@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import CharacterBuilder from "./pages/CharacterBuilder";
 import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
+import ClassDetail from "./pages/rules/ClassDetail";
+import AncestryDetail from "./pages/rules/AncestryDetail";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +30,8 @@ const App = () => (
             <Route path="/login" element={<Login />} />
             <Route path="/character-builder" element={<CharacterBuilder />} />
             <Route path="/campaigns" element={<Campaigns />} />
+            <Route path="/rules/classes/:className" element={<ClassDetail />} />
+            <Route path="/rules/ancestries/:ancestryName" element={<AncestryDetail />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
