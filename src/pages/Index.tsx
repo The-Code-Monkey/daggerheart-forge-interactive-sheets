@@ -5,6 +5,7 @@ import { Dice1, Users, BookOpen, Sword, Shield, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import FeatureCard from "@/components/FeatureCard";
+import FeaturedCampaigns from "@/components/FeaturedCampaigns";
 
 const Index = () => {
   const features = [
@@ -63,6 +64,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Featured Campaigns Section */}
+      <FeaturedCampaigns />
 
       {/* CTA Section */}
       <section className="py-20 px-4">

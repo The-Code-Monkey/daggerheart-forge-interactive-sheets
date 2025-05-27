@@ -8,11 +8,14 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const navItems = [
+  const publicNavItems = [
     { name: "Home", path: "/" },
     { name: "Game Rules", path: "/game-rules" },
+  ];
+
+  const protectedNavItems = [
     { name: "Character Builder", path: "/character-builder" },
-    { name: "Campaigns", path: "/campaigns" },
+    { name: "Campaign Builder", path: "/campaigns" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -29,7 +32,7 @@ const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
+            {publicNavItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
@@ -40,9 +43,22 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
-              Login
-            </Button>
+            {protectedNavItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className={`text-white hover:text-yellow-400 transition-colors ${
+                  isActive(item.path) ? "text-yellow-400" : ""
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Link to="/login">
+              <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                Login
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -62,7 +78,7 @@ const Navigation = () => {
         {isOpen && (
           <div className="md:hidden py-4 border-t border-purple-700/50">
             <div className="flex flex-col space-y-2">
-              {navItems.map((item) => (
+              {publicNavItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
@@ -74,9 +90,23 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
-                Login
-              </Button>
+              {protectedNavItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setIsOpen(false)}
+                  className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                    isActive(item.path) ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Link to="/login">
+                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
+                  Login
+                </Button>
+              </Link>
             </div>
           </div>
         )}
