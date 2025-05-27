@@ -1,7 +1,8 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Lock, User } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -9,11 +10,46 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { User, Heart, Zap, Shield, Sword, Book, Dice6 } from "lucide-react";
+import { Heart, Zap, Shield, Sword, Book, Dice6 } from "lucide-react";
 import DiceRoller from "@/components/DiceRoller";
 import StatBlock from "@/components/StatBlock";
 
 const CharacterBuilder = () => {
+  // For now, we'll show the login requirement
+  // Later this can be replaced with actual authentication state
+  const isLoggedIn = false;
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 flex items-center justify-center px-4">
+        <Card className="w-full max-w-md bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Lock className="w-8 h-8 text-black" />
+            </div>
+            <CardTitle className="text-white text-2xl">Login Required</CardTitle>
+            <CardDescription className="text-purple-200">
+              You need to be logged in to access the character builder and manage your characters.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <Link to="/login" className="block">
+              <Button className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/game-rules" className="block">
+              <Button variant="outline" className="w-full border-purple-400 text-purple-100 hover:bg-purple-700/30">
+                View Game Rules Instead
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // ... keep existing code (the actual character builder interface that was here before)
   const [character, setCharacter] = useState({
     name: "",
     ancestry: "",

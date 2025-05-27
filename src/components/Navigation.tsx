@@ -10,6 +10,7 @@ const Navigation = () => {
 
   const navItems = [
     { name: "Home", path: "/" },
+    { name: "Game Rules", path: "/game-rules" },
     { name: "Character Builder", path: "/character-builder" },
     { name: "Campaigns", path: "/campaigns" },
   ];
@@ -39,6 +40,9 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
+            <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+              Login
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -70,6 +74,9 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
+              <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
+                Login
+              </Button>
             </div>
           </div>
         )}
