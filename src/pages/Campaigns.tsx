@@ -54,7 +54,7 @@ const Campaigns = () => {
         {/* Campaign Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300">
+            <Card key={campaign.id} className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300">
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>

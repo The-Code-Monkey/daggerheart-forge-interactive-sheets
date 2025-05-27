@@ -15,7 +15,7 @@ const Navigation = () => {
 
   const protectedNavItems = [
     { name: "Character Builder", path: "/character-builder" },
-    { name: "Campaign Builder", path: "/campaigns" },
+    { name: "Campaigns", path: "/campaigns" },
   ];
 
   const isActive = (path: string) => location.pathname === path;

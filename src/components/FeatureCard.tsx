@@ -10,7 +10,7 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon: Icon, title, description }: FeatureCardProps) => {
   return (
-    <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300 hover:scale-105">
+    <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300 hover:scale-105">
       <CardHeader>
         <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center mb-4">
           <Icon className="w-6 h-6 text-black" />
