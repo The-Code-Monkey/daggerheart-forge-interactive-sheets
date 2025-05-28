@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Sword, BookOpen, Plus, LogOut } from "lucide-react";
+import { Users, Sword, BookOpen, Plus, LogOut, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -153,9 +153,18 @@ const Dashboard = () => {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-purple-200 text-sm">
+                      <p className="text-purple-200 text-sm mb-3">
                         {character.class || 'No class selected'}
                       </p>
+                      <Link to={`/character-sheet/${character.id}`}>
+                        <Button 
+                          size="sm" 
+                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                        >
+                          <Eye className="w-4 h-4 mr-2" />
+                          View Sheet
+                        </Button>
+                      </Link>
                     </CardContent>
                   </Card>
                 ))}

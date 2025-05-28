@@ -12,6 +12,7 @@ import GameRules from "./pages/GameRules";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import CharacterBuilder from "./pages/CharacterBuilder";
+import CharacterSheet from "./pages/CharacterSheet";
 import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
 import ClassDetail from "./pages/rules/ClassDetail";
@@ -42,6 +43,11 @@ const App = () => (
               <Route path="/character-builder" element={
                 <ProtectedRoute>
                   <CharacterBuilder />
+                </ProtectedRoute>
+              } />
+              <Route path="/character-sheet/:characterId" element={
+                <ProtectedRoute>
+                  <CharacterSheet />
                 </ProtectedRoute>
               } />
               <Route path="/campaigns" element={
