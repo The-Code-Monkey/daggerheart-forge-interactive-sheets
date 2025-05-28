@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="bg-purple-900/90 backdrop-blur-sm p-4 text-white">
       {/* <p>&copy; {new Date().getFullYear()} Forge Interactive Sheets</p> */}
-      <p>This work is a fan-created project and is not intended to infringe upon or violate any copyrights or trademarks. All original content, intellectual property, and related rights are owned by Critical Role and the respective parties as listed in the official document <a href="https://darringtonpress.com/wp-content/uploads/2025/05/DRP-CGL-May-19-2025.pdf" target="_blank" rel="noopener noreferrer">Darrington Press Critical Role License Agreement (May 19, 2025)</a>. This project is made for personal, non-commercial use and respects all rights and ownership held by Critical Role and its affiliates.</p>
+      <p>This site uses only official Public Game Content from the Darrington Press System Reference Document (SRD), shared under the Community Gaming License. The descriptive text comes straight from the SRD, but all the images here are original creations inspired by those descriptions. We don’t use any copyrighted art, logos, or story content from Critical Role or its related companies. All trademarks and rights belong to Critical Role, LLC and its partners. Just so you know, this project isn’t officially connected to or endorsed by Critical Role or Darrington Press.</p>
     </footer>
   );
 };
