@@ -3,10 +3,12 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
 
   const publicNavItems = [
     { name: "Home", path: "/" },
@@ -14,6 +16,7 @@ const Navigation = () => {
   ];
 
   const protectedNavItems = [
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Character Builder", path: "/character-builder" },
     { name: "Campaigns", path: "/campaigns" },
   ];
@@ -25,7 +28,7 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
             <Sparkles className="w-8 h-8 text-yellow-400" />
             <span className="text-xl font-bold text-white">Daggerheart Tools</span>
           </Link>
@@ -43,7 +46,7 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            {protectedNavItems.map((item) => (
+            {user && protectedNavItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
@@ -54,11 +57,19 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Link to="/login">
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
-                Login
-              </Button>
-            </Link>
+            {!user ? (
+              <Link to="/auth">
+                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                  Login
+                </Button>
+              </Link>
+            ) : (
+              <Link to="/dashboard">
+                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                  Dashboard
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -90,7 +101,7 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              {protectedNavItems.map((item) => (
+              {user && protectedNavItems.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
@@ -102,11 +113,19 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              <Link to="/login">
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
-                  Login
-                </Button>
-              </Link>
+              {!user ? (
+                <Link to="/auth">
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
+                    Login
+                  </Button>
+                </Link>
+              ) : (
+                <Link to="/dashboard">
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
+                    Dashboard
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         )}
