@@ -8,90 +8,168 @@ import { Link } from "react-router-dom";
 const GameRules = () => {
   const classes = [
     {
-      name: "Guardian",
-      description: "Stalwart defenders who protect their allies",
-      primaryStats: ["Strength", "Presence"],
-      icon: <Shield className="w-6 h-6" />,
-      features: ["Armor Domain", "Bone Domain", "Blade Domain"],
-      slug: "guardian"
-    },
-    {
-      name: "Warrior",
-      description: "Fierce combatants who excel in battle",
-      primaryStats: ["Strength", "Agility"],
-      icon: <Sword className="w-6 h-6" />,
-      features: ["Fury Domain", "Prowess Domain", "Bone Domain"],
-      slug: "warrior"
-    },
-    {
-      name: "Ranger",
-      description: "Masters of nature and ranged combat",
-      primaryStats: ["Agility", "Instinct"],
-      icon: <Zap className="w-6 h-6" />,
-      features: ["Flora Domain", "Fauna Domain", "Swift Domain"],
-      slug: "ranger"
-    },
-    {
-      name: "Rogue",
-      description: "Stealthy operatives skilled in deception",
-      primaryStats: ["Agility", "Finesse"],
-      icon: <User className="w-6 h-6" />,
-      features: ["Shadow Domain", "Swift Domain", "Midnight Domain"],
-      slug: "rogue"
-    },
-    {
-      name: "Seraph",
-      description: "Divine warriors channeling celestial power",
-      primaryStats: ["Presence", "Instinct"],
-      icon: <Sparkles className="w-6 h-6" />,
-      features: ["Divine Domain", "Splendor Domain", "Valor Domain"],
-      slug: "seraph"
-    },
-    {
-      name: "Sorcerer",
-      description: "Innate spellcasters wielding raw magic",
-      primaryStats: ["Instinct", "Presence"],
-      icon: <Zap className="w-6 h-6" />,
-      features: ["Arcane Domain", "Elemental Domain", "Wyrd Domain"],
-      slug: "sorcerer"
-    },
-    {
-      name: "Wizard",
-      description: "Scholarly mages who study the arcane arts",
-      primaryStats: ["Knowledge", "Instinct"],
-      icon: <Book className="w-6 h-6" />,
-      features: ["Arcane Domain", "Sage Domain", "Bone Domain"],
-      slug: "wizard"
-    },
-    {
-      name: "Druid",
-      description: "Nature's guardians who shapeshift and heal",
-      primaryStats: ["Instinct", "Knowledge"],
-      icon: <Heart className="w-6 h-6" />,
-      features: ["Flora Domain", "Fauna Domain", "Elemental Domain"],
-      slug: "druid"
-    },
-    {
       name: "Bard",
-      description: "Inspiring performers who weave magic through art",
-      primaryStats: ["Presence", "Knowledge"],
+      description: `Bards are charismatic performers who excel in social situations through music, storytelling, and wit, though their egos can either unite or divide those around them.`,
       icon: <Sparkles className="w-6 h-6" />,
-      features: ["Midnight Domain", "Splendor Domain", "Wyrd Domain"],
+      features: ["Grace", "Codex"],
       slug: "bard"
-    }
+    }, {
+      name: "Druid",
+      description: "Druids are devoted guardians of nature who, through deep study and connection to the wild, gain the power to shape the natural world and transform into beasts.",
+       icon: <Heart className="w-6 h-6" />,
+       features: ["Sage", "Arcana"],
+       slug: "druid"
+    }, {
+      name: "Guardian",
+      description: "Guardians are steadfast warriors driven by loyalty and conviction, known for their fierce defense of loved ones and unwavering resolve in the face of overwhelming odds.",
+      icon: <Shield className="w-6 h-6" />,
+      features: ["Valor", "Blade"],
+      slug: "guardian"
+       }, {
+         name: "Ranger",
+         description: "Rangers are cunning wilderness hunters who combine martial skill, expert tracking, and deep bonds with animal companions to outwit and overcome their foes.",
+         icon: <Zap className="w-6 h-6" />,
+         features: ["Bone", "Sage"],
+         slug: "ranger"
+       }, {
+         name: "Rogue",
+         description: "Rogues are cunning tricksters and stealthy combatants who blend wit, shadow, and skill to deceive, infiltrate, and strike from the darkness—often guided by the hidden codes of thieves’ guilds.",
+         icon: <User className="w-6 h-6" />,
+         features: ["Midnight", "Grace"],
+         slug: "rogue"
+       }, {
+         name :"Seraph",
+         description: "Seraphs are divinely empowered warriors and healers who serve the will of their gods with unwavering purpose, defending faith and justice while striking fear into those who oppose them.",
+         icon: <Sparkles className="w-6 h-6" />,
+         features: ["Splendor", "Valor"],
+         slug: "seraph"
+       }, {
+         name: "Sorcerer",
+         description: "Sorcerers are innate magic wielders who gain power through bloodline and become truly formidable by learning to control and refine the magic that already burns within them.",
+         icon: <Zap className="w-6 h-6" />,
+         features: ["Arcana", "Midnight"],
+         slug: "sorcerer"
+       }, {
+         name: "Warrior",
+         description: "Warriors are disciplined masters of combat who combine strength, agility, and skill through lifelong training, making them elite fighters fiercely bonded to their chosen weapon.",
+         icon: <Sword className="w-6 h-6" />,
+         features: ["Blade", "Bone"],
+         slug: "warrior"
+       }, {
+         name: "Wizard",
+         description: "Wizards are disciplined scholars of magic who spend years mastering arcane knowledge, often becoming powerful advisors or leaders—though their pursuit of magical secrets frequently sparks fierce rivalries.",
+         icon: <Book className="w-6 h-6" />,
+         features: ["Codex", "Splendor"],
+         slug: "wizard"
+       }
   ];
 
   const ancestries = [
-    { name: "Human", description: "Versatile and adaptable beings", slug: "human" },
-    { name: "Drakona", description: "Dragon-descended folk with elemental heritage", slug: "drakona" },
-    { name: "Faerie", description: "Magical beings from the realm of dreams", slug: "faerie" },
-    { name: "Dwarf", description: "Hardy mountain folk skilled in craftsmanship", slug: "dwarf" },
-    { name: "Elf", description: "Graceful beings with deep magical connections", slug: "elf" },
-    { name: "Giant", description: "Towering people with incredible strength", slug: "giant" },
-    { name: "Halfling", description: "Small folk known for their courage and luck", slug: "halfling" },
-    { name: "Orc", description: "Proud warriors with strong tribal bonds", slug: "orc" },
-    { name: "Ribbet", description: "Amphibious people who value community", slug: "ribbet" }
+    { name: "Clank", description: "Clanks are sentient mechanical beings crafted from diverse materials with specialized bodies that can include claws, wheels, or built-in weapons. Their forms can be endlessly modified, granting them effective immortality as long as they maintain their parts, though their minds can deteriorate over time as their magic fades.", slug: "clank"},
+    { name: "Drakona", description: "Drakona are wingless, dragon-like humanoids with thick scales that act as natural armor and possess powerful elemental breath unique to their lineage. They have long lifespans, continuously growing new teeth, and typically inherit their elemental abilities from their family, though exceptions exist.", slug: "drakona"},
+    { name: "Dwarf", description: "Dwarves are short, stocky humanoids known for their dense muscles, thick hair, and naturally resilient keratin-rich skin that allows for gemstone adornment and tattoos. They often style elaborate facial hair and live up to 250 years while retaining their strength well into old age.", slug: "dwarves"},
+    { name: "Elf", description: "Elves are tall, pointed-eared humanoids with keen senses and the unique ability to enter a celestial trance for quick rest. Some develop a mystic form—marked by nature-inspired traits like celestial freckles or vine-like hair—that can change over their long 350-year lifespans.", slug: "elf"},
+    { name: "Faerie", description: "Faeries are winged humanoids with diverse insect-like features such as extra arms, compound eyes, and chitinous exoskeletons, often blending with plants due to their natural affinity. They undergo unique metamorphoses that define their permanent form for their roughly 50-year lifespan, ranging in height from 2 to 7 feet.", slug: "faerie"},
+    { name: "Faun", description: "Fauns are humanoid goats with curving horns, cloven hooves, and variable goat- or humanlike faces, known for their long limbs and powerful hoof strikes. They stand 4 to 6½ feet tall, with height shifting by stance, and live about 225 years, growing more goatlike with age.", slug: "faun"},
+    { name: "Firbolg", description: "Firbolgs are tall, muscular bovine humanoids with broad noses, drooping ears, and varying horn styles, known for their strength and powerful charging attacks. Covered in earth-toned or pastel fur, they typically live around 150 years.", slug: "firbolg"},
+    { name: "Fungil", description: "Fungril are humanoid mushrooms with diverse appearances and vibrant colors, ranging from 2 to 7 feet tall with no single common form. They live around 300 years, communicate nonverbally, and use a mycelial network to share information over long distances.", slug: "fungil"},
+    { name: "Galapa", description: "Galapa are anthropomorphic turtles with large, patterned shells into which they can retract for protection, standing 4 to 6 feet tall and typically adorned in earth tones. They move slowly and can live about 150 years, sometimes enhancing their shells with armor or carvings despite the pain involved.", slug: "galapa"},
+    { name: "Giant", description: "Giants are towering humanoids standing 6½ to 8½ feet tall with broad frames, long arms, and up to three eyes that develop after their first year of life. Known for their muscular build and distinctive features, they live around 75 years on average.", slug: "giant"},
+    { name: "Goblin", description: "Goblins are small humanoids with large eyes and oversized membranous ears that give them exceptional hearing and vision, aiding their movement in difficult environments. They vary widely in skin and eye color, stand 3 to 4 feet tall, communicate nonverbally through ear movements, and live about 100 years.", slug: "goblin"},
+    { name: "Halfling", description: "Halflings are small humanoids with large, hairy feet and proportionally large ears and noses, standing 3 to 4 feet tall and often maintaining a youthful appearance throughout their 150-year lifespan. They have a natural internal compass and keen senses of hearing and smell, allowing them to recognize familiar individuals by their movements.", slug: "halfling"},
+    { name: "Human", description: "Humans are adaptable beings with dexterous hands, rounded ears, and bodies built for endurance, ranging from just under 5 feet to 6½ feet tall with varied builds. They adjust well to different climates and typically live around 100 years, undergoing significant physical changes throughout their lives.", slug: "human"},
+    { name: "Infernis", description: "Infernis are humanoids descended from demons, characterized by sharp canine teeth, pointed ears, horns in various shapes and numbers, and often long, pointed tails, with skin and features in a wide range of colors. They possess a “dread visage” that can alter their appearance to intimidate, and typically live up to 350 years, reflecting their demonic heritage.", slug: "infernis"},
+    { name: "Katari", description: "Katari are feline humanoids with retractable claws, slit pupils, and highly mobile triangular ears, featuring varied fur patterns and sometimes tails, blending catlike and humanoid traits. They range from 3 to 6½ feet tall, have keen senses aided by whiskers and swiveling ears, and live up to around 150 years.", slug: "katari"},
+    { name: "Orc", description: "Orcs are humanoids known for their square features, prominent boar-like tusks often adorned with decorations, and pointed ears. They typically have green, blue, pink, or gray skin tones, muscular builds, stand between 5 and 6½ feet tall, and live around 125 years.", slug: "orc"},
+    { name: "Ribbit", description: "Ribbets are frog-like humanoids with webbed hands and feet, smooth or warty skin, and eyes set wide on their heads. They range from 3 to 4½ feet tall, move mostly by hopping, and live about 100 years.", slug: "ribbit"},
+    { name: "Simiah", description: "Simiah are monkey-like humanoids with long limbs, prehensile feet, and sometimes tails, ranging from 2 to 6 feet tall. Their agility and climbing skills make them versatile movers, and they live around 100 years.", slug: "simiah"}
   ];
+
+  const domains = [
+    {
+      name: "Arcana",
+      description: `Arcana is the domain of innate and instinctual magic. Those
+      who choose this path tap into the raw, enigmatic forces of the
+      realms to manipulate both their own energy and the elements.
+      Arcana offers wielders a volatile power, but it is incredibly
+      potent when correctly channeled. The Arcana domain can be
+      accessed by the Druid and Sorcerer classes`,
+      slug: "arcana"
+    },
+    {
+      name: "Blade",
+      description: `Blade is the domain of weapon mastery. Whether by steel,
+      bow, or perhaps a more specialized arm, those who follow this
+      path have the skill to cut short the lives of others. Wielders of
+      Blade dedicate themselves to achieving inexorable power over
+      death. The Blade domain can be accessed by the Guardian
+      and Warrior classes.`,
+      slug: 'blade',
+    }, {
+      name: "Bone",
+      description: `Bone is the domain of tactics and the body. Practitioners
+      of this domain have an uncanny control over their own
+      physical abilities and an eye for predicting the behaviors of
+      others in combat. Adherents to Bone gain an unparalleled
+      understanding of bodies and their movements. The Bone
+      domain can be accessed by the Ranger & Warrior classes.`,
+      slug: 'bone',
+    },{
+      name: "Codex",
+      description: `Codex is the domain of intensive magical study. Those who
+      seek magical knowledge turn to the equations of power
+      recorded in books, written on scrolls, etched into walls, or
+      tattooed on bodies. Codex offers a commanding and versatile
+      understanding of magic to devotees who pursue knowledge
+      beyond the boundaries of common wisdom. The Codex
+      domain can be accessed by the Bard and Wizard classes.`,
+      slug: 'codex'
+    }, {
+      name: "Grace",
+      description: `Grace is the domain of charisma. Through rapturous
+      storytelling, charming spells, or a shroud of lies, those who
+      channel this power define the realities of their adversaries,
+      bending perception to their will. Grace offers its wielders raw
+      magnetism and mastery over language. The Grace domain can
+      be accessed by the Bard and Rogue classes`,
+      slug: "grace",
+    }, {
+      name: "Midnight",
+      description: `Midnight is the domain of shadows and secrecy. Whether
+      by clever tricks, deft magic, or the cloak of night, those who
+      channel these forces practice the art of obscurity and can
+      uncover sequestered treasures. Midnight offers practitioners
+      the power to control and create enigmas. The Midnight
+      domain can be access by the Rogue and Sorcerer classes.`,
+      slug: 'midnight'
+    }, {
+      name: "Sage",
+      description: `Sage is the domain of the natural world. Those who walk
+      this path tap into the unfettered power of the earth and its
+      creatures to unleash raw magic. Sage grants its adherents
+      the vitality of a blooming flower and the ferocity of a ravenous
+      predator. The Sage domain can be accessed by the Druid and
+      Ranger classes.`,
+      slug: 'sage'
+          }, {
+            name: "Splendor",
+            description: `Splendor is the domain of life. Through this magic, followers
+            gain the ability to heal and, to an extent, control death.
+            Splendor offers its disciples the magnificent ability to both
+            give and end life. The Splendor domain can be accessed by the
+            Seraph and Wizard classes.`,
+            slug: 'splendor'
+          }, {
+            name: "Valor",
+            description: `Valor is the domain of protection. Whether through attack or
+            defense, those who choose this discipline channel formidable
+            strength to protect their allies in battle. Valor offers great
+            power to those who raise their shields in defense of others.
+            The Valor domain can be accessed by the Guardian and
+            Seraph classes.`,
+            slug: 'valor'
+          }
+  ]
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
@@ -125,16 +203,6 @@ const GameRules = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      <div>
-                        <span className="text-sm font-medium text-purple-300">Primary Stats:</span>
-                        <div className="flex gap-2 mt-1">
-                          {cls.primaryStats.map((stat) => (
-                            <Badge key={stat} variant="secondary" className="bg-purple-600/50 text-white">
-                              {stat}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
                       <div>
                         <span className="text-sm font-medium text-purple-300">Domains:</span>
                         <div className="flex flex-wrap gap-1 mt-1">
@@ -183,64 +251,51 @@ const GameRules = () => {
 
           <TabsContent value="mechanics" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Dice6 className="w-6 h-6" />
-                    Duality Dice System
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="text-purple-200 space-y-3">
-                  <p>Daggerheart uses a unique duality dice system with Hope and Fear dice:</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li><strong className="text-green-400">Hope Dice (d12):</strong> Rolled when you have advantage or positive circumstances</li>
-                    <li><strong className="text-red-400">Fear Dice (d12):</strong> Rolled when you have disadvantage or negative circumstances</li>
-                    <li><strong className="text-blue-400">Duality Dice (2d12):</strong> Standard roll using both Hope and Fear dice</li>
-                  </ul>
-                </CardContent>
-              </Card>
 
-              <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
-                <CardHeader>
-                  <CardTitle className="text-white">Stats & Modifiers</CardTitle>
-                </CardHeader>
-                <CardContent className="text-purple-200 space-y-3">
-                  <p>Six core stats define your character:</p>
-                  <ul className="list-disc list-inside space-y-1">
-                    <li><strong>Agility:</strong> Speed, reflexes, and dexterity</li>
-                    <li><strong>Strength:</strong> Physical power and endurance</li>
-                    <li><strong>Finesse:</strong> Precision and careful manipulation</li>
-                    <li><strong>Instinct:</strong> Intuition and natural awareness</li>
-                    <li><strong>Presence:</strong> Charisma and force of personality</li>
-                    <li><strong>Knowledge:</strong> Learning and reasoning ability</li>
-                  </ul>
-                </CardContent>
-              </Card>
             </div>
           </TabsContent>
 
           <TabsContent value="domains" className="space-y-6">
-            <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
+            <Card  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm text-center">
               <CardHeader>
-                <CardTitle className="text-white">Magic Domains</CardTitle>
-                <CardDescription className="text-purple-200">
-                  Domains represent different schools of magic and abilities that classes can access
-                </CardDescription>
+                <CardTitle className="text-white pb-2">Class Domains</CardTitle>
+                <CardContent className="text-purple-200">
+                  Each class grants access to two domains:
+                  <ul className="list-inside list-disc py-2">
+                    <li>Bard: Codex & Grace</li>
+                    <li>Druid: Arcana & Sage</li>
+                    <li>Guardian: Blade & Valor</li>
+                    <li>Ranger: Bone & Sage</li>
+                    <li>Rogue: Grace & Midnight</li>
+                    <li>Seraph: Splendor & Valor</li>
+                    <li>Sorcerer: Arcana & Midnight</li>
+                    <li>Warrior: Blade & Bone</li>
+                    <li>Wizard: Codex & Splendor</li>
+                  </ul>
+                  PCs acquire two 1st-level domain cards at character creation
+                  and an additional domain card at or below their level each time
+                  they level up.
+                </CardContent>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {[
-                    "Arcane", "Divine", "Elemental", "Flora", "Fauna", "Splendor",
-                    "Midnight", "Wyrd", "Sage", "Shadow", "Swift", "Valor",
-                    "Fury", "Prowess", "Armor", "Blade", "Bone"
-                  ].map((domain) => (
-                    <Badge key={domain} variant="outline" className="border-purple-400/50 text-purple-200 p-2 text-center">
-                      {domain} Domain
-                    </Badge>
-                  ))}
-                </div>
-              </CardContent>
             </Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {domains.map((domain, index) => (
+                <Card key={index} className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle className="text-white">{domain.name}</CardTitle>
+                    <CardDescription className="text-purple-200">{domain.description}</CardDescription>
+                  </CardHeader>
+                  {/* <CardContent>
+                    <Link to={`/rules/domains/${domain.slug}`}>
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                        Learn More
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </Link>
+                  </CardContent> */}
+                </Card>
+              ))}
+            </div>
           </TabsContent>
         </Tabs>
       </div>
