@@ -9,8 +9,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { JSX } from "react";
 
-const AncestryDetail = () => {
+const AncestryDetail = (): JSX.Element => {
   const { ancestryName } = useParams();
 
   const ancestries = {};

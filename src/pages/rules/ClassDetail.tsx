@@ -8,23 +8,45 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  ArrowLeft,
-  Sword,
-  Shield,
-  Zap,
-  Heart,
-  User,
-  Book,
-  Sparkles,
-} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { JSX, useEffect, useState } from "react";
+import { Class, Domain } from "@/lib/types";
+import { supabase } from "@/integrations/supabase/client";
 
-const ClassDetail = () => {
+const ClassDetail = (): JSX.Element => {
   const { className } = useParams();
+  const [classData, setClassData] = useState<Class | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const classes = {};
+  const fetchClass = async () => {
+    const { data, error } = await supabase.from("classes").select(`
+      *, classes_domains ( domains ( id, name ) )`).eq("slug", String(className)).single();
+    if (error) {
+      console.error(error);
+    } else {
+      setClassData({
+        ...data,
+        domains: data.classes_domains.map(classDomain => classDomain.domains) as unknown as Domain[],
+      } as unknown as Class);
+    }
+    setLoading(false);
+  }
 
-  const classData = classes[className?.toLowerCase() as keyof typeof classes];
+  useEffect(() => {
+    fetchClass();
+  }, [className])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Loading Class...
+          </h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!classData) {
     return (
@@ -76,33 +98,23 @@ const ClassDetail = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-white">Primary Stats</CardTitle>
+              <CardTitle className="text-white">Hit Points</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex gap-2">
-                {classData.primaryStats.map((stat) => (
-                  <Badge
-                    key={stat}
-                    variant="secondary"
-                    className="bg-purple-600/50 text-white"
-                  >
-                    {stat}
-                  </Badge>
-                ))}
-              </div>
+              <p className="text-purple-200">{classData.base_hp}</p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle className="text-white">Hit Points</CardTitle>
+              <CardTitle className="text-white">Evasion</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-purple-200">{classData.hitPoints}</p>
+              <p className="text-purple-200">{classData.base_evasion}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+          {/* <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-white">Damage Thresholds</CardTitle>
             </CardHeader>
@@ -122,7 +134,7 @@ const ClassDetail = () => {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> */}
 
           <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
             <CardHeader>
@@ -130,13 +142,13 @@ const ClassDetail = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap gap-1">
-                {classData.domains.map((domain) => (
+                {classData.domains?.map((domain) => (
                   <Badge
-                    key={domain}
+                    key={domain.id}
                     variant="outline"
                     className="border-yellow-500/50 text-yellow-300 text-xs"
                   >
-                    {domain}
+                    {domain.name}
                   </Badge>
                 ))}
               </div>
@@ -145,7 +157,7 @@ const ClassDetail = () => {
         </div>
 
         {/* Class Features */}
-        <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+        {/* <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="text-white">Class Features</CardTitle>
             <CardDescription className="text-purple-200">
@@ -164,7 +176,7 @@ const ClassDetail = () => {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );

@@ -20,16 +20,44 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+import { Class } from "@/lib/types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const GameRules = () => {
+  const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null)
+
+  const fetchClasses = async () => {
+    const { data, error } = await supabase.from("classes").select(`
+      *, classes_domains ( domains ( id, name ) )`);
+    if (error) {
+      console.error(error);
+    } else {
+      setClassesData(data.map(cls => ({
+        ...cls,
+        domains: cls.classes_domains.map(cd => cd.domains),
+      })) as Partial<Class>[]);
+    }
+  }
+
+  useEffect(() => {
+    fetchClasses();
+  }, [])
+
+  console.log(classesData);
+
+  const icons = {
+    bard: <Sparkles className="w-6 h-6" />,
+    druid: <Heart className="w-6 h-6" />,
+    guardian: <Shield className="w-6 h-6" />,
+    ranger: <Zap className="w-6 h-6" />,
+    rogue: <Dice6 className="w-6 h-6" />,
+    wizard: <ArrowRight className="w-6 h-6" />,
+    warrior: <Shield className="w-6 h-6" />,
+  };
+
   const classes = [
-    {
-      name: "Bard",
-      description: `Bards are charismatic performers who excel in social situations through music, storytelling, and wit, though their egos can either unite or divide those around them.`,
-      icon: <Sparkles className="w-6 h-6" />,
-      features: ["Grace", "Codex"],
-      slug: "bard",
-    },
     {
       name: "Druid",
       description:
@@ -343,6 +371,61 @@ const GameRules = () => {
 
           <TabsContent value="classes" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {classesData ? classesData.map((cls) => (
+                <Card
+                  key={cls.id}
+                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm"
+                >
+                  <CardHeader>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+                        {icons[String(cls.slug)]}
+                      </div>
+                      <CardTitle className="text-white">{cls.name}</CardTitle>
+                    </div>
+                    <CardDescription className="text-purple-200 truncate-5-lines">
+                      {cls.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div>
+                        <span className="text-sm font-medium text-purple-300">
+                          Domains:
+                        </span>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {cls.domains?.map((domain) => (
+                            <Badge
+                              key={domain.id}
+                              variant="outline"
+                              className="border-yellow-500/50 text-yellow-300 text-xs"
+                            >
+                              {domain.name}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="pt-2">
+                        <Link to={`/rules/classes/${cls.slug}`}>
+                          <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                            Learn More
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )) : (
+                <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+                      <CardHeader>
+                        <div className="flex items-center gap-3 mb-2">
+                          <Skeleton className="w-10 h-10 rounded-lg" />
+                          <Skeleton className="h-6 w-32" />
+                        </div>
+                      </CardHeader>
+                    </Card>
+              )}
               {classes.map((cls, index) => (
                 <Card
                   key={index}
