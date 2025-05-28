@@ -44,7 +44,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900">
       <HeroSection />
-      
+
       {/* Features Section */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -56,7 +56,7 @@ const Index = () => {
               A comprehensive digital toolset designed specifically for Daggerheart campaigns and character management.
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <FeatureCard key={index} {...feature} />
@@ -88,7 +88,7 @@ const Index = () => {
                   </Button>
                 </Link>
                 <Link to="/campaigns">
-                  <Button size="lg" variant="outline" className="border-purple-400 text-purple-100 hover:bg-purple-700/30 px-8 py-3">
+                  <Button size="lg" variant="outline" className="border-purple-400 text-purple-100  px-8 py-3">
                     Manage Campaigns
                   </Button>
                 </Link>

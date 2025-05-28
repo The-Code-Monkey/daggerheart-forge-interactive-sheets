@@ -29,9 +29,9 @@ const Auth = () => {
           email,
           password,
         });
-        
+
         if (error) throw error;
-        
+
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
@@ -47,9 +47,9 @@ const Auth = () => {
             },
           },
         });
-        
+
         if (error) throw error;
-        
+
         toast({
           title: "Account created!",
           description: "Please check your email to verify your account.",
@@ -78,8 +78,8 @@ const Auth = () => {
             {isLogin ? "Welcome Back" : "Create Account"}
           </CardTitle>
           <CardDescription className="text-purple-200">
-            {isLogin 
-              ? "Sign in to access your characters and campaigns" 
+            {isLogin
+              ? "Sign in to access your characters and campaigns"
               : "Join the adventure and create your first character"
             }
           </CardDescription>
@@ -124,8 +124,8 @@ const Auth = () => {
                 required
               />
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               disabled={loading}
             >
@@ -139,9 +139,9 @@ const Auth = () => {
             <p className="text-purple-200 text-sm">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
             </p>
-            <Button 
-              variant="outline" 
-              className="w-full border-purple-400 text-purple-100 hover:bg-purple-700/30"
+            <Button
+              variant="outline"
+              className="w-full border-purple-400 text-purple-100 "
               onClick={() => setIsLogin(!isLogin)}
             >
               {isLogin ? "Create Account" : "Sign In"}

@@ -26,7 +26,7 @@ const HeroSection = () => {
             Built for Daggerheart
           </span>
         </div>
-        
+
         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
           Your Digital
           <br />
@@ -34,12 +34,12 @@ const HeroSection = () => {
             Adventure Hub
           </span>
         </h1>
-        
+
         <p className="text-xl md:text-2xl text-purple-200 mb-10 max-w-4xl mx-auto leading-relaxed">
-          Create characters, manage campaigns, and enhance your Daggerheart experience with 
+          Create characters, manage campaigns, and enhance your Daggerheart experience with
           our comprehensive digital toolset designed for players and Game Masters.
         </p>
-        
+
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <Link to="/character-builder">
             <Button size="lg" className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg group">
@@ -47,9 +47,9 @@ const HeroSection = () => {
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
-          
+
           <Link to="/demo">
-            <Button size="lg" variant="ghost" className="text-white border-2 border-purple-400 hover:bg-purple-700/30 px-8 py-4 text-lg">
+            <Button size="lg" variant="ghost" className="text-white border-2 border-purple-400  px-8 py-4 text-lg">
               View Demo
             </Button>
           </Link>

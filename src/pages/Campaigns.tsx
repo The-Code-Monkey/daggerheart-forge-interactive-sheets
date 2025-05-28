@@ -59,8 +59,8 @@ const Campaigns = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-white text-xl mb-2">{campaign.name}</CardTitle>
-                    <Badge 
-                      variant="secondary" 
+                    <Badge
+                      variant="secondary"
                       className={campaign.status === 'active' ? 'bg-green-600/50 text-white' : 'bg-gray-600/50 text-white'}
                     >
                       {campaign.status}
@@ -85,17 +85,17 @@ const Campaigns = () => {
                     {campaign.sessions} Sessions
                   </div>
                 </div>
-                
+
                 <div className="text-sm text-purple-300">
                   Last played: {new Date(campaign.lastPlayed).toLocaleDateString()}
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1 border-purple-400 text-purple-100 hover:bg-purple-700/30">
+                  <Button variant="outline" className="flex-1 border-purple-400 text-purple-100 ">
                     <Eye className="w-4 h-4 mr-2" />
                     View
                   </Button>
-                  <Button variant="outline" className="border-purple-400 text-purple-100 hover:bg-purple-700/30">
+                  <Button variant="outline" className="border-purple-400 text-purple-100 ">
                     <MapPin className="w-4 h-4" />
                   </Button>
                 </div>
@@ -108,29 +108,29 @@ const Campaigns = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="bg-gradient-to-br from-green-800/40 to-emerald-800/40 border-green-500/30 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-white mb-2">2</div>
-              <div className="text-green-200">Active Campaigns</div>
+              <div className="text-3xl font-bold mb-2 text-green-950">2</div>
+              <div className="text-green-950">Active Campaigns</div>
             </CardContent>
           </Card>
-          
+
           <Card className="bg-gradient-to-br from-blue-800/40 to-cyan-800/40 border-blue-500/30 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-white mb-2">12</div>
-              <div className="text-blue-200">Total Players</div>
+              <div className="text-3xl font-bold text-blue-900 mb-2">12</div>
+              <div className="text-blue-900">Total Players</div>
             </CardContent>
           </Card>
-          
+
           <Card className="bg-gradient-to-br from-purple-800/40 to-pink-800/40 border-purple-500/30 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-white mb-2">44</div>
-              <div className="text-purple-200">Sessions Played</div>
+              <div className="text-3xl font-bold text-purple-900 mb-2">44</div>
+              <div className="text-purple-900">Sessions Played</div>
             </CardContent>
           </Card>
-          
+
           <Card className="bg-gradient-to-br from-orange-800/40 to-red-800/40 border-orange-500/30 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-white mb-2">156</div>
-              <div className="text-orange-200">Hours Played</div>
+              <div className="text-3xl font-bold text-orange-900 mb-2">156</div>
+              <div className="text-orange-900">Hours Played</div>
             </CardContent>
           </Card>
         </div>

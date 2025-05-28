@@ -42,7 +42,7 @@ const App = () => (
                   <Dashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/character-builder" element={
+              <Route path="/character-builder/:characterId?" element={
                 <ProtectedRoute>
                   <CharacterBuilder />
                 </ProtectedRoute>

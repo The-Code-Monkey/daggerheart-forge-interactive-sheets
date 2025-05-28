@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,31 +13,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { debounce } from "lodash";
+import { Character, Json } from "@/lib/types";
 
-interface Character {
-  id: string;
-  name: string;
-  ancestry: string;
-  class: string;
-  community: string;
-  level: number;
-  background: string;
-  stats: {
-    agility: number;
-    strength: number;
-    finesse: number;
-    instinct: number;
-    presence: number;
-    knowledge: number;
-  };
-  hope: number;
-  fear: number;
-  current_hp?: number;
-  max_hp?: number;
-  inventory?: any[];
-}
-
-interface InventoryItem {
+interface InventoryItem extends Json {
   id: string;
   name: string;
   quantity: number;
@@ -60,14 +39,14 @@ const CharacterSheet = () => {
     queryKey: ['character', characterId],
     queryFn: async () => {
       if (!user || !characterId) return null;
-      
+
       const { data, error } = await supabase
         .from('characters')
         .select('*')
         .eq('id', characterId)
         .eq('user_id', user.id)
         .single();
-      
+
       if (error) throw error;
       return data as Character;
     },
@@ -78,19 +57,19 @@ const CharacterSheet = () => {
     if (character) {
       setCurrentHp(character.current_hp || character.level * 10);
       setMaxHp(character.max_hp || character.level * 10);
-      setInventory(character.inventory || []);
+      setInventory((character.inventory as unknown as InventoryItem[]) || []);
     }
   }, [character]);
 
   const updateCharacterMutation = useMutation({
     mutationFn: async (updates: Partial<Character>) => {
       if (!characterId) throw new Error('No character ID');
-      
+
       const { error } = await supabase
         .from('characters')
         .update(updates)
         .eq('id', characterId);
-      
+
       if (error) throw error;
     },
     onSuccess: () => {
@@ -109,16 +88,22 @@ const CharacterSheet = () => {
     }
   });
 
+  const debouncedMutation = useRef(
+    debounce((data: { current_hp?: number; max_hp?: number }) => {
+      updateCharacterMutation.mutate(data);
+    }, 500)
+  ).current;
+
   const handleHpChange = (type: 'current' | 'max', value: number) => {
     if (type === 'current') {
       const newCurrentHp = Math.max(0, Math.min(value, maxHp));
       setCurrentHp(newCurrentHp);
-      updateCharacterMutation.mutate({ current_hp: newCurrentHp });
+      debouncedMutation({ current_hp: newCurrentHp });
     } else {
       const newMaxHp = Math.max(1, value);
       setMaxHp(newMaxHp);
       setCurrentHp(Math.min(currentHp, newMaxHp));
-      updateCharacterMutation.mutate({ 
+      debouncedMutation({
         max_hp: newMaxHp,
         current_hp: Math.min(currentHp, newMaxHp)
       });
@@ -127,12 +112,12 @@ const CharacterSheet = () => {
 
   const addInventoryItem = () => {
     if (!newItem.name.trim()) return;
-    
+
     const item: InventoryItem = {
       id: crypto.randomUUID(),
       ...newItem
     };
-    
+
     const updatedInventory = [...inventory, item];
     setInventory(updatedInventory);
     updateCharacterMutation.mutate({ inventory: updatedInventory });
@@ -162,7 +147,7 @@ const CharacterSheet = () => {
           <p className="text-center text-purple-200 py-8">Character not found.</p>
           <div className="text-center">
             <Link to="/dashboard">
-              <Button variant="outline" className="border-purple-400 text-purple-100 hover:bg-purple-700/30">
+              <Button variant="outline" className="border-purple-400 text-purple-100 ">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
               </Button>
@@ -180,7 +165,7 @@ const CharacterSheet = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <Link to="/dashboard">
-              <Button variant="outline" className="border-purple-400 text-purple-100 hover:bg-purple-700/30">
+              <Button variant="outline" className="border-purple-400 text-purple-100 ">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
@@ -204,7 +189,7 @@ const CharacterSheet = () => {
           {/* Character Stats */}
           <div className="lg:col-span-2 space-y-6">
             {/* HP and Combat Stats */}
-            <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+            <Card>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Heart className="w-5 h-5 text-red-400" />
@@ -243,15 +228,15 @@ const CharacterSheet = () => {
                     <div className="text-2xl font-bold text-white">{character.hope}</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-sm text-red-300">Fear</div>
-                    <div className="text-2xl font-bold text-white">{character.fear}</div>
+                    <div className="text-sm text-red-300">Stress</div>
+                    <div className="text-2xl font-bold text-white">{character.stress}</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Attributes */}
-            <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+            <Card>
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Sword className="w-5 h-5 text-yellow-400" />
@@ -272,7 +257,7 @@ const CharacterSheet = () => {
 
             {/* Background */}
             {character.background && (
-              <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+              <Card>
                 <CardHeader>
                   <CardTitle className="text-white">Background</CardTitle>
                 </CardHeader>
@@ -285,7 +270,7 @@ const CharacterSheet = () => {
 
           {/* Inventory */}
           <div className="space-y-6">
-            <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+            <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0">
                 <CardTitle className="text-white">Inventory</CardTitle>
                 <Sheet>
@@ -334,8 +319,8 @@ const CharacterSheet = () => {
                           placeholder="Item description"
                         />
                       </div>
-                      <Button 
-                        onClick={addInventoryItem} 
+                      <Button
+                        onClick={addInventoryItem}
                         className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
                         disabled={!newItem.name.trim()}
                       >
@@ -388,7 +373,7 @@ const CharacterSheet = () => {
             </Card>
 
             {/* Character Info */}
-            <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+            <Card>
               <CardHeader>
                 <CardTitle className="text-white">Character Info</CardTitle>
               </CardHeader>

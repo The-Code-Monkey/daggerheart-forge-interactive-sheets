@@ -3,20 +3,12 @@ import { useEffect, useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Sword, BookOpen, Plus, LogOut, Eye } from "lucide-react";
+import { Users, Sword, BookOpen, Plus, LogOut, Eye, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
-
-interface Character {
-  id: string;
-  name: string;
-  ancestry: string;
-  class: string;
-  level: number;
-}
 
 const Dashboard = () => {
   const { user, signOut } = useAuth();
@@ -26,15 +18,15 @@ const Dashboard = () => {
     queryKey: ['characters', user?.id],
     queryFn: async () => {
       if (!user) return [];
-      
+
       const { data, error } = await supabase
         .from('characters')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
-      
+
       if (error) throw error;
-      return data as Character[];
+      return data;
     },
     enabled: !!user,
   });
@@ -62,10 +54,10 @@ const Dashboard = () => {
             </h1>
             <p className="text-purple-200">Manage your characters and campaigns</p>
           </div>
-          <Button 
-            onClick={handleSignOut} 
-            variant="outline" 
-            className="border-purple-400 text-purple-100 hover:bg-purple-700/30"
+          <Button
+            onClick={handleSignOut}
+            variant="outline"
+            className="border-purple-400 text-purple-100 "
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
@@ -74,7 +66,7 @@ const Dashboard = () => {
 
         {/* Character Overview */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-white">Characters</CardTitle>
               <Users className="h-4 w-4 text-yellow-400" />
@@ -89,7 +81,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-white">Campaigns</CardTitle>
               <Sword className="h-4 w-4 text-yellow-400" />
@@ -100,7 +92,7 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+          <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-white">Rule Books</CardTitle>
               <BookOpen className="h-4 w-4 text-yellow-400" />
@@ -113,7 +105,7 @@ const Dashboard = () => {
         </div>
 
         {/* Characters Section */}
-        <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle className="text-white text-xl">Your Characters</CardTitle>
@@ -137,37 +129,49 @@ const Dashboard = () => {
               </div>
             ) : characters.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {characters.map((character) => (
-                  <Card key={character.id} className="bg-slate-800/30 border-purple-500/20">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-white text-lg">{character.name}</CardTitle>
-                      <div className="flex gap-2">
-                        <Badge variant="secondary" className="text-xs">
-                          Level {character.level}
-                        </Badge>
-                        {character.ancestry && (
-                          <Badge variant="outline" className="text-xs border-purple-400 text-purple-200">
-                            {character.ancestry}
-                          </Badge>
-                        )}
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-purple-200 text-sm mb-3">
-                        {character.class || 'No class selected'}
-                      </p>
-                      <Link to={`/character-sheet/${character.id}`}>
-                        <Button 
-                          size="sm" 
-                          className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                        >
-                          <Eye className="w-4 h-4 mr-2" />
-                          View Sheet
-                        </Button>
-                      </Link>
-                    </CardContent>
-                  </Card>
-                ))}
+                  {characters.map((character) => {
+                    const link = character.complete ? `/character-sheet/${character.id}` : `/character-builder/${character.id}`;
+
+                    return (
+                      <Card key={character.id} className="bg-slate-800/30 border-purple-500/20">
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-white text-lg">{character.name}</CardTitle>
+                          <div className="flex gap-2">
+                            <Badge variant="secondary" className="text-xs">
+                              Level {character.level}
+                            </Badge>
+                            {character.ancestry && (
+                              <Badge variant="outline" className="text-xs border-purple-400 text-purple-200">
+                                {character.ancestry}
+                              </Badge>
+                            )}
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-purple-200 text-sm mb-3">
+                            {character.class || 'No class selected'}
+                          </p>
+                          <Link to={link}>
+                            <Button
+                              size="sm"
+                              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              {character.complete ? <>
+                                <Eye className="w-4 h-4 mr-2" />
+                                View Sheet
+                              </>
+                                : <>
+                                  <Pencil className="w-4 h-4 mr-2" />
+                                  Edit Sheet
+                                </>
+                              }
+                            </Button>
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    )
+                  }
+                )}
               </div>
             ) : (
               <div className="text-center py-8">
@@ -182,7 +186,7 @@ const Dashboard = () => {
                 )}
               </div>
             )}
-            
+
             {!canCreateMore && (
               <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
                 <p className="text-orange-200 text-sm">

@@ -11,49 +11,112 @@ export type Database = {
     Tables: {
       characters: {
         Row: {
+          age: number | null
           ancestry: string | null
           background: string | null
           class: string | null
           community: string | null
+          complete: boolean | null
           created_at: string | null
-          fear: number | null
+          current_hp: number | null
+          gender: string | null
           hope: number | null
           id: string
+          inventory: Json | null
           level: number | null
+          max_hp: number | null
           name: string
+          pronouns: string | null
           stats: Json | null
+          stress: number | null
+          stressSlots: number | null
+          subclass: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          age?: number | null
           ancestry?: string | null
           background?: string | null
           class?: string | null
           community?: string | null
+          complete?: boolean | null
           created_at?: string | null
-          fear?: number | null
+          current_hp?: number | null
+          gender?: string | null
           hope?: number | null
           id?: string
+          inventory?: Json | null
           level?: number | null
+          max_hp?: number | null
           name: string
+          pronouns?: string | null
           stats?: Json | null
+          stress?: number | null
+          stressSlots?: number | null
+          subclass?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          age?: number | null
           ancestry?: string | null
           background?: string | null
           class?: string | null
           community?: string | null
+          complete?: boolean | null
           created_at?: string | null
-          fear?: number | null
+          current_hp?: number | null
+          gender?: string | null
           hope?: number | null
           id?: string
+          inventory?: Json | null
           level?: number | null
+          max_hp?: number | null
           name?: string
+          pronouns?: string | null
           stats?: Json | null
+          stress?: number | null
+          stressSlots?: number | null
+          subclass?: string | null
           updated_at?: string | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      classes: {
+        Row: {
+          additional: Json | null
+          base_evasion: number | null
+          base_hp: number | null
+          class_items: string | null
+          created_at: string
+          description: string | null
+          features: Json | null
+          id: number
+          name: string | null
+        }
+        Insert: {
+          additional?: Json | null
+          base_evasion?: number | null
+          base_hp?: number | null
+          class_items?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json | null
+          id?: number
+          name?: string | null
+        }
+        Update: {
+          additional?: Json | null
+          base_evasion?: number | null
+          base_hp?: number | null
+          class_items?: string | null
+          created_at?: string
+          description?: string | null
+          features?: Json | null
+          id?: number
+          name?: string | null
         }
         Relationships: []
       }
