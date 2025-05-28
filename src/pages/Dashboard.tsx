@@ -1,9 +1,22 @@
-
 import { useEffect, useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Users, Sword, BookOpen, Plus, LogOut, Eye, Pencil } from "lucide-react";
+import {
+  Users,
+  Sword,
+  BookOpen,
+  Plus,
+  LogOut,
+  Eye,
+  Pencil,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -15,15 +28,15 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   const { data: characters = [], isLoading } = useQuery({
-    queryKey: ['characters', user?.id],
+    queryKey: ["characters", user?.id],
     queryFn: async () => {
       if (!user) return [];
 
       const { data, error } = await supabase
-        .from('characters')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+        .from("characters")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
 
       if (error) throw error;
       return data;
@@ -50,9 +63,11 @@ const Dashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome back, {user?.user_metadata?.username || 'Adventurer'}!
+              Welcome back, {user?.user_metadata?.username || "Adventurer"}!
             </h1>
-            <p className="text-purple-200">Manage your characters and campaigns</p>
+            <p className="text-purple-200">
+              Manage your characters and campaigns
+            </p>
           </div>
           <Button
             onClick={handleSignOut}
@@ -68,7 +83,9 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Characters</CardTitle>
+              <CardTitle className="text-sm font-medium text-white">
+                Characters
+              </CardTitle>
               <Users className="h-4 w-4 text-yellow-400" />
             </CardHeader>
             <CardContent>
@@ -76,14 +93,18 @@ const Dashboard = () => {
                 {characterCount}/{maxCharacters}
               </div>
               <p className="text-xs text-purple-200">
-                {canCreateMore ? `${maxCharacters - characterCount} slots remaining` : 'Maximum reached'}
+                {canCreateMore
+                  ? `${maxCharacters - characterCount} slots remaining`
+                  : "Maximum reached"}
               </p>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Campaigns</CardTitle>
+              <CardTitle className="text-sm font-medium text-white">
+                Campaigns
+              </CardTitle>
               <Sword className="h-4 w-4 text-yellow-400" />
             </CardHeader>
             <CardContent>
@@ -94,7 +115,9 @@ const Dashboard = () => {
 
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Rule Books</CardTitle>
+              <CardTitle className="text-sm font-medium text-white">
+                Rule Books
+              </CardTitle>
               <BookOpen className="h-4 w-4 text-yellow-400" />
             </CardHeader>
             <CardContent>
@@ -108,7 +131,9 @@ const Dashboard = () => {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle className="text-white text-xl">Your Characters</CardTitle>
+              <CardTitle className="text-white text-xl">
+                Your Characters
+              </CardTitle>
               <CardDescription className="text-purple-200">
                 Manage your Daggerheart characters
               </CardDescription>
@@ -129,53 +154,66 @@ const Dashboard = () => {
               </div>
             ) : characters.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {characters.map((character) => {
-                    const link = character.complete ? `/character-sheet/${character.id}` : `/character-builder/${character.id}`;
+                {characters.map((character) => {
+                  const link = character.complete
+                    ? `/character-sheet/${character.id}`
+                    : `/character-builder/${character.id}`;
 
-                    return (
-                      <Card key={character.id} className="bg-slate-800/30 border-purple-500/20">
-                        <CardHeader className="pb-2">
-                          <CardTitle className="text-white text-lg">{character.name}</CardTitle>
-                          <div className="flex gap-2">
-                            <Badge variant="secondary" className="text-xs">
-                              Level {character.level}
-                            </Badge>
-                            {character.ancestry && (
-                              <Badge variant="outline" className="text-xs border-purple-400 text-purple-200">
-                                {character.ancestry}
-                              </Badge>
-                            )}
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <p className="text-purple-200 text-sm mb-3">
-                            {character.class || 'No class selected'}
-                          </p>
-                          <Link to={link}>
-                            <Button
-                              size="sm"
-                              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  return (
+                    <Card
+                      key={character.id}
+                      className="bg-slate-800/30 border-purple-500/20"
+                    >
+                      <CardHeader className="pb-2">
+                        <CardTitle className="text-white text-lg">
+                          {character.name}
+                        </CardTitle>
+                        <div className="flex gap-2">
+                          <Badge variant="secondary" className="text-xs">
+                            Level {character.level}
+                          </Badge>
+                          {character.ancestry && (
+                            <Badge
+                              variant="outline"
+                              className="text-xs border-purple-400 text-purple-200"
                             >
-                              {character.complete ? <>
+                              {character.ancestry}
+                            </Badge>
+                          )}
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-purple-200 text-sm mb-3">
+                          {character.class || "No class selected"}
+                        </p>
+                        <Link to={link}>
+                          <Button
+                            size="sm"
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                          >
+                            {character.complete ? (
+                              <>
                                 <Eye className="w-4 h-4 mr-2" />
                                 View Sheet
                               </>
-                                : <>
-                                  <Pencil className="w-4 h-4 mr-2" />
-                                  Edit Sheet
-                                </>
-                              }
-                            </Button>
-                          </Link>
-                        </CardContent>
-                      </Card>
-                    )
-                  }
-                )}
+                            ) : (
+                              <>
+                                <Pencil className="w-4 h-4 mr-2" />
+                                Edit Sheet
+                              </>
+                            )}
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-purple-200 mb-4">You haven't created any characters yet.</p>
+                <p className="text-purple-200 mb-4">
+                  You haven't created any characters yet.
+                </p>
                 {canCreateMore && (
                   <Link to="/character-builder">
                     <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
@@ -190,7 +228,8 @@ const Dashboard = () => {
             {!canCreateMore && (
               <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
                 <p className="text-orange-200 text-sm">
-                  You've reached the maximum of {maxCharacters} characters. Delete a character to create a new one.
+                  You've reached the maximum of {maxCharacters} characters.
+                  Delete a character to create a new one.
                 </p>
               </div>
             )}
@@ -207,7 +246,9 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Badge variant="secondary" className="bg-gray-600">Coming Soon</Badge>
+              <Badge variant="secondary" className="bg-gray-600">
+                Coming Soon
+              </Badge>
             </CardContent>
           </Card>
 
@@ -219,7 +260,9 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Badge variant="secondary" className="bg-gray-600">Coming Soon</Badge>
+              <Badge variant="secondary" className="bg-gray-600">
+                Coming Soon
+              </Badge>
             </CardContent>
           </Card>
         </div>

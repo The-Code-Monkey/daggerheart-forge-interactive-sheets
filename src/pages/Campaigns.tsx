@@ -1,6 +1,11 @@
-
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Calendar, MapPin, Plus, Settings, Eye } from "lucide-react";
@@ -10,11 +15,12 @@ const Campaigns = () => {
     {
       id: 1,
       name: "The Shattered Crown",
-      description: "A quest to restore the ancient crown and unite the fractured kingdoms",
+      description:
+        "A quest to restore the ancient crown and unite the fractured kingdoms",
       players: 4,
       sessions: 12,
       lastPlayed: "2024-01-15",
-      status: "active"
+      status: "active",
     },
     {
       id: 2,
@@ -23,17 +29,18 @@ const Campaigns = () => {
       players: 3,
       sessions: 8,
       lastPlayed: "2024-01-10",
-      status: "active"
+      status: "active",
     },
     {
       id: 3,
       name: "The Dragon's Bargain",
-      description: "A completed campaign where heroes made a pact with an ancient dragon",
+      description:
+        "A completed campaign where heroes made a pact with an ancient dragon",
       players: 5,
       sessions: 24,
       lastPlayed: "2023-12-20",
-      status: "completed"
-    }
+      status: "completed",
+    },
   ]);
 
   return (
@@ -42,8 +49,12 @@ const Campaigns = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-4">Campaign Manager</h1>
-            <p className="text-xl text-purple-200">Organize and track your Daggerheart campaigns</p>
+            <h1 className="text-4xl font-bold text-white mb-4">
+              Campaign Manager
+            </h1>
+            <p className="text-xl text-purple-200">
+              Organize and track your Daggerheart campaigns
+            </p>
           </div>
           <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
             <Plus className="w-4 h-4 mr-2" />
@@ -54,19 +65,32 @@ const Campaigns = () => {
         {/* Campaign Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {campaigns.map((campaign) => (
-            <Card key={campaign.id} className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300">
+            <Card
+              key={campaign.id}
+              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300"
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-white text-xl mb-2">{campaign.name}</CardTitle>
+                    <CardTitle className="text-white text-xl mb-2">
+                      {campaign.name}
+                    </CardTitle>
                     <Badge
                       variant="secondary"
-                      className={campaign.status === 'active' ? 'bg-green-600/50 text-white' : 'bg-gray-600/50 text-white'}
+                      className={
+                        campaign.status === "active"
+                          ? "bg-green-600/50 text-white"
+                          : "bg-gray-600/50 text-white"
+                      }
                     >
                       {campaign.status}
                     </Badge>
                   </div>
-                  <Button variant="ghost" size="sm" className="text-purple-300 hover:text-white">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-purple-300 hover:text-white"
+                  >
                     <Settings className="w-4 h-4" />
                   </Button>
                 </div>
@@ -87,15 +111,22 @@ const Campaigns = () => {
                 </div>
 
                 <div className="text-sm text-purple-300">
-                  Last played: {new Date(campaign.lastPlayed).toLocaleDateString()}
+                  Last played:{" "}
+                  {new Date(campaign.lastPlayed).toLocaleDateString()}
                 </div>
 
                 <div className="flex gap-2">
-                  <Button variant="outline" className="flex-1 border-purple-400 text-purple-100 ">
+                  <Button
+                    variant="outline"
+                    className="flex-1 border-purple-400 text-purple-100 "
+                  >
                     <Eye className="w-4 h-4 mr-2" />
                     View
                   </Button>
-                  <Button variant="outline" className="border-purple-400 text-purple-100 ">
+                  <Button
+                    variant="outline"
+                    className="border-purple-400 text-purple-100 "
+                  >
                     <MapPin className="w-4 h-4" />
                   </Button>
                 </div>

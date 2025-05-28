@@ -1,6 +1,11 @@
-
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Dice1, Users, BookOpen, Sword, Shield, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
@@ -12,33 +17,39 @@ const Index = () => {
     {
       icon: BookOpen,
       title: "Interactive Character Sheets",
-      description: "Create and manage detailed Daggerheart characters with all stats, abilities, and equipment tracked automatically."
+      description:
+        "Create and manage detailed Daggerheart characters with all stats, abilities, and equipment tracked automatically.",
     },
     {
       icon: Users,
       title: "Campaign Management",
-      description: "Organize your campaigns, track party members, and manage session notes in one centralized location."
+      description:
+        "Organize your campaigns, track party members, and manage session notes in one centralized location.",
     },
     {
       icon: Dice1,
       title: "Digital Dice Rolling",
-      description: "Built-in dice roller with Daggerheart's unique mechanics, including Hope and Fear dice."
+      description:
+        "Built-in dice roller with Daggerheart's unique mechanics, including Hope and Fear dice.",
     },
     {
       icon: Sword,
       title: "Combat Tracker",
-      description: "Streamlined initiative tracking and combat management for smooth gameplay sessions."
+      description:
+        "Streamlined initiative tracking and combat management for smooth gameplay sessions.",
     },
     {
       icon: Shield,
       title: "Equipment Manager",
-      description: "Comprehensive inventory system with item descriptions, stats, and automatic calculations."
+      description:
+        "Comprehensive inventory system with item descriptions, stats, and automatic calculations.",
     },
     {
       icon: Sparkles,
       title: "Spell & Ability Cards",
-      description: "Beautiful card-based interface for managing spells, class features, and special abilities."
-    }
+      description:
+        "Beautiful card-based interface for managing spells, class features, and special abilities.",
+    },
   ];
 
   return (
@@ -50,10 +61,12 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Everything You Need for <span className="text-yellow-400">Daggerheart</span>
+              Everything You Need for{" "}
+              <span className="text-yellow-400">Daggerheart</span>
             </h2>
             <p className="text-xl text-purple-200 max-w-3xl mx-auto">
-              A comprehensive digital toolset designed specifically for Daggerheart campaigns and character management.
+              A comprehensive digital toolset designed specifically for
+              Daggerheart campaigns and character management.
             </p>
           </div>
 
@@ -77,18 +90,26 @@ const Index = () => {
                 Ready to Begin Your Adventure?
               </CardTitle>
               <CardDescription className="text-xl text-purple-200">
-                Join thousands of players using our tools to enhance their Daggerheart experience.
+                Join thousands of players using our tools to enhance their
+                Daggerheart experience.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/character-builder">
-                  <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3">
+                  <Button
+                    size="lg"
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3"
+                  >
                     Create Character
                   </Button>
                 </Link>
                 <Link to="/campaigns">
-                  <Button size="lg" variant="outline" className="border-purple-400 text-purple-100  px-8 py-3">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-purple-400 text-purple-100  px-8 py-3"
+                  >
                     Manage Campaigns
                   </Button>
                 </Link>

@@ -1,6 +1,11 @@
-
 import { useParams, Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -8,17 +13,18 @@ import { ArrowLeft } from "lucide-react";
 const AncestryDetail = () => {
   const { ancestryName } = useParams();
 
-  const ancestries = {
+  const ancestries = {};
 
-  };
-
-  const ancestryData = ancestries[ancestryName?.toLowerCase() as keyof typeof ancestries];
+  const ancestryData =
+    ancestries[ancestryName?.toLowerCase() as keyof typeof ancestries];
 
   if (!ancestryData) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Ancestry Not Found</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Ancestry Not Found
+          </h1>
           <Link to="/game-rules">
             <Button className="bg-purple-600 hover:bg-purple-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -36,15 +42,22 @@ const AncestryDetail = () => {
         {/* Header */}
         <div className="mb-8">
           <Link to="/game-rules">
-            <Button variant="ghost" className="text-purple-200 hover:text-white mb-4">
+            <Button
+              variant="ghost"
+              className="text-purple-200 hover:text-white mb-4"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Game Rules
             </Button>
           </Link>
 
           <div className="mb-4">
-            <h1 className="text-4xl font-bold text-white mb-2">{ancestryData.name}</h1>
-            <p className="text-xl text-purple-200">{ancestryData.description}</p>
+            <h1 className="text-4xl font-bold text-white mb-2">
+              {ancestryData.name}
+            </h1>
+            <p className="text-xl text-purple-200">
+              {ancestryData.description}
+            </p>
           </div>
         </div>
 
@@ -77,7 +90,11 @@ const AncestryDetail = () => {
             <CardContent>
               <div className="flex flex-wrap gap-2">
                 {ancestryData.languages.map((language, index) => (
-                  <Badge key={index} variant="secondary" className="bg-purple-600/50 text-white">
+                  <Badge
+                    key={index}
+                    variant="secondary"
+                    className="bg-purple-600/50 text-white"
+                  >
                     {language}
                   </Badge>
                 ))}
@@ -98,7 +115,9 @@ const AncestryDetail = () => {
             <div className="space-y-4">
               {ancestryData.traits.map((trait, index) => (
                 <div key={index} className="border-l-4 border-yellow-500 pl-4">
-                  <h3 className="text-lg font-semibold text-white mb-2">{trait.name}</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {trait.name}
+                  </h3>
                   <p className="text-purple-200">{trait.description}</p>
                 </div>
               ))}

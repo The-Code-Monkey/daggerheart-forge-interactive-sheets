@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -28,9 +27,14 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to={user ? "/dashboard" : "/"} className="flex items-center space-x-2">
+          <Link
+            to={user ? "/dashboard" : "/"}
+            className="flex items-center space-x-2"
+          >
             <Sparkles className="w-8 h-8 text-yellow-400" />
-            <span className="text-xl font-bold text-white">Daggerheart Tools</span>
+            <span className="text-xl font-bold text-white">
+              Daggerheart Tools
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -46,17 +50,18 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            {user && protectedNavItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`text-white hover:text-yellow-400 transition-colors ${
-                  isActive(item.path) ? "text-yellow-400" : ""
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {user &&
+              protectedNavItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`text-white hover:text-yellow-400 transition-colors ${
+                    isActive(item.path) ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
             {!user ? (
               <Link to="/auth">
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
@@ -77,10 +82,16 @@ const Navigation = () => {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
               className="text-white hover:text-yellow-400"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -93,7 +104,9 @@ const Navigation = () => {
                 <Link
                   key={item.name}
                   to={item.path}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
                   className={`text-white hover:text-yellow-400 transition-colors py-2 ${
                     isActive(item.path) ? "text-yellow-400" : ""
                   }`}
@@ -101,18 +114,21 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              {user && protectedNavItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => setIsOpen(false)}
-                  className={`text-white hover:text-yellow-400 transition-colors py-2 ${
-                    isActive(item.path) ? "text-yellow-400" : ""
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {user &&
+                protectedNavItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                    className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                      isActive(item.path) ? "text-yellow-400" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
               {!user ? (
                 <Link to="/auth">
                   <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">

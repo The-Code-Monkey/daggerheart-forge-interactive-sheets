@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -36,20 +35,28 @@ const HeroSection = () => {
         </h1>
 
         <p className="text-xl md:text-2xl text-purple-200 mb-10 max-w-4xl mx-auto leading-relaxed">
-          Create characters, manage campaigns, and enhance your Daggerheart experience with
-          our comprehensive digital toolset designed for players and Game Masters.
+          Create characters, manage campaigns, and enhance your Daggerheart
+          experience with our comprehensive digital toolset designed for players
+          and Game Masters.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <Link to="/character-builder">
-            <Button size="lg" className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg group">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg group"
+            >
               Start Building
               <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </Link>
 
           <Link to="/demo">
-            <Button size="lg" variant="ghost" className="text-white border-2 border-purple-400  px-8 py-4 text-lg">
+            <Button
+              size="lg"
+              variant="ghost"
+              className="text-white border-2 border-purple-400  px-8 py-4 text-lg"
+            >
               View Demo
             </Button>
           </Link>

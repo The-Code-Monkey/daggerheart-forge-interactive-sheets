@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,28 +34,46 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/game-rules" element={<GameRules />} />
               {/* <Route path="/rules/domains/:domainName" element={<DomainDetail />} /> */}
-              <Route path="/rules/classes/:className" element={<ClassDetail />} />
-              <Route path="/rules/ancestries/:ancestryName" element={<AncestryDetail />} />
-              <Route path="/dashboard" element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              } />
-              <Route path="/character-builder/:characterId?" element={
-                <ProtectedRoute>
-                  <CharacterBuilder />
-                </ProtectedRoute>
-              } />
-              <Route path="/character-sheet/:characterId" element={
-                <ProtectedRoute>
-                  <CharacterSheet />
-                </ProtectedRoute>
-              } />
-              <Route path="/campaigns" element={
-                <ProtectedRoute>
-                  <Campaigns />
-                </ProtectedRoute>
-              } />
+              <Route
+                path="/rules/classes/:className"
+                element={<ClassDetail />}
+              />
+              <Route
+                path="/rules/ancestries/:ancestryName"
+                element={<AncestryDetail />}
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/character-builder/:characterId?"
+                element={
+                  <ProtectedRoute>
+                    <CharacterBuilder />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/character-sheet/:characterId"
+                element={
+                  <ProtectedRoute>
+                    <CharacterSheet />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/campaigns"
+                element={
+                  <ProtectedRoute>
+                    <Campaigns />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Footer />

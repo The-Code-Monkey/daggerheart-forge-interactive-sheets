@@ -17,6 +17,14 @@ const compat = new FlatCompat({
 const eslintConfig = tseslint.config(
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
+  {
+      languageOptions: {
+        parserOptions: {
+          projectService: true,
+          tsconfigRootDir: import.meta.dirname,
+        },
+      },
+    },
 [
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -34,10 +42,6 @@ const eslintConfig = tseslint.config(
       "better-tailwindcss": eslintPluginBetterTailwind
     },
     rules: {
-          // enable all recommended rules to warn
-          ...eslintPluginBetterTailwind.configs.warning.rules,
-          // enable all recommended rules to error
-          ...eslintPluginBetterTailwind.configs.error.rules,
           "@typescript-eslint/no-unnecessary-type-parameters": "off"
     },
     settings: {
@@ -47,8 +51,6 @@ const eslintConfig = tseslint.config(
     }
   },
   ...compat.extends(
-    "next/core-web-vitals",
-    "next/typescript",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ),

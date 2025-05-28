@@ -1,16 +1,28 @@
-
 import { useParams, Link } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Sword, Shield, Zap, Heart, User, Book, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  Sword,
+  Shield,
+  Zap,
+  Heart,
+  User,
+  Book,
+  Sparkles,
+} from "lucide-react";
 
 const ClassDetail = () => {
   const { className } = useParams();
 
-  const classes = {
-
-  };
+  const classes = {};
 
   const classData = classes[className?.toLowerCase() as keyof typeof classes];
 
@@ -18,7 +30,9 @@ const ClassDetail = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">Class Not Found</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Class Not Found
+          </h1>
           <Link to="/game-rules">
             <Button className="bg-purple-600 hover:bg-purple-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
@@ -36,7 +50,10 @@ const ClassDetail = () => {
         {/* Header */}
         <div className="mb-8">
           <Link to="/game-rules">
-            <Button variant="ghost" className="text-purple-200 hover:text-white mb-4">
+            <Button
+              variant="ghost"
+              className="text-purple-200 hover:text-white mb-4"
+            >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Game Rules
             </Button>
@@ -47,7 +64,9 @@ const ClassDetail = () => {
               {classData.icon}
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-white">{classData.name}</h1>
+              <h1 className="text-4xl font-bold text-white">
+                {classData.name}
+              </h1>
               <p className="text-xl text-purple-200">{classData.description}</p>
             </div>
           </div>
@@ -62,7 +81,11 @@ const ClassDetail = () => {
             <CardContent>
               <div className="flex gap-2">
                 {classData.primaryStats.map((stat) => (
-                  <Badge key={stat} variant="secondary" className="bg-purple-600/50 text-white">
+                  <Badge
+                    key={stat}
+                    variant="secondary"
+                    className="bg-purple-600/50 text-white"
+                  >
                     {stat}
                   </Badge>
                 ))}
@@ -87,11 +110,15 @@ const ClassDetail = () => {
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-purple-200">Minor:</span>
-                  <span className="text-white">{classData.thresholds.Minor}</span>
+                  <span className="text-white">
+                    {classData.thresholds.Minor}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-purple-200">Major:</span>
-                  <span className="text-white">{classData.thresholds.Major}</span>
+                  <span className="text-white">
+                    {classData.thresholds.Major}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -104,7 +131,11 @@ const ClassDetail = () => {
             <CardContent>
               <div className="flex flex-wrap gap-1">
                 {classData.domains.map((domain) => (
-                  <Badge key={domain} variant="outline" className="border-yellow-500/50 text-yellow-300 text-xs">
+                  <Badge
+                    key={domain}
+                    variant="outline"
+                    className="border-yellow-500/50 text-yellow-300 text-xs"
+                  >
                     {domain}
                   </Badge>
                 ))}
@@ -125,7 +156,9 @@ const ClassDetail = () => {
             <div className="space-y-4">
               {classData.classFeatures.map((feature, index) => (
                 <div key={index} className="border-l-4 border-yellow-500 pl-4">
-                  <h3 className="text-lg font-semibold text-white mb-2">{feature.name}</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {feature.name}
+                  </h3>
                   <p className="text-purple-200">{feature.description}</p>
                 </div>
               ))}

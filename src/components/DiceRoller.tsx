@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,18 +5,23 @@ import { Badge } from "@/components/ui/badge";
 import { Dice6, Plus, RotateCcw } from "lucide-react";
 
 const DiceRoller = () => {
-  const [lastRoll, setLastRoll] = useState<{ dice: string; result: number } | null>(null);
-  const [rollHistory, setRollHistory] = useState<{ dice: string; result: number; timestamp: Date }[]>([]);
+  const [lastRoll, setLastRoll] = useState<{
+    dice: string;
+    result: number;
+  } | null>(null);
+  const [rollHistory, setRollHistory] = useState<
+    { dice: string; result: number; timestamp: Date }[]
+  >([]);
 
-  const rollDice = (sides: number, count: number = 1, diceType: string) => {
+  const rollDice = (sides: number, count = 1, diceType: string) => {
     let total = 0;
     for (let i = 0; i < count; i++) {
       total += Math.floor(Math.random() * sides) + 1;
     }
-    
+
     const roll = { dice: diceType, result: total, timestamp: new Date() };
     setLastRoll({ dice: diceType, result: total });
-    setRollHistory(prev => [roll, ...prev.slice(0, 4)]);
+    setRollHistory((prev) => [roll, ...prev.slice(0, 4)]);
   };
 
   const clearHistory = () => {
@@ -37,7 +41,9 @@ const DiceRoller = () => {
         {/* Last Roll Display */}
         {lastRoll && (
           <div className="bg-slate-800/50 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-yellow-400">{lastRoll.result}</div>
+            <div className="text-2xl font-bold text-yellow-400">
+              {lastRoll.result}
+            </div>
             <div className="text-sm text-purple-200">{lastRoll.dice}</div>
           </div>
         )}
@@ -46,56 +52,72 @@ const DiceRoller = () => {
         <div className="grid grid-cols-2 gap-2">
           <Button
             variant="outline"
-            onClick={() => rollDice(12, 2, "2d12 (Hope)")}
+            onClick={() => {
+              rollDice(12, 2, "2d12 (Hope)");
+            }}
             className="border-green-500 text-green-400 hover:bg-green-500/20"
           >
             2d12 Hope
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(12, 2, "2d12 (Fear)")}
+            onClick={() => {
+              rollDice(12, 2, "2d12 (Fear)");
+            }}
             className="border-red-500 text-red-400 hover:bg-red-500/20"
           >
             2d12 Fear
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(20, 1, "1d20")}
+            onClick={() => {
+              rollDice(20, 1, "1d20");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d20
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(12, 1, "1d12")}
+            onClick={() => {
+              rollDice(12, 1, "1d12");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d12
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(10, 1, "1d10")}
+            onClick={() => {
+              rollDice(10, 1, "1d10");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d10
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(8, 1, "1d8")}
+            onClick={() => {
+              rollDice(8, 1, "1d8");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d8
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(6, 1, "1d6")}
+            onClick={() => {
+              rollDice(6, 1, "1d6");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d6
           </Button>
           <Button
             variant="outline"
-            onClick={() => rollDice(4, 1, "1d4")}
+            onClick={() => {
+              rollDice(4, 1, "1d4");
+            }}
             className="border-purple-400 text-purple-300 hover:bg-purple-500/20"
           >
             d4
@@ -118,9 +140,15 @@ const DiceRoller = () => {
             </div>
             <div className="space-y-1">
               {rollHistory.map((roll, index) => (
-                <div key={index} className="flex justify-between items-center text-sm">
+                <div
+                  key={index}
+                  className="flex justify-between items-center text-sm"
+                >
                   <span className="text-purple-200">{roll.dice}</span>
-                  <Badge variant="secondary" className="bg-slate-700 text-white">
+                  <Badge
+                    variant="secondary"
+                    className="bg-slate-700 text-white"
+                  >
                     {roll.result}
                   </Badge>
                 </div>

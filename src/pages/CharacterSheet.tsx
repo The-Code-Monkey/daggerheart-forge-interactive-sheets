@@ -1,14 +1,41 @@
-
 import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, Heart, Shield, Sword, Plus, Trash2, Edit3 } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
+  ArrowLeft,
+  Heart,
+  Shield,
+  Sword,
+  Plus,
+  Trash2,
+  Edit3,
+} from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -32,19 +59,23 @@ const CharacterSheet = () => {
 
   const [currentHp, setCurrentHp] = useState(0);
   const [maxHp, setMaxHp] = useState(0);
-  const [newItem, setNewItem] = useState({ name: "", quantity: 1, description: "" });
+  const [newItem, setNewItem] = useState({
+    name: "",
+    quantity: 1,
+    description: "",
+  });
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
 
   const { data: character, isLoading } = useQuery({
-    queryKey: ['character', characterId],
+    queryKey: ["character", characterId],
     queryFn: async () => {
       if (!user || !characterId) return null;
 
       const { data, error } = await supabase
-        .from('characters')
-        .select('*')
-        .eq('id', characterId)
-        .eq('user_id', user.id)
+        .from("characters")
+        .select("*")
+        .eq("id", characterId)
+        .eq("user_id", user.id)
         .single();
 
       if (error) throw error;
@@ -63,17 +94,17 @@ const CharacterSheet = () => {
 
   const updateCharacterMutation = useMutation({
     mutationFn: async (updates: Partial<Character>) => {
-      if (!characterId) throw new Error('No character ID');
+      if (!characterId) throw new Error("No character ID");
 
       const { error } = await supabase
-        .from('characters')
+        .from("characters")
         .update(updates)
-        .eq('id', characterId);
+        .eq("id", characterId);
 
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['character', characterId] });
+      queryClient.invalidateQueries({ queryKey: ["character", characterId] });
       toast({
         title: "Character updated",
         description: "Your character has been saved.",
@@ -85,7 +116,7 @@ const CharacterSheet = () => {
         description: "Failed to update character.",
         variant: "destructive",
       });
-    }
+    },
   });
 
   const debouncedMutation = useRef(
@@ -94,8 +125,8 @@ const CharacterSheet = () => {
     }, 500)
   ).current;
 
-  const handleHpChange = (type: 'current' | 'max', value: number) => {
-    if (type === 'current') {
+  const handleHpChange = (type: "current" | "max", value: number) => {
+    if (type === "current") {
       const newCurrentHp = Math.max(0, Math.min(value, maxHp));
       setCurrentHp(newCurrentHp);
       debouncedMutation({ current_hp: newCurrentHp });
@@ -105,7 +136,7 @@ const CharacterSheet = () => {
       setCurrentHp(Math.min(currentHp, newMaxHp));
       debouncedMutation({
         max_hp: newMaxHp,
-        current_hp: Math.min(currentHp, newMaxHp)
+        current_hp: Math.min(currentHp, newMaxHp),
       });
     }
   };
@@ -115,7 +146,7 @@ const CharacterSheet = () => {
 
     const item: InventoryItem = {
       id: crypto.randomUUID(),
-      ...newItem
+      ...newItem,
     };
 
     const updatedInventory = [...inventory, item];
@@ -125,7 +156,7 @@ const CharacterSheet = () => {
   };
 
   const removeInventoryItem = (itemId: string) => {
-    const updatedInventory = inventory.filter(item => item.id !== itemId);
+    const updatedInventory = inventory.filter((item) => item.id !== itemId);
     setInventory(updatedInventory);
     updateCharacterMutation.mutate({ inventory: updatedInventory });
   };
@@ -134,7 +165,9 @@ const CharacterSheet = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-purple-200 py-8">Loading character...</p>
+          <p className="text-center text-purple-200 py-8">
+            Loading character...
+          </p>
         </div>
       </div>
     );
@@ -144,10 +177,15 @@ const CharacterSheet = () => {
     return (
       <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
         <div className="max-w-6xl mx-auto">
-          <p className="text-center text-purple-200 py-8">Character not found.</p>
+          <p className="text-center text-purple-200 py-8">
+            Character not found.
+          </p>
           <div className="text-center">
             <Link to="/dashboard">
-              <Button variant="outline" className="border-purple-400 text-purple-100 ">
+              <Button
+                variant="outline"
+                className="border-purple-400 text-purple-100 "
+              >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back to Dashboard
               </Button>
@@ -165,19 +203,30 @@ const CharacterSheet = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
             <Link to="/dashboard">
-              <Button variant="outline" className="border-purple-400 text-purple-100 ">
+              <Button
+                variant="outline"
+                className="border-purple-400 text-purple-100 "
+              >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Back
               </Button>
             </Link>
             <div>
-              <h1 className="text-4xl font-bold text-white">{character.name}</h1>
+              <h1 className="text-4xl font-bold text-white">
+                {character.name}
+              </h1>
               <div className="flex gap-2 mt-2">
                 <Badge variant="secondary">Level {character.level}</Badge>
-                <Badge variant="outline" className="border-purple-400 text-purple-200">
+                <Badge
+                  variant="outline"
+                  className="border-purple-400 text-purple-200"
+                >
                   {character.ancestry}
                 </Badge>
-                <Badge variant="outline" className="border-purple-400 text-purple-200">
+                <Badge
+                  variant="outline"
+                  className="border-purple-400 text-purple-200"
+                >
                   {character.class}
                 </Badge>
               </div>
@@ -199,25 +248,36 @@ const CharacterSheet = () => {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="current-hp" className="text-white">Current HP</Label>
+                    <Label htmlFor="current-hp" className="text-white">
+                      Current HP
+                    </Label>
                     <Input
                       id="current-hp"
                       type="number"
                       min="0"
                       max={maxHp}
                       value={currentHp}
-                      onChange={(e) => handleHpChange('current', parseInt(e.target.value) || 0)}
+                      onChange={(e) => {
+                        handleHpChange(
+                          "current",
+                          parseInt(e.target.value) || 0
+                        );
+                      }}
                       className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="max-hp" className="text-white">Max HP</Label>
+                    <Label htmlFor="max-hp" className="text-white">
+                      Max HP
+                    </Label>
                     <Input
                       id="max-hp"
                       type="number"
                       min="1"
                       value={maxHp}
-                      onChange={(e) => handleHpChange('max', parseInt(e.target.value) || 1)}
+                      onChange={(e) => {
+                        handleHpChange("max", parseInt(e.target.value) || 1);
+                      }}
                       className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                     />
                   </div>
@@ -225,11 +285,15 @@ const CharacterSheet = () => {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center">
                     <div className="text-sm text-green-300">Hope</div>
-                    <div className="text-2xl font-bold text-white">{character.hope}</div>
+                    <div className="text-2xl font-bold text-white">
+                      {character.hope}
+                    </div>
                   </div>
                   <div className="text-center">
                     <div className="text-sm text-red-300">Stress</div>
-                    <div className="text-2xl font-bold text-white">{character.stress}</div>
+                    <div className="text-2xl font-bold text-white">
+                      {character.stress}
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -247,8 +311,12 @@ const CharacterSheet = () => {
                 <div className="grid grid-cols-3 gap-4">
                   {Object.entries(character.stats).map(([stat, value]) => (
                     <div key={stat} className="text-center">
-                      <div className="text-sm text-purple-300 capitalize">{stat}</div>
-                      <div className="text-2xl font-bold text-white">{value}</div>
+                      <div className="text-sm text-purple-300 capitalize">
+                        {stat}
+                      </div>
+                      <div className="text-2xl font-bold text-white">
+                        {value}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -275,46 +343,72 @@ const CharacterSheet = () => {
                 <CardTitle className="text-white">Inventory</CardTitle>
                 <Sheet>
                   <SheetTrigger asChild>
-                    <Button size="sm" className="bg-yellow-500 hover:bg-yellow-600 text-black">
+                    <Button
+                      size="sm"
+                      className="bg-yellow-500 hover:bg-yellow-600 text-black"
+                    >
                       <Plus className="w-4 h-4 mr-1" />
                       Add Item
                     </Button>
                   </SheetTrigger>
                   <SheetContent className="bg-slate-900 border-purple-500/30">
                     <SheetHeader>
-                      <SheetTitle className="text-white">Add Inventory Item</SheetTitle>
+                      <SheetTitle className="text-white">
+                        Add Inventory Item
+                      </SheetTitle>
                       <SheetDescription className="text-purple-200">
                         Add a new item to your character's inventory.
                       </SheetDescription>
                     </SheetHeader>
                     <div className="space-y-4 mt-6">
                       <div>
-                        <Label htmlFor="item-name" className="text-white">Item Name</Label>
+                        <Label htmlFor="item-name" className="text-white">
+                          Item Name
+                        </Label>
                         <Input
                           id="item-name"
                           value={newItem.name}
-                          onChange={(e) => setNewItem({...newItem, name: e.target.value})}
+                          onChange={(e) => {
+                            setNewItem({ ...newItem, name: e.target.value });
+                          }}
                           className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                           placeholder="Enter item name"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="item-quantity" className="text-white">Quantity</Label>
+                        <Label htmlFor="item-quantity" className="text-white">
+                          Quantity
+                        </Label>
                         <Input
                           id="item-quantity"
                           type="number"
                           min="1"
                           value={newItem.quantity}
-                          onChange={(e) => setNewItem({...newItem, quantity: parseInt(e.target.value) || 1})}
+                          onChange={(e) => {
+                            setNewItem({
+                              ...newItem,
+                              quantity: parseInt(e.target.value) || 1,
+                            });
+                          }}
                           className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                         />
                       </div>
                       <div>
-                        <Label htmlFor="item-description" className="text-white">Description (Optional)</Label>
+                        <Label
+                          htmlFor="item-description"
+                          className="text-white"
+                        >
+                          Description (Optional)
+                        </Label>
                         <Input
                           id="item-description"
                           value={newItem.description}
-                          onChange={(e) => setNewItem({...newItem, description: e.target.value})}
+                          onChange={(e) => {
+                            setNewItem({
+                              ...newItem,
+                              description: e.target.value,
+                            });
+                          }}
                           className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                           placeholder="Item description"
                         />
@@ -347,16 +441,22 @@ const CharacterSheet = () => {
                             <div>
                               <div className="font-medium">{item.name}</div>
                               {item.description && (
-                                <div className="text-sm text-purple-300">{item.description}</div>
+                                <div className="text-sm text-purple-300">
+                                  {item.description}
+                                </div>
                               )}
                             </div>
                           </TableCell>
-                          <TableCell className="text-white">{item.quantity}</TableCell>
+                          <TableCell className="text-white">
+                            {item.quantity}
+                          </TableCell>
                           <TableCell>
                             <Button
                               variant="ghost"
                               size="sm"
-                              onClick={() => removeInventoryItem(item.id)}
+                              onClick={() => {
+                                removeInventoryItem(item.id);
+                              }}
                               className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -367,7 +467,9 @@ const CharacterSheet = () => {
                     </TableBody>
                   </Table>
                 ) : (
-                  <p className="text-purple-300 text-center py-4">No items in inventory</p>
+                  <p className="text-purple-300 text-center py-4">
+                    No items in inventory
+                  </p>
                 )}
               </CardContent>
             </Card>
@@ -380,7 +482,9 @@ const CharacterSheet = () => {
               <CardContent className="space-y-2">
                 <div>
                   <span className="text-purple-300">Community:</span>
-                  <span className="text-white ml-2">{character.community || 'None'}</span>
+                  <span className="text-white ml-2">
+                    {character.community || "None"}
+                  </span>
                 </div>
                 <div>
                   <span className="text-purple-300">Level:</span>

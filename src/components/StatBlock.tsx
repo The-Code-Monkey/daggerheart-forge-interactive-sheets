@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ReactNode } from "react";
@@ -24,9 +23,9 @@ const StatBlock = ({ name, value, modifier, icon }: StatBlockProps) => {
         </div>
         <div className="space-y-1">
           <div className="text-2xl font-bold text-white">{value}</div>
-          <Badge 
-            variant="secondary" 
-            className={`text-xs ${modifier >= 0 ? 'bg-green-600/50' : 'bg-red-600/50'} text-white`}
+          <Badge
+            variant="secondary"
+            className={`text-xs ${modifier >= 0 ? "bg-green-600/50" : "bg-red-600/50"} text-white`}
           >
             {getModifierString(modifier)}
           </Badge>

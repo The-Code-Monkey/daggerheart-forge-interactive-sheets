@@ -1,6 +1,11 @@
-
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -72,7 +77,9 @@ const Auth = () => {
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-8 h-8 text-yellow-400" />
-            <span className="text-2xl font-bold text-white">Daggerheart Tools</span>
+            <span className="text-2xl font-bold text-white">
+              Daggerheart Tools
+            </span>
           </div>
           <CardTitle className="text-white text-2xl">
             {isLogin ? "Welcome Back" : "Create Account"}
@@ -80,20 +87,23 @@ const Auth = () => {
           <CardDescription className="text-purple-200">
             {isLogin
               ? "Sign in to access your characters and campaigns"
-              : "Join the adventure and create your first character"
-            }
+              : "Join the adventure and create your first character"}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && (
               <div className="space-y-2">
-                <Label htmlFor="username" className="text-white">Username</Label>
+                <Label htmlFor="username" className="text-white">
+                  Username
+                </Label>
                 <Input
                   id="username"
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                   className="bg-slate-800/50 border-purple-500/50 text-white"
                   placeholder="Choose a username"
                   required={!isLogin}
@@ -101,24 +111,32 @@ const Auth = () => {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">Email</Label>
+              <Label htmlFor="email" className="text-white">
+                Email
+              </Label>
               <Input
                 id="email"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
                 className="bg-slate-800/50 border-purple-500/50 text-white"
                 placeholder="Enter your email"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">Password</Label>
+              <Label htmlFor="password" className="text-white">
+                Password
+              </Label>
               <Input
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 className="bg-slate-800/50 border-purple-500/50 text-white"
                 placeholder="Enter your password"
                 required
@@ -129,7 +147,7 @@ const Auth = () => {
               className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               disabled={loading}
             >
-              {loading ? "Loading..." : (isLogin ? "Sign In" : "Sign Up")}
+              {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
             </Button>
           </form>
 
@@ -142,7 +160,9 @@ const Auth = () => {
             <Button
               variant="outline"
               className="w-full border-purple-400 text-purple-100 "
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() => {
+                setIsLogin(!isLogin);
+              }}
             >
               {isLogin ? "Create Account" : "Sign In"}
             </Button>
