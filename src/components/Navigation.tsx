@@ -10,7 +10,6 @@ const Navigation = () => {
   const { user } = useAuth();
 
   const publicNavItems = [
-    { name: "Home", path: "/" },
     { name: "Game Rules", path: "/game-rules" },
     {
       name: "Discord",
@@ -20,7 +19,6 @@ const Navigation = () => {
   ];
 
   const protectedNavItems = [
-    { name: "Dashboard", path: "/dashboard" },
     { name: "Character Builder", path: "/character-builder" },
     { name: "Campaigns", path: "/campaigns" },
   ];
@@ -43,7 +41,7 @@ const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {publicNavItems.map((item) => (
               <Link
                 key={item.name}
@@ -84,9 +82,8 @@ const Navigation = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <Button
-              variant="ghost"
               size="sm"
               onClick={() => {
                 setIsOpen(!isOpen);
@@ -104,7 +101,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t border-purple-700/50">
+          <div className="lg:hidden py-4 border-t border-purple-700/50">
             <div className="flex flex-col space-y-2">
               {publicNavItems.map((item) => (
                 <Link
@@ -136,13 +133,23 @@ const Navigation = () => {
                   </Link>
                 ))}
               {!user ? (
-                <Link to="/auth">
+                <Link
+                  to="/auth"
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
                   <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
                     Login
                   </Button>
                 </Link>
               ) : (
-                <Link to="/dashboard">
+                <Link
+                  to="/dashboard"
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                >
                   <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold mt-4">
                     Dashboard
                   </Button>

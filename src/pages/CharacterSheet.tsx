@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, JSX } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Card,
@@ -27,15 +27,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  ArrowLeft,
-  Heart,
-  Shield,
-  Sword,
-  Plus,
-  Trash2,
-  Edit3,
-} from "lucide-react";
+import { ArrowLeft, Heart, Sword, Plus, Trash2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -50,7 +42,7 @@ interface InventoryItem extends Json {
   description?: string;
 }
 
-const CharacterSheet = () => {
+const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -73,7 +65,9 @@ const CharacterSheet = () => {
 
       const { data, error } = await supabase
         .from("characters")
-        .select("*")
+        .select(
+          "*, class(name), ancestry(name), subclass(name), community(name)"
+        )
         .eq("id", characterId)
         .eq("user_id", user.id)
         .single();
@@ -86,9 +80,9 @@ const CharacterSheet = () => {
 
   useEffect(() => {
     if (character) {
-      setCurrentHp(character.current_hp || character.level * 10);
-      setMaxHp(character.max_hp || character.level * 10);
-      setInventory((character.inventory as unknown as InventoryItem[]) || []);
+      setCurrentHp(character.current_hp ?? 0);
+      setMaxHp(character.max_hp ?? 0);
+      setInventory((character.inventory ?? []) as unknown as InventoryItem[]);
     }
   }, [character]);
 
@@ -104,7 +98,9 @@ const CharacterSheet = () => {
       if (error) throw error;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["character", characterId] });
+      void queryClient.invalidateQueries({
+        queryKey: ["character", characterId],
+      });
       toast({
         title: "Character updated",
         description: "Your character has been saved.",
@@ -221,13 +217,16 @@ const CharacterSheet = () => {
                   variant="outline"
                   className="border-purple-400 text-purple-200"
                 >
-                  {character.ancestry}
+                  {character.ancestry?.name ?? "Unknown"}
                 </Badge>
                 <Badge
                   variant="outline"
                   className="border-purple-400 text-purple-200"
                 >
-                  {character.class}
+                  {character.class?.name ?? "Unknown"}
+                  {character.subclass
+                    ? ` - (${String(character.subclass?.name)})`
+                    : ""}
                 </Badge>
               </div>
             </div>
@@ -309,16 +308,18 @@ const CharacterSheet = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-3 gap-4">
-                  {Object.entries(character.stats).map(([stat, value]) => (
-                    <div key={stat} className="text-center">
-                      <div className="text-sm text-purple-300 capitalize">
-                        {stat}
+                  {Object.entries(character.stats).map(
+                    ([stat, value]: [string, string]) => (
+                      <div key={stat} className="text-center">
+                        <div className="text-sm text-purple-300 capitalize">
+                          {stat}
+                        </div>
+                        <div className="text-2xl font-bold text-white">
+                          {String(value)}
+                        </div>
                       </div>
-                      <div className="text-2xl font-bold text-white">
-                        {value}
-                      </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -483,7 +484,7 @@ const CharacterSheet = () => {
                 <div>
                   <span className="text-purple-300">Community:</span>
                   <span className="text-white ml-2">
-                    {character.community || "None"}
+                    {character.community?.name ?? "Unknown"}
                   </span>
                 </div>
                 <div>

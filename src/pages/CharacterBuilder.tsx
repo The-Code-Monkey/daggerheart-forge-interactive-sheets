@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import {
   Card,
   CardContent,
@@ -22,6 +22,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Ancestry, Class, Subclass, Community } from "@/lib/types";
+import {
+  getAllClasses,
+  getSubclassesByClassId,
+  getAllAncestries,
+  getAllCommunities,
+} from "@/integrations/supabase/helpers";
 
 const allowedMods = {
   "+2": 1,
@@ -42,7 +49,7 @@ type StatKey = (typeof statKeys)[number];
 
 interface FormData {
   name: string | undefined;
-  level: number | undefined;
+  level: number;
   age: number | undefined;
   pronouns: string | undefined;
   gender: string | undefined;
@@ -64,7 +71,7 @@ interface FormData {
   hope: number | undefined;
 }
 
-const CharacterBuilder = () => {
+const CharacterBuilder = (): JSX.Element => {
   const { characterId: urlCharacterId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -74,6 +81,11 @@ const CharacterBuilder = () => {
     urlCharacterId ?? null
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  const [classes, setClasses] = useState<Class[]>([]);
+  const [subclasses, setSubclasses] = useState<Subclass[]>([]);
+  const [ancestries, setAncestries] = useState<Ancestry[]>([]);
+  const [communities, setCommunities] = useState<Community[]>([]);
 
   // Form data
   const [formData, setFormData] = useState<FormData>({
@@ -100,6 +112,59 @@ const CharacterBuilder = () => {
     hope: 2,
   });
 
+  useEffect(() => {
+    const fetchCommunities = async () => {
+      const data = await getAllCommunities();
+      if (data) {
+        setCommunities(data);
+      }
+    };
+
+    const fetchAncestries = async () => {
+      const data = await getAllAncestries();
+      if (data) {
+        setAncestries(data);
+      }
+    };
+
+    const fetchClasses = async () => {
+      const data = await getAllClasses();
+      if (data) {
+        setClasses(data);
+      }
+    };
+
+    void fetchClasses();
+    void fetchAncestries();
+    void fetchCommunities();
+  }, []);
+
+  useEffect(() => {
+    const fetchSubclasses = async () => {
+      // Validate class ID before fetching
+      const classIdNum = parseInt(formData.class ?? "0", 10);
+      if (!formData.class || isNaN(classIdNum) || classIdNum === 0) {
+        setSubclasses([]);
+        return;
+      }
+
+      const data = await getSubclassesByClassId(classIdNum);
+
+      if (data) {
+        setSubclasses(data);
+      } else {
+        setSubclasses([]);
+        toast({
+          title: "Error",
+          description: "Failed to load subclasses for selected class.",
+          variant: "destructive",
+        });
+      }
+    };
+
+    void fetchSubclasses();
+  }, [formData.class]);
+
   const fetchCharacter = async () => {
     const { data } = await supabase
       .from("characters")
@@ -114,10 +179,10 @@ const CharacterBuilder = () => {
       pronouns: data.pronouns,
       gender: data.gender,
       background: data.background,
-      ancestry: data.ancestry,
-      class: data.class,
-      community: data.community,
-      subclass: data.subclass,
+      ancestry: String(data.ancestry),
+      class: String(data.class),
+      community: String(data.community),
+      subclass: String(data.subclass),
       stats: data.stats as unknown as FormData["stats"],
       stressSlots: data.stressSlots ?? 6,
       stress: data.stress ?? 0,
@@ -127,7 +192,7 @@ const CharacterBuilder = () => {
 
   useEffect(() => {
     if (urlCharacterId) {
-      fetchCharacter();
+      void fetchCharacter();
     }
   }, [urlCharacterId]);
 
@@ -343,24 +408,14 @@ const CharacterBuilder = () => {
                   <SelectValue placeholder="Select ancestry" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="clank">Clank</SelectItem>
-                  <SelectItem value="drakona">Drakona</SelectItem>
-                  <SelectItem value="dwarf">Dwarf</SelectItem>
-                  <SelectItem value="elf">Elf</SelectItem>
-                  <SelectItem value="faerie">Faerie</SelectItem>
-                  <SelectItem value="faun">Faun</SelectItem>
-                  <SelectItem value="firbolg">Firbolg</SelectItem>
-                  <SelectItem value="fungil">Fungil</SelectItem>
-                  <SelectItem value="galapa">Galapa</SelectItem>
-                  <SelectItem value="giant">Giant</SelectItem>
-                  <SelectItem value="goblin">Goblin</SelectItem>
-                  <SelectItem value="halfling">Halfling</SelectItem>
-                  <SelectItem value="human">Human</SelectItem>
-                  <SelectItem value="infernis">Infernis</SelectItem>
-                  <SelectItem value="katari">Katari</SelectItem>
-                  <SelectItem value="orc">Orc</SelectItem>
-                  <SelectItem value="ribbit">Ribbit</SelectItem>
-                  <SelectItem value="simiah">Simiah</SelectItem>
+                  {ancestries.map((ancestry) => (
+                    <SelectItem
+                      key={String(ancestry.id)}
+                      value={String(ancestry.id)}
+                    >
+                      {String(ancestry.name)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -378,15 +433,11 @@ const CharacterBuilder = () => {
                   <SelectValue placeholder="Select class" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bard">Bard</SelectItem>
-                  <SelectItem value="druid">Druid</SelectItem>
-                  <SelectItem value="guardian">Guardian</SelectItem>
-                  <SelectItem value="ranger">Ranger</SelectItem>
-                  <SelectItem value="rogue">Rogue</SelectItem>
-                  <SelectItem value="seraph">Seraph</SelectItem>
-                  <SelectItem value="sorcerer">Sorcerer</SelectItem>
-                  <SelectItem value="wizard">Wizard</SelectItem>
-                  <SelectItem value="warrior">Warrior</SelectItem>
+                  {classes.map((cls) => (
+                    <SelectItem key={cls.id} value={String(cls.id)}>
+                      {cls.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -405,80 +456,11 @@ const CharacterBuilder = () => {
                     <SelectValue placeholder="Select subclass" />
                   </SelectTrigger>
                   <SelectContent>
-                    {formData.class === "bard" && (
-                      <>
-                        <SelectItem value="troubadour">Troubadour</SelectItem>
-                        <SelectItem value="wordsmith">Wordsmith</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "druid" && (
-                      <>
-                        <SelectItem value="warden-of-the-elements">
-                          Warden of the Elements
-                        </SelectItem>
-                        <SelectItem value="warden-of-renewal">
-                          Warden of Renewal
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "guardian" && (
-                      <>
-                        <SelectItem value="stalwart">Stalwart</SelectItem>
-                        <SelectItem value="vengeance">Vengeance</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "ranger" && (
-                      <>
-                        <SelectItem value="beastbound">Beastbound</SelectItem>
-                        <SelectItem value="wayfinder">Wayfinder</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "rogue" && (
-                      <>
-                        <SelectItem value="nightwalker">Nightwalker</SelectItem>
-                        <SelectItem value="syndicate">Syndicate</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "seraph" && (
-                      <>
-                        <SelectItem value="divine-wielder">
-                          Divine Wielder
-                        </SelectItem>
-                        <SelectItem value="winged-sentinel">
-                          Winged Sentinel
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "sorcerer" && (
-                      <>
-                        <SelectItem value="elemental-origin">
-                          Elemental Origin
-                        </SelectItem>
-                        <SelectItem value="primal-origin">
-                          Primal Origin
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "wizard" && (
-                      <>
-                        <SelectItem value="school-of-knowledge">
-                          School of Knowledge
-                        </SelectItem>
-                        <SelectItem value="school-of-war">
-                          School of War
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "warrior" && (
-                      <>
-                        <SelectItem value="call-of-the-brave">
-                          Call of the Brave
-                        </SelectItem>
-                        <SelectItem value="call-of-the-slayer">
-                          Call of the Slayer
-                        </SelectItem>
-                      </>
-                    )}
+                    {subclasses.map((subclass) => (
+                      <SelectItem key={subclass.id} value={String(subclass.id)}>
+                        {subclass.name}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -497,15 +479,14 @@ const CharacterBuilder = () => {
                   <SelectValue placeholder="Select community" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="highborne">Highborne</SelectItem>
-                  <SelectItem value="loreborne">Loreborne</SelectItem>
-                  <SelectItem value="orderborne">Orderborne</SelectItem>
-                  <SelectItem value="ridgeborne">Ridgeborne</SelectItem>
-                  <SelectItem value="seaborne">Seaborne</SelectItem>
-                  <SelectItem value="slyborne">Slyborne</SelectItem>
-                  <SelectItem value="underborne">Underborne</SelectItem>
-                  <SelectItem value="wanderborne">Wanderborne</SelectItem>
-                  <SelectItem value="wildborne">Wildborne</SelectItem>
+                  {communities.map((community) => (
+                    <SelectItem
+                      key={String(community.id)}
+                      value={String(community.id)}
+                    >
+                      {String(community.name)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -578,6 +559,16 @@ const CharacterBuilder = () => {
         );
 
       case 4:
+        const cls = classes.find((cls) => String(cls.id) === formData.class);
+        const subclass = subclasses.find(
+          (subclass) => String(subclass.id) === formData.subclass
+        );
+        const ancestry = ancestries.find(
+          (ancestry) => String(ancestry.id) === formData.ancestry
+        );
+        const community = communities.find(
+          (community) => String(community.id) === formData.community
+        );
         return (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-white mb-4">
@@ -588,13 +579,13 @@ const CharacterBuilder = () => {
                 {formData.name || "Unnamed Character"}
               </h4>
               <p className="text-purple-200">
-                Level {formData.level} | {formData.class} ({formData.subclass})
+                Level {formData.level} | {cls?.name} ({subclass?.name})
               </p>
               <p className="text-purple-200">
                 Background: {formData.background}
               </p>
-              <p className="text-purple-200">Ancestry: {formData.ancestry}</p>
-              <p className="text-purple-200">Community: {formData.community}</p>
+              <p className="text-purple-200">Ancestry: {ancestry?.name}</p>
+              <p className="text-purple-200">Community: {community?.name}</p>
               <div className="grid grid-cols-3 gap-2 mt-4">
                 {Object.entries(formData.stats).map(([stat, value]) => (
                   <div key={stat} className="text-center">

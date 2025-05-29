@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { JSX } from "react";
 import {
   Card,
   CardContent,
@@ -23,7 +23,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
-const Dashboard = () => {
+const Dashboard = (): JSX.Element => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
       const { data, error } = await supabase
         .from("characters")
-        .select("*")
+        .select("*, class(name), ancestry(name), subclass(name)")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
 
@@ -63,14 +63,16 @@ const Dashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome back, {user?.user_metadata?.username || "Adventurer"}!
+              Welcome back, {user?.user_metadata.username ?? "Adventurer"}!
             </h1>
             <p className="text-purple-200">
               Manage your characters and campaigns
             </p>
           </div>
           <Button
-            onClick={handleSignOut}
+            onClick={() => {
+              void handleSignOut();
+            }}
             variant="outline"
             className="border-purple-400 text-purple-100 "
           >
@@ -177,14 +179,17 @@ const Dashboard = () => {
                               variant="outline"
                               className="text-xs border-purple-400 text-purple-200"
                             >
-                              {character.ancestry}
+                              {character.ancestry.name ?? "Unknown"}
                             </Badge>
                           )}
                         </div>
                       </CardHeader>
                       <CardContent>
                         <p className="text-purple-200 text-sm mb-3">
-                          {character.class || "No class selected"}
+                          {character.class?.name ?? "No class selected"}
+                          {character.subclass
+                            ? ` - (${String(character.subclass.name)})`
+                            : ""}
                         </p>
                         <Link to={link}>
                           <Button

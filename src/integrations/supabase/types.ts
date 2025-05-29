@@ -9,13 +9,43 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      ancestries: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          features: Json | null;
+          id: number;
+          isHomebrew: boolean | null;
+          name: string | null;
+          slug: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+          slug?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+          slug?: string | null;
+        };
+        Relationships: [];
+      };
       characters: {
         Row: {
           age: number | null;
-          ancestry: string | null;
+          ancestry: number | null;
           background: string | null;
-          class: string | null;
-          community: string | null;
+          class: number | null;
+          community: number | null;
           complete: boolean | null;
           created_at: string | null;
           current_hp: number | null;
@@ -30,16 +60,16 @@ export interface Database {
           stats: Json | null;
           stress: number | null;
           stressSlots: number | null;
-          subclass: string | null;
+          subclass: number | null;
           updated_at: string | null;
           user_id: string;
         };
         Insert: {
           age?: number | null;
-          ancestry?: string | null;
+          ancestry?: number | null;
           background?: string | null;
-          class?: string | null;
-          community?: string | null;
+          class?: number | null;
+          community?: number | null;
           complete?: boolean | null;
           created_at?: string | null;
           current_hp?: number | null;
@@ -54,16 +84,16 @@ export interface Database {
           stats?: Json | null;
           stress?: number | null;
           stressSlots?: number | null;
-          subclass?: string | null;
+          subclass?: number | null;
           updated_at?: string | null;
           user_id: string;
         };
         Update: {
           age?: number | null;
-          ancestry?: string | null;
+          ancestry?: number | null;
           background?: string | null;
-          class?: string | null;
-          community?: string | null;
+          class?: number | null;
+          community?: number | null;
           complete?: boolean | null;
           created_at?: string | null;
           current_hp?: number | null;
@@ -78,11 +108,40 @@ export interface Database {
           stats?: Json | null;
           stress?: number | null;
           stressSlots?: number | null;
-          subclass?: string | null;
+          subclass?: number | null;
           updated_at?: string | null;
           user_id?: string;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "characters_ancestry_fkey";
+            columns: ["ancestry"];
+            isOneToOne: false;
+            referencedRelation: "ancestries";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "characters_class_fkey";
+            columns: ["class"];
+            isOneToOne: false;
+            referencedRelation: "classes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "characters_community_fkey";
+            columns: ["community"];
+            isOneToOne: false;
+            referencedRelation: "communities";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "characters_subclass_fkey";
+            columns: ["subclass"];
+            isOneToOne: false;
+            referencedRelation: "subclasses";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       classes: {
         Row: {
@@ -94,6 +153,7 @@ export interface Database {
           description: string | null;
           features: Json | null;
           id: number;
+          isHomebrew: boolean | null;
           name: string | null;
           slug: string | null;
         };
@@ -106,6 +166,7 @@ export interface Database {
           description?: string | null;
           features?: Json | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
           slug?: string | null;
         };
@@ -118,6 +179,7 @@ export interface Database {
           description?: string | null;
           features?: Json | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
           slug?: string | null;
         };
@@ -155,6 +217,33 @@ export interface Database {
             referencedColumns: ["id"];
           },
         ];
+      };
+      communities: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          features: Json | null;
+          id: number;
+          isHomebrew: boolean | null;
+          name: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Relationships: [];
       };
       domains: {
         Row: {
@@ -200,6 +289,41 @@ export interface Database {
           username?: string | null;
         };
         Relationships: [];
+      };
+      subclasses: {
+        Row: {
+          class_id: number | null;
+          created_at: string;
+          description: string | null;
+          id: number;
+          isHomebrew: boolean | null;
+          name: string | null;
+        };
+        Insert: {
+          class_id?: number | null;
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Update: {
+          class_id?: number | null;
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subclasses_class_id_fkey";
+            columns: ["class_id"];
+            isOneToOne: false;
+            referencedRelation: "classes";
+            referencedColumns: ["id"];
+          },
+        ];
       };
     };
     Views: Record<never, never>;
