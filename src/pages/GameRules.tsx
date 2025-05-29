@@ -345,7 +345,6 @@ const GameRules = (): JSX.Element => {
                       </CardHeader>
                       <CardContent className="mt-auto">
                         <div className="space-y-3">
-
                           <div className="pt-2 mt-auto">
                             <Link to={`/rules/classes/${String(cls.slug)}`}>
                               <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
