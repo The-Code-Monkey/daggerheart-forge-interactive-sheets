@@ -6,18 +6,38 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
+import { Ancestry } from "@/lib/types";
+import { getSingleAncestryBySlug } from "@/integrations/supabase/helpers";
 
 const AncestryDetail = (): JSX.Element => {
   const { ancestryName } = useParams();
+  const [ancestryData, setAncestryData] = useState<Ancestry | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const ancestries = {};
+  const fetchAncestry = async () => {
+    const data = await getSingleAncestryBySlug(String(ancestryName));
+    setAncestryData(data);
+    setLoading(false);
+  };
 
-  const ancestryData =
-    ancestries[ancestryName?.toLowerCase() as keyof typeof ancestries];
+  useEffect(() => {
+    void fetchAncestry();
+  }, [ancestryName]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            Loading Ancestry...
+          </h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!ancestryData) {
     return (
@@ -52,89 +72,55 @@ const AncestryDetail = (): JSX.Element => {
             </Button>
           </Link>
 
-          <div className="mb-4">
-            <h1 className="text-4xl font-bold text-white mb-2">
-              {ancestryData.name}
-            </h1>
-            <p className="text-xl text-purple-200">
-              {ancestryData.description}
-            </p>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+              {/* {classData.icon} */}
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white">
+                {ancestryData.name}
+              </h1>
+              <p className="text-xl text-purple-200">
+                {ancestryData.description}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Ancestry Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Physical Traits</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-purple-200">Size:</span>
-                <span className="text-white">{ancestryData.size}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-purple-200">Speed:</span>
-                <span className="text-white">{ancestryData.speed}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-purple-200">Lifespan:</span>
-                <span className="text-white">{ancestryData.lifespan}</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Languages</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {ancestryData.languages.map((language, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className="bg-purple-600/50 text-white"
-                  >
-                    {language}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Ancestry Traits */}
-        <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm mb-8">
+        <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm col-span-2">
           <CardHeader>
-            <CardTitle className="text-white">Ancestry Traits</CardTitle>
+            <CardTitle className="text-white">Ancestry Features</CardTitle>
             <CardDescription className="text-purple-200">
-              Special abilities that all {ancestryData.name} possess
+              Special abilities that define the {ancestryData.name} ancestry
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {ancestryData.traits.map((trait, index) => (
-                <div key={index} className="border-l-4 border-yellow-500 pl-4">
+              {ancestryData.features.map((feature, index) => (
+                <div key={`feature-${String(index)}`}>
                   <h3 className="text-lg font-semibold text-white mb-2">
-                    {trait.name}
+                    {feature.name}
                   </h3>
-                  <p className="text-purple-200">{trait.description}</p>
+                  <p className="text-purple-200">{feature.description}</p>
+                  {feature.list && (
+                    <ul className="list-disc list-inside">
+                      {feature.list.map((item, itemIndex) => (
+                        <li
+                          key={`feature-list-${String(itemIndex)}`}
+                          className="text-purple-200"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        {/* Culture */}
-        <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-white">Culture & Society</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-purple-200">{ancestryData.culture}</p>
-          </CardContent>
-        </Card>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"></div>
       </div>
     </div>
   );

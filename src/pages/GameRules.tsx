@@ -22,12 +22,18 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { JSX, useEffect, useState } from "react";
-import { Class } from "@/lib/types";
+import { Ancestry, Class } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getAllClassesWithDomains } from "@/integrations/supabase/helpers";
+import {
+  getAllAncestries,
+  getAllClassesWithDomains,
+} from "@/integrations/supabase/helpers";
 
 const GameRules = (): JSX.Element => {
   const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
+  const [ancestriesData, setAncestriesData] = useState<
+    Partial<Ancestry>[] | null
+  >(null);
 
   const fetchClasses = async () => {
     const data = await getAllClassesWithDomains();
@@ -36,8 +42,16 @@ const GameRules = (): JSX.Element => {
     }
   };
 
+  const fetchAncestries = async () => {
+    const data = await getAllAncestries();
+    if (data) {
+      setAncestriesData(data);
+    }
+  };
+
   useEffect(() => {
     void fetchClasses();
+    void fetchAncestries();
   }, []);
 
   const icons = {
@@ -51,117 +65,6 @@ const GameRules = (): JSX.Element => {
     seraph: <Sparkles className="w-6 h-6" />,
     sorcerer: <Zap className="w-6 h-6" />,
   };
-
-  const ancestries = [
-    {
-      name: "Clank",
-      description:
-        "Clanks are sentient mechanical beings crafted from diverse materials with specialized bodies that can include claws, wheels, or built-in weapons. Their forms can be endlessly modified, granting them effective immortality as long as they maintain their parts, though their minds can deteriorate over time as their magic fades.",
-      slug: "clank",
-    },
-    {
-      name: "Drakona",
-      description:
-        "Drakona are wingless, dragon-like humanoids with thick scales that act as natural armor and possess powerful elemental breath unique to their lineage. They have long lifespans, continuously growing new teeth, and typically inherit their elemental abilities from their family, though exceptions exist.",
-      slug: "drakona",
-    },
-    {
-      name: "Dwarf",
-      description:
-        "Dwarves are short, stocky humanoids known for their dense muscles, thick hair, and naturally resilient keratin-rich skin that allows for gemstone adornment and tattoos. They often style elaborate facial hair and live up to 250 years while retaining their strength well into old age.",
-      slug: "dwarves",
-    },
-    {
-      name: "Elf",
-      description:
-        "Elves are tall, pointed-eared humanoids with keen senses and the unique ability to enter a celestial trance for quick rest. Some develop a mystic form—marked by nature-inspired traits like celestial freckles or vine-like hair—that can change over their long 350-year lifespans.",
-      slug: "elf",
-    },
-    {
-      name: "Faerie",
-      description:
-        "Faeries are winged humanoids with diverse insect-like features such as extra arms, compound eyes, and chitinous exoskeletons, often blending with plants due to their natural affinity. They undergo unique metamorphoses that define their permanent form for their roughly 50-year lifespan, ranging in height from 2 to 7 feet.",
-      slug: "faerie",
-    },
-    {
-      name: "Faun",
-      description:
-        "Fauns are humanoid goats with curving horns, cloven hooves, and variable goat- or humanlike faces, known for their long limbs and powerful hoof strikes. They stand 4 to 6½ feet tall, with height shifting by stance, and live about 225 years, growing more goatlike with age.",
-      slug: "faun",
-    },
-    {
-      name: "Firbolg",
-      description:
-        "Firbolgs are tall, muscular bovine humanoids with broad noses, drooping ears, and varying horn styles, known for their strength and powerful charging attacks. Covered in earth-toned or pastel fur, they typically live around 150 years.",
-      slug: "firbolg",
-    },
-    {
-      name: "Fungil",
-      description:
-        "Fungril are humanoid mushrooms with diverse appearances and vibrant colors, ranging from 2 to 7 feet tall with no single common form. They live around 300 years, communicate nonverbally, and use a mycelial network to share information over long distances.",
-      slug: "fungil",
-    },
-    {
-      name: "Galapa",
-      description:
-        "Galapa are anthropomorphic turtles with large, patterned shells into which they can retract for protection, standing 4 to 6 feet tall and typically adorned in earth tones. They move slowly and can live about 150 years, sometimes enhancing their shells with armor or carvings despite the pain involved.",
-      slug: "galapa",
-    },
-    {
-      name: "Giant",
-      description:
-        "Giants are towering humanoids standing 6½ to 8½ feet tall with broad frames, long arms, and up to three eyes that develop after their first year of life. Known for their muscular build and distinctive features, they live around 75 years on average.",
-      slug: "giant",
-    },
-    {
-      name: "Goblin",
-      description:
-        "Goblins are small humanoids with large eyes and oversized membranous ears that give them exceptional hearing and vision, aiding their movement in difficult environments. They vary widely in skin and eye color, stand 3 to 4 feet tall, communicate nonverbally through ear movements, and live about 100 years.",
-      slug: "goblin",
-    },
-    {
-      name: "Halfling",
-      description:
-        "Halflings are small humanoids with large, hairy feet and proportionally large ears and noses, standing 3 to 4 feet tall and often maintaining a youthful appearance throughout their 150-year lifespan. They have a natural internal compass and keen senses of hearing and smell, allowing them to recognize familiar individuals by their movements.",
-      slug: "halfling",
-    },
-    {
-      name: "Human",
-      description:
-        "Humans are adaptable beings with dexterous hands, rounded ears, and bodies built for endurance, ranging from just under 5 feet to 6½ feet tall with varied builds. They adjust well to different climates and typically live around 100 years, undergoing significant physical changes throughout their lives.",
-      slug: "human",
-    },
-    {
-      name: "Infernis",
-      description:
-        "Infernis are humanoids descended from demons, characterized by sharp canine teeth, pointed ears, horns in various shapes and numbers, and often long, pointed tails, with skin and features in a wide range of colors. They possess a “dread visage” that can alter their appearance to intimidate, and typically live up to 350 years, reflecting their demonic heritage.",
-      slug: "infernis",
-    },
-    {
-      name: "Katari",
-      description:
-        "Katari are feline humanoids with retractable claws, slit pupils, and highly mobile triangular ears, featuring varied fur patterns and sometimes tails, blending catlike and humanoid traits. They range from 3 to 6½ feet tall, have keen senses aided by whiskers and swiveling ears, and live up to around 150 years.",
-      slug: "katari",
-    },
-    {
-      name: "Orc",
-      description:
-        "Orcs are humanoids known for their square features, prominent boar-like tusks often adorned with decorations, and pointed ears. They typically have green, blue, pink, or gray skin tones, muscular builds, stand between 5 and 6½ feet tall, and live around 125 years.",
-      slug: "orc",
-    },
-    {
-      name: "Ribbit",
-      description:
-        "Ribbets are frog-like humanoids with webbed hands and feet, smooth or warty skin, and eyes set wide on their heads. They range from 3 to 4½ feet tall, move mostly by hopping, and live about 100 years.",
-      slug: "ribbit",
-    },
-    {
-      name: "Simiah",
-      description:
-        "Simiah are monkey-like humanoids with long limbs, prehensile feet, and sometimes tails, ranging from 2 to 6 feet tall. Their agility and climbing skills make them versatile movers, and they live around 100 years.",
-      slug: "simiah",
-    },
-  ];
 
   const domains = [
     {
@@ -373,16 +276,16 @@ const GameRules = (): JSX.Element => {
 
           <TabsContent value="ancestries" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ancestries.map((ancestry, index) => (
+              {ancestriesData?.map((ancestry, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm"
+                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   <CardHeader>
                     <CardTitle className="text-white">
                       {ancestry.name}
                     </CardTitle>
-                    <CardDescription className="text-purple-200">
+                    <CardDescription className="text-purple-200 truncate-5-lines">
                       {ancestry.description}
                     </CardDescription>
                   </CardHeader>

@@ -23,10 +23,11 @@ interface ClassWithDomainsResponse {
   }[];
 }
 
-const transformClassWithDomains = (data: any): Class => ({
-  ...data,
-  domains: data.classes_domains.map((cd: any) => cd.domains),
-});
+const transformClassWithDomains = (data: ClassWithDomainsResponse): Class =>
+  ({
+    ...data,
+    domains: data.classes_domains.map((cd) => cd.domains),
+  }) as unknown as Class;
 
 export const getSingleClassBySlugWithDomains = async (
   slug: string
@@ -41,7 +42,7 @@ export const getSingleClassBySlugWithDomains = async (
     console.log(error);
     return null;
   }
-  return transformClassWithDomains(data);
+  return transformClassWithDomains(data as ClassWithDomainsResponse);
 };
 
 export const getSingleClass = async (id: number): Promise<Class | null> => {
@@ -180,4 +181,20 @@ export const getAllCommunities = async (
     return null;
   }
   return data as Community[];
+};
+
+export const getSingleAncestryBySlug = async (
+  slug: string
+): Promise<Ancestry | null> => {
+  const { data, error } = await supabase
+    .from("ancestries")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Ancestry;
 };

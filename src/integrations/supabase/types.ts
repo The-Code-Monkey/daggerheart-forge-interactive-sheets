@@ -17,6 +17,7 @@ export interface Database {
           id: number;
           isHomebrew: boolean | null;
           name: string | null;
+          slug: string | null;
         };
         Insert: {
           created_at?: string;
@@ -25,6 +26,7 @@ export interface Database {
           id?: number;
           isHomebrew?: boolean | null;
           name?: string | null;
+          slug?: string | null;
         };
         Update: {
           created_at?: string;
@@ -33,6 +35,7 @@ export interface Database {
           id?: number;
           isHomebrew?: boolean | null;
           name?: string | null;
+          slug?: string | null;
         };
         Relationships: [];
       };
