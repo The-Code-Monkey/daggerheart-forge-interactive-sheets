@@ -17,6 +17,17 @@ export const getSingleClassBySlug = async (
   return data as Class;
 };
 
+interface ClassWithDomainsResponse {
+  classes_domains: Array<{
+    domains: Domain;
+  }>;
+}
+
+const transformClassWithDomains = (data: any): Class => ({
+  ...data,
+  domains: data.classes_domains.map((cd: any) => cd.domains),
+});
+
 export const getSingleClassBySlugWithDomains = async (
   slug: string
 ): Promise<Class | null> => {
@@ -30,12 +41,7 @@ export const getSingleClassBySlugWithDomains = async (
     console.log(error);
     return null;
   }
-  return {
-    ...data,
-    domains: data.classes_domains.map(
-      (classDomain) => classDomain.domains
-    ) as unknown as Domain[],
-  } as unknown as Class;
+  return transformClassWithDomains(data);
 };
 
 export const getSingleClass = async (id: number): Promise<Class | null> => {
