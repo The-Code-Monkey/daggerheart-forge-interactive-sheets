@@ -18,15 +18,17 @@ import {
   Sparkles,
   Dice6,
   ArrowRight,
+  BowArrow,
+  Guitar,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import { Class } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
 
-const GameRules = () => {
-  const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null)
+const GameRules = (): JSX.Element => {
+  const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
 
   const fetchClasses = async () => {
     const { data, error } = await supabase.from("classes").select(`
@@ -34,95 +36,30 @@ const GameRules = () => {
     if (error) {
       console.error(error);
     } else {
-      setClassesData(data.map(cls => ({
-        ...cls,
-        domains: cls.classes_domains.map(cd => cd.domains),
-      })) as Partial<Class>[]);
+      setClassesData(
+        data.map((cls) => ({
+          ...cls,
+          domains: cls.classes_domains.flatMap((cd) => cd.domains!),
+        }))
+      );
     }
-  }
-
-  useEffect(() => {
-    fetchClasses();
-  }, [])
-
-  console.log(classesData);
-
-  const icons = {
-    bard: <Sparkles className="w-6 h-6" />,
-    druid: <Heart className="w-6 h-6" />,
-    guardian: <Shield className="w-6 h-6" />,
-    ranger: <Zap className="w-6 h-6" />,
-    rogue: <Dice6 className="w-6 h-6" />,
-    wizard: <ArrowRight className="w-6 h-6" />,
-    warrior: <Shield className="w-6 h-6" />,
   };
 
-  const classes = [
-    {
-      name: "Druid",
-      description:
-        "Druids are devoted guardians of nature who, through deep study and connection to the wild, gain the power to shape the natural world and transform into beasts.",
-      icon: <Heart className="w-6 h-6" />,
-      features: ["Sage", "Arcana"],
-      slug: "druid",
-    },
-    {
-      name: "Guardian",
-      description:
-        "Guardians are steadfast warriors driven by loyalty and conviction, known for their fierce defense of loved ones and unwavering resolve in the face of overwhelming odds.",
-      icon: <Shield className="w-6 h-6" />,
-      features: ["Valor", "Blade"],
-      slug: "guardian",
-    },
-    {
-      name: "Ranger",
-      description:
-        "Rangers are cunning wilderness hunters who combine martial skill, expert tracking, and deep bonds with animal companions to outwit and overcome their foes.",
-      icon: <Zap className="w-6 h-6" />,
-      features: ["Bone", "Sage"],
-      slug: "ranger",
-    },
-    {
-      name: "Rogue",
-      description:
-        "Rogues are cunning tricksters and stealthy combatants who blend wit, shadow, and skill to deceive, infiltrate, and strike from the darkness—often guided by the hidden codes of thieves’ guilds.",
-      icon: <User className="w-6 h-6" />,
-      features: ["Midnight", "Grace"],
-      slug: "rogue",
-    },
-    {
-      name: "Seraph",
-      description:
-        "Seraphs are divinely empowered warriors and healers who serve the will of their gods with unwavering purpose, defending faith and justice while striking fear into those who oppose them.",
-      icon: <Sparkles className="w-6 h-6" />,
-      features: ["Splendor", "Valor"],
-      slug: "seraph",
-    },
-    {
-      name: "Sorcerer",
-      description:
-        "Sorcerers are innate magic wielders who gain power through bloodline and become truly formidable by learning to control and refine the magic that already burns within them.",
-      icon: <Zap className="w-6 h-6" />,
-      features: ["Arcana", "Midnight"],
-      slug: "sorcerer",
-    },
-    {
-      name: "Warrior",
-      description:
-        "Warriors are disciplined masters of combat who combine strength, agility, and skill through lifelong training, making them elite fighters fiercely bonded to their chosen weapon.",
-      icon: <Sword className="w-6 h-6" />,
-      features: ["Blade", "Bone"],
-      slug: "warrior",
-    },
-    {
-      name: "Wizard",
-      description:
-        "Wizards are disciplined scholars of magic who spend years mastering arcane knowledge, often becoming powerful advisors or leaders—though their pursuit of magical secrets frequently sparks fierce rivalries.",
-      icon: <Book className="w-6 h-6" />,
-      features: ["Codex", "Splendor"],
-      slug: "wizard",
-    },
-  ];
+  useEffect(() => {
+    void fetchClasses();
+  }, []);
+
+  const icons = {
+    bard: <Guitar className="w-6 h-6" />,
+    druid: <Heart className="w-6 h-6" />,
+    guardian: <Shield className="w-6 h-6" />,
+    ranger: <BowArrow className="w-6 h-6" />,
+    rogue: <Dice6 className="w-6 h-6" />,
+    wizard: <Book className="w-6 h-6" />,
+    warrior: <Shield className="w-6 h-6" />,
+    seraph: <Sparkles className="w-6 h-6" />,
+    sorcerer: <Zap className="w-6 h-6" />,
+  };
 
   const ancestries = [
     {
@@ -371,107 +308,76 @@ const GameRules = () => {
 
           <TabsContent value="classes" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {classesData ? classesData.map((cls) => (
-                <Card
-                  key={cls.id}
-                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm"
-                >
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                        {icons[String(cls.slug)]}
-                      </div>
-                      <CardTitle className="text-white">{cls.name}</CardTitle>
-                    </div>
-                    <CardDescription className="text-purple-200 truncate-5-lines">
-                      {cls.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div>
-                        <span className="text-sm font-medium text-purple-300">
-                          Domains:
-                        </span>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {cls.domains?.map((domain) => (
-                            <Badge
-                              key={domain.id}
-                              variant="outline"
-                              className="border-yellow-500/50 text-yellow-300 text-xs"
-                            >
-                              {domain.name}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="pt-2">
-                        <Link to={`/rules/classes/${cls.slug}`}>
-                          <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                            Learn More
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )) : (
-                <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+              {classesData
+                ? classesData.map((cls) => (
+                    <Card
+                      key={cls.id}
+                      className="bg-gradient-to-br aspect-square from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
+                    >
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-2">
-                          <Skeleton className="w-10 h-10 rounded-lg" />
-                          <Skeleton className="h-6 w-32" />
+                          <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+                            {icons[String(cls.slug)]}
+                          </div>
+                          <CardTitle className="text-white">
+                            {cls.name}
+                          </CardTitle>
+                        </div>
+                        <CardDescription className="text-purple-200 truncate-5-lines">
+                          {cls.description}
+                        </CardDescription>
+                        <div>
+                          <span className="text-sm font-medium text-purple-300">
+                            Domains:
+                          </span>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {cls.domains?.map((domain) => (
+                              <Badge
+                                key={domain.id}
+                                variant="outline"
+                                className="border-yellow-500/50 text-yellow-300 text-xs"
+                              >
+                                {domain.name}
+                              </Badge>
+                            ))}
+                          </div>
                         </div>
                       </CardHeader>
-                    </Card>
-              )}
-              {classes.map((cls, index) => (
-                <Card
-                  key={index}
-                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm"
-                >
-                  <CardHeader>
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                        {cls.icon}
-                      </div>
-                      <CardTitle className="text-white">{cls.name}</CardTitle>
-                    </div>
-                    <CardDescription className="text-purple-200">
-                      {cls.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div>
-                        <span className="text-sm font-medium text-purple-300">
-                          Domains:
-                        </span>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {cls.features.map((feature) => (
-                            <Badge
-                              key={feature}
-                              variant="outline"
-                              className="border-yellow-500/50 text-yellow-300 text-xs"
-                            >
-                              {feature}
-                            </Badge>
-                          ))}
+                      <CardContent className="mt-auto">
+                        <div className="space-y-3">
+
+                          <div className="pt-2 mt-auto">
+                            <Link to={`/rules/classes/${String(cls.slug)}`}>
+                              <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
+                                Learn More
+                                <ArrowRight className="w-4 h-4 ml-2" />
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
-                      </div>
-                      <div className="pt-2">
-                        <Link to={`/rules/classes/${cls.slug}`}>
-                          <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
-                            Learn More
-                            <ArrowRight className="w-4 h-4 ml-2" />
-                          </Button>
-                        </Link>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                      </CardContent>
+                    </Card>
+                  ))
+                : Array(12)
+                    .fill(null)
+                    .map((_, index) => (
+                      <Card
+                        key={index}
+                        className="bg-gradient-to-br from-slate-800/80 aspect-square to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col"
+                      >
+                        <CardHeader>
+                          <div className="flex items-center gap-3 mb-2">
+                            <Skeleton className="w-10 h-10 rounded-lg" />
+                            <Skeleton className="h-6 w-32" />
+                          </div>
+                        </CardHeader>
+                        <CardContent className="flex-1">
+                          <CardDescription className="text-purple-200 flex-1 h-full">
+                            <Skeleton className="h-full w-full" />
+                          </CardDescription>
+                        </CardContent>
+                      </Card>
+                    ))}
             </div>
           </TabsContent>
 

@@ -19,22 +19,30 @@ const ClassDetail = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
 
   const fetchClass = async () => {
-    const { data, error } = await supabase.from("classes").select(`
-      *, classes_domains ( domains ( id, name ) )`).eq("slug", String(className)).single();
+    const { data, error } = await supabase
+      .from("classes")
+      .select(
+        `
+      *, classes_domains ( domains ( id, name ) )`
+      )
+      .eq("slug", String(className))
+      .single();
     if (error) {
       console.error(error);
     } else {
       setClassData({
         ...data,
-        domains: data.classes_domains.map(classDomain => classDomain.domains) as unknown as Domain[],
+        domains: data.classes_domains.map(
+          (classDomain) => classDomain.domains
+        ) as unknown as Domain[],
       } as unknown as Class);
     }
     setLoading(false);
-  }
+  };
 
   useEffect(() => {
     fetchClass();
-  }, [className])
+  }, [className]);
 
   if (loading) {
     return (
