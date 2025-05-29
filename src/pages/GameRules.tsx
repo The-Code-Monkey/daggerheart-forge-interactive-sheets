@@ -9,39 +9,30 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Sword,
   Shield,
   Zap,
   Heart,
-  User,
   Book,
   Sparkles,
   Dice6,
   ArrowRight,
   BowArrow,
   Guitar,
+  Sword,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { JSX, useEffect, useState } from "react";
 import { Class } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getAllClassesWithDomains } from "@/integrations/supabase/helpers";
 
 const GameRules = (): JSX.Element => {
   const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
 
   const fetchClasses = async () => {
-    const { data, error } = await supabase.from("classes").select(`
-      *, classes_domains ( domains ( id, name ) )`);
-    if (error) {
-      console.error(error);
-    } else {
-      setClassesData(
-        data.map((cls) => ({
-          ...cls,
-          domains: cls.classes_domains.flatMap((cd) => cd.domains!),
-        }))
-      );
+    const data = await getAllClassesWithDomains();
+    if (data) {
+      setClassesData(data);
     }
   };
 
@@ -56,7 +47,7 @@ const GameRules = (): JSX.Element => {
     ranger: <BowArrow className="w-6 h-6" />,
     rogue: <Dice6 className="w-6 h-6" />,
     wizard: <Book className="w-6 h-6" />,
-    warrior: <Shield className="w-6 h-6" />,
+    warrior: <Sword className="w-6 h-6" />,
     seraph: <Sparkles className="w-6 h-6" />,
     sorcerer: <Zap className="w-6 h-6" />,
   };
@@ -371,9 +362,9 @@ const GameRules = (): JSX.Element => {
                           </div>
                         </CardHeader>
                         <CardContent className="flex-1">
-                          <CardDescription className="text-purple-200 flex-1 h-full">
+                          <div className="text-purple-200 flex-1 h-full">
                             <Skeleton className="h-full w-full" />
-                          </CardDescription>
+                          </div>
                         </CardContent>
                       </Card>
                     ))}

@@ -201,6 +201,38 @@ export interface Database {
         };
         Relationships: [];
       };
+      subclasses: {
+        Row: {
+          class_id: number | null;
+          created_at: string;
+          description: string | null;
+          id: number;
+          name: string | null;
+        };
+        Insert: {
+          class_id?: number | null;
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          name?: string | null;
+        };
+        Update: {
+          class_id?: number | null;
+          created_at?: string;
+          description?: string | null;
+          id?: number;
+          name?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "subclasses_class_id_fkey";
+            columns: ["class_id"];
+            isOneToOne: false;
+            referencedRelation: "classes";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Views: Record<never, never>;
     Functions: Record<never, never>;

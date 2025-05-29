@@ -10,9 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { JSX, useEffect, useState } from "react";
-import { Class, Domain } from "@/lib/types";
-import { supabase } from "@/integrations/supabase/client";
+import { Class } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getSingleClassBySlugWithDomains } from "@/integrations/supabase/helpers";
 
 const ClassDetail = (): JSX.Element => {
   const { className } = useParams();
@@ -20,24 +20,9 @@ const ClassDetail = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
 
   const fetchClass = async () => {
-    const { data, error } = await supabase
-      .from("classes")
-      .select(
-        `
-      *, classes_domains ( domains ( id, name ) )`
-      )
-      .eq("slug", String(className))
-      .single();
-    if (error) {
-      console.error(error);
-    } else {
-      setClassData({
-        ...data,
-        domains: data.classes_domains.map(
-          (classDomain) => classDomain.domains
-        ) as unknown as Domain[],
-      } as unknown as Class);
-    }
+    const data = await getSingleClassBySlugWithDomains(String(className));
+
+    setClassData(data);
     setLoading(false);
   };
 

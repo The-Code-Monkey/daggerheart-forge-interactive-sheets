@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import {
   Card,
   CardContent,
@@ -22,6 +22,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Class, Subclass } from "@/lib/types";
+import {
+  getAllClasses,
+  getSubclassesByClassId,
+} from "@/integrations/supabase/helpers";
 
 const allowedMods = {
   "+2": 1,
@@ -42,7 +47,7 @@ type StatKey = (typeof statKeys)[number];
 
 interface FormData {
   name: string | undefined;
-  level: number | undefined;
+  level: number;
   age: number | undefined;
   pronouns: string | undefined;
   gender: string | undefined;
@@ -64,7 +69,7 @@ interface FormData {
   hope: number | undefined;
 }
 
-const CharacterBuilder = () => {
+const CharacterBuilder = (): JSX.Element => {
   const { characterId: urlCharacterId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -74,6 +79,9 @@ const CharacterBuilder = () => {
     urlCharacterId ?? null
   );
   const [isLoading, setIsLoading] = useState(false);
+
+  const [classes, setClasses] = useState<Class[]>([]);
+  const [subclasses, setSubclasses] = useState<Subclass[]>([]);
 
   // Form data
   const [formData, setFormData] = useState<FormData>({
@@ -99,6 +107,35 @@ const CharacterBuilder = () => {
     stress: 0,
     hope: 2,
   });
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      const data = await getAllClasses();
+      if (data) {
+        setFormData((prevState) => ({
+          ...prevState,
+          subclass: undefined,
+        }));
+        setClasses(data);
+      }
+    };
+
+    void fetchClasses();
+  }, []);
+
+  useEffect(() => {
+    const fetchSubclasses = async () => {
+      const data = await getSubclassesByClassId(
+        parseInt(formData.class ?? "0", 10)
+      );
+
+      if (data) {
+        setSubclasses(data);
+      }
+    };
+
+    void fetchSubclasses();
+  }, [formData.class]);
 
   const fetchCharacter = async () => {
     const { data } = await supabase
@@ -127,7 +164,7 @@ const CharacterBuilder = () => {
 
   useEffect(() => {
     if (urlCharacterId) {
-      fetchCharacter();
+      void fetchCharacter();
     }
   }, [urlCharacterId]);
 
@@ -378,15 +415,11 @@ const CharacterBuilder = () => {
                   <SelectValue placeholder="Select class" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="bard">Bard</SelectItem>
-                  <SelectItem value="druid">Druid</SelectItem>
-                  <SelectItem value="guardian">Guardian</SelectItem>
-                  <SelectItem value="ranger">Ranger</SelectItem>
-                  <SelectItem value="rogue">Rogue</SelectItem>
-                  <SelectItem value="seraph">Seraph</SelectItem>
-                  <SelectItem value="sorcerer">Sorcerer</SelectItem>
-                  <SelectItem value="wizard">Wizard</SelectItem>
-                  <SelectItem value="warrior">Warrior</SelectItem>
+                  {classes.map((cls) => (
+                    <SelectItem key={cls.id} value={String(cls.id)}>
+                      {cls.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -405,6 +438,11 @@ const CharacterBuilder = () => {
                     <SelectValue placeholder="Select subclass" />
                   </SelectTrigger>
                   <SelectContent>
+                    {subclasses.map((subclass) => (
+                      <SelectItem value={String(subclass.id)}>
+                        {subclass.name}
+                      </SelectItem>
+                    ))}
                     {formData.class === "bard" && (
                       <>
                         <SelectItem value="troubadour">Troubadour</SelectItem>

@@ -1,0 +1,141 @@
+import { Class, Domain, Subclass } from "@/lib/types";
+import { supabase } from "./client";
+
+export const getSingleClassBySlug = async (slug: string): Promise<Class> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) throw error;
+  return data as Class;
+};
+
+export const getSingleClassBySlugWithDomains = async (
+  slug: string
+): Promise<Class | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("*, classes_domains ( domains ( * ) )")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return {
+    ...data,
+    domains: data.classes_domains.map(
+      (classDomain) => classDomain.domains
+    ) as unknown as Domain[],
+  } as unknown as Class;
+};
+
+export const getSingleClass = async (id: number): Promise<Class | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Class;
+};
+
+export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("*")
+    .limit(limit);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Class[];
+};
+
+export const getAllClassesWithDomains = async (
+  limit = 99
+): Promise<Class[] | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("*, classes_domains ( domains ( * ) )")
+    .limit(limit);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data.map(
+    (classData) =>
+      ({
+        ...classData,
+        domains: classData.classes_domains.map(
+          (classDomain) => classDomain.domains
+        ) as unknown as Domain[],
+      }) as unknown as Class
+  );
+};
+
+export const getSubclassesByClassId = async (
+  classId: number
+): Promise<Subclass[] | null> => {
+  const { data, error } = await supabase
+    .from("subclasses")
+    .select("*")
+    .eq("class_id", classId);
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data;
+};
+
+export const getSingleDomainBySlug = async (
+  slug: string
+): Promise<Domain | null> => {
+  const { data, error } = await supabase
+    .from("domains")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Domain;
+};
+
+export const getSingleDomain = async (id: number): Promise<Domain | null> => {
+  const { data, error } = await supabase
+    .from("domains")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Domain;
+};
+
+export const getAllDomains = async (limit = 99): Promise<Domain[] | null> => {
+  const { data, error } = await supabase
+    .from("domains")
+    .select("*")
+    .limit(limit);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Domain[];
+};

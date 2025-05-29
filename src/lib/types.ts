@@ -12,14 +12,14 @@ export interface SubclassFeature {
   list?: string[];
 }
 
-export interface Subclass {
+export interface ClassSubclass {
   name: string;
   features: Record<string, Partial<SubclassFeature>[]>;
   spellcast_trait?: string;
 }
 
 export interface ClassAdditional {
-  subclasses: Record<string, Partial<Subclass>>;
+  subclasses: Record<string, Partial<ClassSubclass>>;
 }
 
 export type Domain = Database["public"]["Tables"]["domains"]["Row"];
@@ -31,5 +31,7 @@ export type Class = Database["public"]["Tables"]["classes"]["Row"] & {
   features: Partial<ClassFeature>[];
   additional: Partial<ClassAdditional>;
 };
+
+export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"];
 
 export type Json = Record<string, SupabaseJson | undefined>;
