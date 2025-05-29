@@ -1,3 +1,4 @@
+
 import { Database, Json as SupabaseJson } from "@/integrations/supabase/types";
 
 export interface Feature {
@@ -16,9 +17,27 @@ export interface ClassAdditional {
   subclasses: Record<string, Partial<ClassSubclass>>;
 }
 
+export interface CharacterStats {
+  agility: number;
+  strength: number;
+  finesse: number;
+  instinct: number;
+  presence: number;
+  knowledge: number;
+}
+
 export type Domain = Database["public"]["Tables"]["domains"]["Row"];
 
-export type Character = Database["public"]["Tables"]["characters"]["Row"];
+export type Character = Database["public"]["Tables"]["characters"]["Row"] & {
+  stats: CharacterStats;
+};
+
+export type CharacterWithRelations = Character & {
+  class: { name: string } | null;
+  ancestry: { name: string } | null;
+  subclass: { name: string } | null;
+  community: { name: string } | null;
+};
 
 export type Community = Database["public"]["Tables"]["communities"]["Row"];
 

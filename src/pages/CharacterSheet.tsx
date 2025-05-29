@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef, JSX } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
@@ -33,7 +34,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { debounce } from "lodash";
-import { Character, Json } from "@/lib/types";
+import { Character, CharacterWithRelations, Json } from "@/lib/types";
 
 interface InventoryItem extends Json {
   id: string;
@@ -60,7 +61,7 @@ const CharacterSheet = (): JSX.Element => {
 
   const { data: character, isLoading } = useQuery({
     queryKey: ["character", characterId],
-    queryFn: async () => {
+    queryFn: async (): Promise<CharacterWithRelations | null> => {
       if (!user || !characterId) return null;
 
       const { data, error } = await supabase
@@ -73,7 +74,7 @@ const CharacterSheet = (): JSX.Element => {
         .single();
 
       if (error) throw error;
-      return data as Character;
+      return data as CharacterWithRelations;
     },
     enabled: !!user && !!characterId,
   });
@@ -225,7 +226,7 @@ const CharacterSheet = (): JSX.Element => {
                 >
                   {character.class?.name ?? "Unknown"}
                   {character.subclass
-                    ? ` - (${String(character.subclass?.name)})`
+                    ? ` - (${character.subclass.name})`
                     : ""}
                 </Badge>
               </div>
@@ -309,13 +310,13 @@ const CharacterSheet = (): JSX.Element => {
               <CardContent>
                 <div className="grid grid-cols-3 gap-4">
                   {Object.entries(character.stats).map(
-                    ([stat, value]: [string, string]) => (
+                    ([stat, value]) => (
                       <div key={stat} className="text-center">
                         <div className="text-sm text-purple-300 capitalize">
                           {stat}
                         </div>
                         <div className="text-2xl font-bold text-white">
-                          {String(value)}
+                          {value}
                         </div>
                       </div>
                     )
