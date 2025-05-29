@@ -166,28 +166,39 @@ const CharacterBuilder = (): JSX.Element => {
   }, [formData.class]);
 
   const fetchCharacter = async () => {
+    if (!characterId) return;
+    
     const { data } = await supabase
       .from("characters")
       .select("*")
       .eq("id", characterId)
       .single();
 
-    setFormData({
-      name: data.name,
-      level: data.level,
-      age: data.age,
-      pronouns: data.pronouns,
-      gender: data.gender,
-      background: data.background,
-      ancestry: String(data.ancestry),
-      class: String(data.class),
-      community: String(data.community),
-      subclass: String(data.subclass),
-      stats: data.stats as unknown as FormData["stats"],
-      stressSlots: data.stressSlots ?? 6,
-      stress: data.stress ?? 0,
-      hope: data.hope ?? 2,
-    } satisfies FormData);
+    if (data) {
+      setFormData({
+        name: data.name || "",
+        level: data.level || 1,
+        age: data.age || undefined,
+        pronouns: data.pronouns || undefined,
+        gender: data.gender || undefined,
+        background: data.background || undefined,
+        ancestry: data.ancestry ? String(data.ancestry) : undefined,
+        class: data.class ? String(data.class) : undefined,
+        community: data.community ? String(data.community) : undefined,
+        subclass: data.subclass ? String(data.subclass) : undefined,
+        stats: (data.stats as unknown as FormData["stats"]) || {
+          agility: undefined,
+          strength: undefined,
+          finesse: undefined,
+          instinct: undefined,
+          presence: undefined,
+          knowledge: undefined,
+        },
+        stressSlots: data.stressSlots || 6,
+        stress: data.stress || 0,
+        hope: data.hope || 2,
+      } satisfies FormData);
+    }
   };
 
   useEffect(() => {
@@ -211,20 +222,20 @@ const CharacterBuilder = (): JSX.Element => {
       const characterData = {
         user_id: user.id,
         name: formData.name || "Unnamed Character",
-        ancestry: formData.ancestry,
-        class: formData.class,
-        subclass: formData.subclass,
-        community: formData.community,
+        ancestry: formData.ancestry ? parseInt(formData.ancestry, 10) : null,
+        class: formData.class ? parseInt(formData.class, 10) : null,
+        subclass: formData.subclass ? parseInt(formData.subclass, 10) : null,
+        community: formData.community ? parseInt(formData.community, 10) : null,
         level: formData.level,
-        background: formData.background,
+        background: formData.background || null,
         stats: formData.stats,
-        stressSlots: formData.stressSlots,
-        stress: formData.stress,
-        hope: formData.hope,
+        stressSlots: formData.stressSlots || 6,
+        stress: formData.stress || 0,
+        hope: formData.hope || 2,
         complete: currentStep === 4,
-        age: formData.age,
-        pronouns: formData.pronouns,
-        gender: formData.gender,
+        age: formData.age || null,
+        pronouns: formData.pronouns || null,
+        gender: formData.gender || null,
       };
 
       if (characterId) {
