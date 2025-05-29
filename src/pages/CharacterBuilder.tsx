@@ -125,12 +125,24 @@ const CharacterBuilder = (): JSX.Element => {
 
   useEffect(() => {
     const fetchSubclasses = async () => {
-      const data = await getSubclassesByClassId(
-        parseInt(formData.class ?? "0", 10)
-      );
+      // Validate class ID before fetching
+      const classIdNum = parseInt(formData.class ?? "0", 10);
+      if (!formData.class || isNaN(classIdNum) || classIdNum === 0) {
+        setSubclasses([]);
+        return;
+      }
+
+      const data = await getSubclassesByClassId(classIdNum);
 
       if (data) {
         setSubclasses(data);
+      } else {
+        setSubclasses([]);
+        toast({
+          title: "Error",
+          description: "Failed to load subclasses for selected class.",
+          variant: "destructive",
+        });
       }
     };
 
