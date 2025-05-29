@@ -18,9 +18,9 @@ export const getSingleClassBySlug = async (
 };
 
 interface ClassWithDomainsResponse {
-  classes_domains: Array<{
+  classes_domains: {
     domains: Domain;
-  }>;
+  }[];
 }
 
 const transformClassWithDomains = (data: any): Class => ({

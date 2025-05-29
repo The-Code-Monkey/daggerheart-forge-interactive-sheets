@@ -130,10 +130,6 @@ const CharacterBuilder = (): JSX.Element => {
     const fetchClasses = async () => {
       const data = await getAllClasses();
       if (data) {
-        setFormData((prevState) => ({
-          ...prevState,
-          subclass: undefined,
-        }));
         setClasses(data);
       }
     };
@@ -183,10 +179,10 @@ const CharacterBuilder = (): JSX.Element => {
       pronouns: data.pronouns,
       gender: data.gender,
       background: data.background,
-      ancestry: data.ancestry,
-      class: data.class,
-      community: data.community,
-      subclass: data.subclass,
+      ancestry: String(data.ancestry),
+      class: String(data.class),
+      community: String(data.community),
+      subclass: String(data.subclass),
       stats: data.stats as unknown as FormData["stats"],
       stressSlots: data.stressSlots ?? 6,
       stress: data.stress ?? 0,
@@ -563,6 +559,16 @@ const CharacterBuilder = (): JSX.Element => {
         );
 
       case 4:
+        const cls = classes.find((cls) => String(cls.id) === formData.class);
+        const subclass = subclasses.find(
+          (subclass) => String(subclass.id) === formData.subclass
+        );
+        const ancestry = ancestries.find(
+          (ancestry) => String(ancestry.id) === formData.ancestry
+        );
+        const community = communities.find(
+          (community) => String(community.id) === formData.community
+        );
         return (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold text-white mb-4">
@@ -573,13 +579,13 @@ const CharacterBuilder = (): JSX.Element => {
                 {formData.name || "Unnamed Character"}
               </h4>
               <p className="text-purple-200">
-                Level {formData.level} | {formData.class} ({formData.subclass})
+                Level {formData.level} | {cls?.name} ({subclass?.name})
               </p>
               <p className="text-purple-200">
                 Background: {formData.background}
               </p>
-              <p className="text-purple-200">Ancestry: {formData.ancestry}</p>
-              <p className="text-purple-200">Community: {formData.community}</p>
+              <p className="text-purple-200">Ancestry: {ancestry?.name}</p>
+              <p className="text-purple-200">Community: {community?.name}</p>
               <div className="grid grid-cols-3 gap-2 mt-4">
                 {Object.entries(formData.stats).map(([stat, value]) => (
                   <div key={stat} className="text-center">
