@@ -439,7 +439,7 @@ const CharacterBuilder = (): JSX.Element => {
                   </SelectTrigger>
                   <SelectContent>
                     {subclasses.map((subclass) => (
-                      <SelectItem value={String(subclass.id)}>
+                      <SelectItem key={subclass.id} value={String(subclass.id)}>
                         {subclass.name}
                       </SelectItem>
                     ))}
