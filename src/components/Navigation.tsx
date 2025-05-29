@@ -12,7 +12,11 @@ const Navigation = () => {
   const publicNavItems = [
     { name: "Home", path: "/" },
     { name: "Game Rules", path: "/game-rules" },
-    { name: "Discord", path: "https://discord.gg/mwgahF9z6q", target: "_blank" },
+    {
+      name: "Discord",
+      path: "https://discord.gg/mwgahF9z6q",
+      target: "_blank",
+    },
   ];
 
   const protectedNavItems = [
