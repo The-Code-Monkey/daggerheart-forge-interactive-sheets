@@ -1,14 +1,19 @@
 import { Class, Domain, Subclass } from "@/lib/types";
 import { supabase } from "./client";
 
-export const getSingleClassBySlug = async (slug: string): Promise<Class> => {
+export const getSingleClassBySlug = async (
+  slug: string
+): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
     .select("*")
     .eq("slug", slug)
     .single();
 
-  if (error) throw error;
+  if (error) {
+    console.log(error);
+    return null;
+  }
   return data as Class;
 };
 
