@@ -72,11 +72,6 @@ const HeroSection = () => {
             <div className="text-2xl font-bold text-white">500+</div>
             <div className="text-sm">Active Campaigns</div>
           </div>
-          <div className="w-px h-12 bg-purple-600"></div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-white">50K+</div>
-            <div className="text-sm">Dice Rolled</div>
-          </div>
         </div>
       </div>
     </section>
