@@ -1,4 +1,4 @@
-import { Class, Domain, Subclass } from "@/lib/types";
+import { Class, Domain, Subclass, Ancestry } from "@/lib/types";
 import { supabase } from "./client";
 
 export const getSingleClassBySlug = async (
@@ -143,4 +143,20 @@ export const getAllDomains = async (limit = 99): Promise<Domain[] | null> => {
     return null;
   }
   return data as Domain[];
+};
+
+export const getAllAncestries = async (
+  limit = 99
+): Promise<Ancestry[] | null> => {
+  const { data, error } = await supabase
+    .from("ancestries")
+    .select("*")
+    .limit(limit);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data as Ancestry[];
 };

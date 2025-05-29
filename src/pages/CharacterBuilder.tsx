@@ -22,10 +22,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Class, Subclass } from "@/lib/types";
+import { Ancestry, Class, Subclass } from "@/lib/types";
 import {
   getAllClasses,
   getSubclassesByClassId,
+  getAllAncestries,
 } from "@/integrations/supabase/helpers";
 
 const allowedMods = {
@@ -82,6 +83,7 @@ const CharacterBuilder = (): JSX.Element => {
 
   const [classes, setClasses] = useState<Class[]>([]);
   const [subclasses, setSubclasses] = useState<Subclass[]>([]);
+  const [ancestries, setAncestries] = useState<Ancestry[]>([]);
 
   // Form data
   const [formData, setFormData] = useState<FormData>({
@@ -109,6 +111,13 @@ const CharacterBuilder = (): JSX.Element => {
   });
 
   useEffect(() => {
+    const fetchAncestries = async () => {
+      const data = await getAllAncestries();
+      if (data) {
+        setAncestries(data);
+      }
+    };
+
     const fetchClasses = async () => {
       const data = await getAllClasses();
       if (data) {
@@ -121,6 +130,7 @@ const CharacterBuilder = (): JSX.Element => {
     };
 
     void fetchClasses();
+    void fetchAncestries();
   }, []);
 
   useEffect(() => {
@@ -392,24 +402,14 @@ const CharacterBuilder = (): JSX.Element => {
                   <SelectValue placeholder="Select ancestry" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="clank">Clank</SelectItem>
-                  <SelectItem value="drakona">Drakona</SelectItem>
-                  <SelectItem value="dwarf">Dwarf</SelectItem>
-                  <SelectItem value="elf">Elf</SelectItem>
-                  <SelectItem value="faerie">Faerie</SelectItem>
-                  <SelectItem value="faun">Faun</SelectItem>
-                  <SelectItem value="firbolg">Firbolg</SelectItem>
-                  <SelectItem value="fungil">Fungil</SelectItem>
-                  <SelectItem value="galapa">Galapa</SelectItem>
-                  <SelectItem value="giant">Giant</SelectItem>
-                  <SelectItem value="goblin">Goblin</SelectItem>
-                  <SelectItem value="halfling">Halfling</SelectItem>
-                  <SelectItem value="human">Human</SelectItem>
-                  <SelectItem value="infernis">Infernis</SelectItem>
-                  <SelectItem value="katari">Katari</SelectItem>
-                  <SelectItem value="orc">Orc</SelectItem>
-                  <SelectItem value="ribbit">Ribbit</SelectItem>
-                  <SelectItem value="simiah">Simiah</SelectItem>
+                  {ancestries.map((ancestry) => (
+                    <SelectItem
+                      key={String(ancestry.id)}
+                      value={String(ancestry.id)}
+                    >
+                      {String(ancestry.name)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

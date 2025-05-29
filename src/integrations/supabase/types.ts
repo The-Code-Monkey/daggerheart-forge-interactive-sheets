@@ -9,6 +9,33 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      ancestries: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          features: Json | null;
+          id: number;
+          isHomebrew: boolean | null;
+          name: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Relationships: [];
+      };
       characters: {
         Row: {
           age: number | null;

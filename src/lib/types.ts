@@ -26,6 +26,8 @@ export type Domain = Database["public"]["Tables"]["domains"]["Row"];
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"];
 
+export type Ancestry = Database["public"]["Tables"]["ancestries"]["Row"];
+
 export type Class = Database["public"]["Tables"]["classes"]["Row"] & {
   domains: Partial<Domain>[];
   features: Partial<ClassFeature>[];
