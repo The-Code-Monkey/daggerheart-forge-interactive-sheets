@@ -121,6 +121,7 @@ export interface Database {
           description: string | null;
           features: Json | null;
           id: number;
+          isHomebrew: boolean | null;
           name: string | null;
           slug: string | null;
         };
@@ -133,6 +134,7 @@ export interface Database {
           description?: string | null;
           features?: Json | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
           slug?: string | null;
         };
@@ -145,6 +147,7 @@ export interface Database {
           description?: string | null;
           features?: Json | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
           slug?: string | null;
         };
@@ -182,6 +185,33 @@ export interface Database {
             referencedColumns: ["id"];
           },
         ];
+      };
+      communities: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          features: Json | null;
+          id: number;
+          isHomebrew: boolean | null;
+          name: string | null;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          features?: Json | null;
+          id?: number;
+          isHomebrew?: boolean | null;
+          name?: string | null;
+        };
+        Relationships: [];
       };
       domains: {
         Row: {
@@ -234,6 +264,7 @@ export interface Database {
           created_at: string;
           description: string | null;
           id: number;
+          isHomebrew: boolean | null;
           name: string | null;
         };
         Insert: {
@@ -241,6 +272,7 @@ export interface Database {
           created_at?: string;
           description?: string | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
         };
         Update: {
@@ -248,6 +280,7 @@ export interface Database {
           created_at?: string;
           description?: string | null;
           id?: number;
+          isHomebrew?: boolean | null;
           name?: string | null;
         };
         Relationships: [

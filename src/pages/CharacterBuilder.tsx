@@ -22,11 +22,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { Ancestry, Class, Subclass } from "@/lib/types";
+import { Ancestry, Class, Subclass, Community } from "@/lib/types";
 import {
   getAllClasses,
   getSubclassesByClassId,
   getAllAncestries,
+  getAllCommunities,
 } from "@/integrations/supabase/helpers";
 
 const allowedMods = {
@@ -84,6 +85,7 @@ const CharacterBuilder = (): JSX.Element => {
   const [classes, setClasses] = useState<Class[]>([]);
   const [subclasses, setSubclasses] = useState<Subclass[]>([]);
   const [ancestries, setAncestries] = useState<Ancestry[]>([]);
+  const [communities, setCommunities] = useState<Community[]>([]);
 
   // Form data
   const [formData, setFormData] = useState<FormData>({
@@ -111,6 +113,13 @@ const CharacterBuilder = (): JSX.Element => {
   });
 
   useEffect(() => {
+    const fetchCommunities = async () => {
+      const data = await getAllCommunities();
+      if (data) {
+        setCommunities(data);
+      }
+    };
+
     const fetchAncestries = async () => {
       const data = await getAllAncestries();
       if (data) {
@@ -131,6 +140,7 @@ const CharacterBuilder = (): JSX.Element => {
 
     void fetchClasses();
     void fetchAncestries();
+    void fetchCommunities();
   }, []);
 
   useEffect(() => {
@@ -455,80 +465,6 @@ const CharacterBuilder = (): JSX.Element => {
                         {subclass.name}
                       </SelectItem>
                     ))}
-                    {formData.class === "bard" && (
-                      <>
-                        <SelectItem value="troubadour">Troubadour</SelectItem>
-                        <SelectItem value="wordsmith">Wordsmith</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "druid" && (
-                      <>
-                        <SelectItem value="warden-of-the-elements">
-                          Warden of the Elements
-                        </SelectItem>
-                        <SelectItem value="warden-of-renewal">
-                          Warden of Renewal
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "guardian" && (
-                      <>
-                        <SelectItem value="stalwart">Stalwart</SelectItem>
-                        <SelectItem value="vengeance">Vengeance</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "ranger" && (
-                      <>
-                        <SelectItem value="beastbound">Beastbound</SelectItem>
-                        <SelectItem value="wayfinder">Wayfinder</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "rogue" && (
-                      <>
-                        <SelectItem value="nightwalker">Nightwalker</SelectItem>
-                        <SelectItem value="syndicate">Syndicate</SelectItem>
-                      </>
-                    )}
-                    {formData.class === "seraph" && (
-                      <>
-                        <SelectItem value="divine-wielder">
-                          Divine Wielder
-                        </SelectItem>
-                        <SelectItem value="winged-sentinel">
-                          Winged Sentinel
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "sorcerer" && (
-                      <>
-                        <SelectItem value="elemental-origin">
-                          Elemental Origin
-                        </SelectItem>
-                        <SelectItem value="primal-origin">
-                          Primal Origin
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "wizard" && (
-                      <>
-                        <SelectItem value="school-of-knowledge">
-                          School of Knowledge
-                        </SelectItem>
-                        <SelectItem value="school-of-war">
-                          School of War
-                        </SelectItem>
-                      </>
-                    )}
-                    {formData.class === "warrior" && (
-                      <>
-                        <SelectItem value="call-of-the-brave">
-                          Call of the Brave
-                        </SelectItem>
-                        <SelectItem value="call-of-the-slayer">
-                          Call of the Slayer
-                        </SelectItem>
-                      </>
-                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -547,15 +483,14 @@ const CharacterBuilder = (): JSX.Element => {
                   <SelectValue placeholder="Select community" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="highborne">Highborne</SelectItem>
-                  <SelectItem value="loreborne">Loreborne</SelectItem>
-                  <SelectItem value="orderborne">Orderborne</SelectItem>
-                  <SelectItem value="ridgeborne">Ridgeborne</SelectItem>
-                  <SelectItem value="seaborne">Seaborne</SelectItem>
-                  <SelectItem value="slyborne">Slyborne</SelectItem>
-                  <SelectItem value="underborne">Underborne</SelectItem>
-                  <SelectItem value="wanderborne">Wanderborne</SelectItem>
-                  <SelectItem value="wildborne">Wildborne</SelectItem>
+                  {communities.map((community) => (
+                    <SelectItem
+                      key={String(community.id)}
+                      value={String(community.id)}
+                    >
+                      {String(community.name)}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
