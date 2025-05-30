@@ -2,6 +2,7 @@
 import React from "react";
 import { render, RenderOptions, screen, fireEvent } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Mock AuthContext
 const mockAuthContext = {
@@ -16,10 +17,24 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return <div data-testid="auth-provider">{children}</div>;
 };
 
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false, // optional: don't retry failed queries during test
+      },
+    },
+  });
+
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
+  const queryClient = createTestQueryClient();
   return (
     <BrowserRouter>
-      <AuthProvider>{children}</AuthProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

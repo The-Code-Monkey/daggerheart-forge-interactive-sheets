@@ -14,6 +14,6 @@ describe("Dashboard", () => {
   it("renders dashboard content", () => {
     render(<Dashboard />);
     // Add specific assertions based on Dashboard content
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/Welcome back/i)).toBeInTheDocument();
   });
 });

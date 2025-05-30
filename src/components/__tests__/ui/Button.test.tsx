@@ -1,10 +1,10 @@
-
-import { render, screen, fireEvent } from "../../../test-utils";
+import { screen, fireEvent, render } from "../../../test-utils";
 import { Button } from "../../ui/button";
 
 describe("Button", () => {
-  it("renders button with text", () => {
+  it("renders button with text", async () => {
     render(<Button>Click me</Button>);
+
     expect(screen.getByText("Click me")).toBeInTheDocument();
   });
 

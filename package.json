@@ -10,7 +10,7 @@
     "lint": "eslint . --fix",
     "preview": "vite preview",
     "gen": "npx supabase gen types typescript --project-id 'grqgftrusuxqdjxqzjwc' --schema public > ./src/integrations/supabase/types.ts",
-    "test": "jest",
+    "test": "jest --verbose --silent=false",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:ci": "jest --coverage --watchAll=false"

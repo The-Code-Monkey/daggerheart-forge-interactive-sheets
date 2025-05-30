@@ -16,7 +16,7 @@
     "noUnusedLocals": false,
     "strictNullChecks": true,
     "jsx": "react-jsx",
-    "esModuleInterop": true
-  },
-  "types": ["@testing-library/jest-dom", "node", "jest"]
+    "esModuleInterop": true,
+    "types": ["@testing-library/jest-dom", "node", "jest"]
+  }
 }

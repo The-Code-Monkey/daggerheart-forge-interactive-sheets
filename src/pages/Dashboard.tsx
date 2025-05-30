@@ -63,7 +63,7 @@ const Dashboard = (): JSX.Element => {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome back, {user?.user_metadata.username ?? "Adventurer"}!
+              Welcome back, {user?.user_metadata?.username ?? "Adventurer"}!
             </h1>
             <p className="text-purple-200">
               Manage your characters and campaigns
