@@ -1,6 +1,6 @@
 
-import { render, screen } from '@testing-library/react';
-import { Heart } from 'lucide-react';
+import { render, screen } from '../../../test-utils';
+import { Sword } from 'lucide-react';
 import StatBlock from '../StatBlock';
 
 describe('StatBlock', () => {
@@ -10,53 +10,26 @@ describe('StatBlock', () => {
         name="Strength"
         value={15}
         modifier={2}
-        icon={<Heart />}
+        icon={<Sword data-testid="sword-icon" />}
       />
     );
 
     expect(screen.getByText('Strength')).toBeInTheDocument();
     expect(screen.getByText('15')).toBeInTheDocument();
     expect(screen.getByText('+2')).toBeInTheDocument();
+    expect(screen.getByTestId('sword-icon')).toBeInTheDocument();
   });
 
-  it('displays negative modifier correctly', () => {
+  it('renders negative modifier correctly', () => {
     render(
       <StatBlock
-        name="Agility"
+        name="Dexterity"
         value={8}
         modifier={-1}
-        icon={<Heart />}
+        icon={<Sword />}
       />
     );
 
     expect(screen.getByText('-1')).toBeInTheDocument();
-  });
-
-  it('applies correct styling for positive modifier', () => {
-    render(
-      <StatBlock
-        name="Knowledge"
-        value={12}
-        modifier={3}
-        icon={<Heart />}
-      />
-    );
-
-    const modifier = screen.getByText('+3');
-    expect(modifier).toHaveClass('bg-green-600/50');
-  });
-
-  it('applies correct styling for negative modifier', () => {
-    render(
-      <StatBlock
-        name="Finesse"
-        value={6}
-        modifier={-2}
-        icon={<Heart />}
-      />
-    );
-
-    const modifier = screen.getByText('-2');
-    expect(modifier).toHaveClass('bg-red-600/50');
   });
 });

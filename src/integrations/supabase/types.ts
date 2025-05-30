@@ -299,6 +299,54 @@ export type Database = {
         }
         Relationships: []
       }
+      items: {
+        Row: {
+          burden: string | null
+          created_at: string
+          damage: Json | null
+          damage_type: string | null
+          features: Json | null
+          id: number
+          isHomebrew: boolean | null
+          isSecondary: boolean | null
+          name: string | null
+          range: string | null
+          tier: number | null
+          trait: string | null
+          type: string | null
+        }
+        Insert: {
+          burden?: string | null
+          created_at?: string
+          damage?: Json | null
+          damage_type?: string | null
+          features?: Json | null
+          id?: number
+          isHomebrew?: boolean | null
+          isSecondary?: boolean | null
+          name?: string | null
+          range?: string | null
+          tier?: number | null
+          trait?: string | null
+          type?: string | null
+        }
+        Update: {
+          burden?: string | null
+          created_at?: string
+          damage?: Json | null
+          damage_type?: string | null
+          features?: Json | null
+          id?: number
+          isHomebrew?: boolean | null
+          isSecondary?: boolean | null
+          name?: string | null
+          range?: string | null
+          tier?: number | null
+          trait?: string | null
+          type?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null

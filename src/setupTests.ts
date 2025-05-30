@@ -2,22 +2,32 @@
 import '@testing-library/jest-dom';
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
+class MockIntersectionObserver {
+  root = null;
+  rootMargin = '';
+  thresholds = [];
+  
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {}
+  
   observe() {}
   unobserve() {}
-};
+  disconnect() {}
+  takeRecords(): IntersectionObserverEntry[] {
+    return [];
+  }
+}
+
+global.IntersectionObserver = MockIntersectionObserver as any;
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
-  constructor() {}
-  disconnect() {}
+  constructor(callback: ResizeObserverCallback) {}
   observe() {}
   unobserve() {}
+  disconnect() {}
 };
 
-// Mock window.matchMedia
+// Mock matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({

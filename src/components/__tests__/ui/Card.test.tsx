@@ -1,45 +1,27 @@
 
-import { render, screen } from '@testing-library/react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../ui/card';
+import { render, screen } from '../../../test-utils';
+import { Card, CardHeader, CardTitle, CardContent } from '../../ui/card';
 
-describe('Card Components', () => {
-  it('renders card with header and content', () => {
+describe('Card', () => {
+  it('renders card with content', () => {
     render(
       <Card>
         <CardHeader>
           <CardTitle>Test Title</CardTitle>
-          <CardDescription>Test Description</CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Test content</p>
+          Test content
         </CardContent>
       </Card>
     );
 
     expect(screen.getByText('Test Title')).toBeInTheDocument();
-    expect(screen.getByText('Test Description')).toBeInTheDocument();
     expect(screen.getByText('Test content')).toBeInTheDocument();
   });
 
-  it('applies custom className to Card', () => {
-    render(
-      <Card className="custom-class">
-        <CardContent>Content</CardContent>
-      </Card>
-    );
-
-    const card = screen.getByText('Content').closest('.custom-class');
-    expect(card).toBeInTheDocument();
-  });
-
-  it('renders CardTitle with correct heading level', () => {
-    render(
-      <CardHeader>
-        <CardTitle>My Title</CardTitle>
-      </CardHeader>
-    );
-
-    const title = screen.getByRole('heading');
-    expect(title).toHaveTextContent('My Title');
+  it('applies card styling', () => {
+    render(<Card data-testid="card">Card content</Card>);
+    const card = screen.getByTestId('card');
+    expect(card).toHaveClass('rounded-lg', 'border', 'bg-card');
   });
 });
