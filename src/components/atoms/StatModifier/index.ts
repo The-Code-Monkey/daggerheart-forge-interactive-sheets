@@ -1,2 +1,1 @@
-
-export { default } from './StatModifier';
+export { default } from "./StatModifier";

@@ -1,4 +1,3 @@
-
 import StatDisplay from "@/components/molecules/StatDisplay";
 import { ReactNode } from "react";
 
@@ -17,13 +16,15 @@ interface StatsGridProps {
 const StatsGrid = ({ stats, columns = 3 }: StatsGridProps) => {
   const gridCols = {
     2: "grid-cols-2",
-    3: "grid-cols-3", 
+    3: "grid-cols-3",
     4: "grid-cols-4",
-    6: "grid-cols-6"
+    6: "grid-cols-6",
   };
 
   return (
-    <div className={`grid ${gridCols[columns as keyof typeof gridCols] || "grid-cols-3"} gap-4`}>
+    <div
+      className={`grid ${gridCols[columns as keyof typeof gridCols] || "grid-cols-3"} gap-4`}
+    >
       {stats.map((stat, index) => (
         <StatDisplay
           key={index}

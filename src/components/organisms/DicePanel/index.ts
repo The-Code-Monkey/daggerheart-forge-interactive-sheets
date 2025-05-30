@@ -1,2 +1,1 @@
-
-export { default } from './DicePanel';
+export { default } from "./DicePanel";

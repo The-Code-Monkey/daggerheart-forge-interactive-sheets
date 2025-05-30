@@ -1,7 +1,6 @@
-
-import React from 'react';
-import { render, RenderOptions } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import React from "react";
+import { render, RenderOptions } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 
 // Mock AuthContext
 const mockAuthContext = {
@@ -19,20 +18,18 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        {children}
-      </AuthProvider>
+      <AuthProvider>{children}</AuthProvider>
     </BrowserRouter>
   );
 };
 
 const customRender = (
   ui: React.ReactElement,
-  options?: Omit<RenderOptions, 'wrapper'>
+  options?: Omit<RenderOptions, "wrapper">
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
 // Export everything from testing-library/react
-export * from '@testing-library/react';
+export * from "@testing-library/react";
 export { customRender as render };
 
 // Mock useAuth hook

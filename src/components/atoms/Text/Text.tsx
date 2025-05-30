@@ -1,4 +1,3 @@
-
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
@@ -16,21 +15,28 @@ const variantStyles = {
   h4: "text-xl font-bold",
   body: "text-base leading-relaxed",
   caption: "text-sm",
-  label: "text-sm font-medium"
+  label: "text-sm font-medium",
 };
 
 const colorStyles = {
   primary: "text-white",
   secondary: "text-purple-200",
   accent: "text-yellow-400",
-  muted: "text-purple-300"
+  muted: "text-purple-300",
 };
 
-const Text = ({ children, variant = "body", color = "primary", className }: TextProps) => {
-  const Component = variant.startsWith('h') ? variant : 'p';
-  
+const Text = ({
+  children,
+  variant = "body",
+  color = "primary",
+  className,
+}: TextProps) => {
+  const Component = variant.startsWith("h") ? variant : "p";
+
   return (
-    <Component className={cn(variantStyles[variant], colorStyles[color], className)}>
+    <Component
+      className={cn(variantStyles[variant], colorStyles[color], className)}
+    >
       {children}
     </Component>
   );

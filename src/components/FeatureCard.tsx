@@ -1,5 +1,4 @@
-
-import IconCard from "@/components/molecules/IconCard";
+import IconCard from "./molecules/IconCard";
 import { LucideIcon } from "lucide-react";
 
 interface FeatureCardProps {

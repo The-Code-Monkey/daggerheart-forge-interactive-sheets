@@ -1,2 +1,1 @@
-
-export { default } from './GradientBox';
+export { default } from "./GradientBox";

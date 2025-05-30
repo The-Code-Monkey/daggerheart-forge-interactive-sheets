@@ -167,7 +167,7 @@ const CharacterBuilder = (): JSX.Element => {
 
   const fetchCharacter = async () => {
     if (!characterId) return;
-    
+
     const { data } = await supabase
       .from("characters")
       .select("*")

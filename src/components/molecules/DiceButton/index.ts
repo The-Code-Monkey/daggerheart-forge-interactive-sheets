@@ -1,2 +1,1 @@
-
-export { default } from './DiceButton';
+export { default } from "./DiceButton";

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef, JSX } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
@@ -225,9 +224,7 @@ const CharacterSheet = (): JSX.Element => {
                   className="border-purple-400 text-purple-200"
                 >
                   {character.class?.name ?? "Unknown"}
-                  {character.subclass
-                    ? ` - (${character.subclass.name})`
-                    : ""}
+                  {character.subclass ? ` - (${character.subclass.name})` : ""}
                 </Badge>
               </div>
             </div>
@@ -309,18 +306,16 @@ const CharacterSheet = (): JSX.Element => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-3 gap-4">
-                  {Object.entries(character.stats).map(
-                    ([stat, value]) => (
-                      <div key={stat} className="text-center">
-                        <div className="text-sm text-purple-300 capitalize">
-                          {stat}
-                        </div>
-                        <div className="text-2xl font-bold text-white">
-                          {value}
-                        </div>
+                  {Object.entries(character.stats).map(([stat, value]) => (
+                    <div key={stat} className="text-center">
+                      <div className="text-sm text-purple-300 capitalize">
+                        {stat}
                       </div>
-                    )
-                  )}
+                      <div className="text-2xl font-bold text-white">
+                        {value}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>

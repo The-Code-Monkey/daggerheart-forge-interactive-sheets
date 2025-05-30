@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/atoms/Icon";
 import Text from "@/components/atoms/Text";
@@ -19,7 +18,9 @@ const StatDisplay = ({ name, value, modifier, icon }: StatDisplayProps) => {
       <CardContent className="p-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           {icon}
-          <Text variant="label" color="primary" className="text-sm">{name}</Text>
+          <Text variant="label" color="primary" className="text-sm">
+            {name}
+          </Text>
         </div>
         <div className="space-y-1">
           <StatValue value={value} />

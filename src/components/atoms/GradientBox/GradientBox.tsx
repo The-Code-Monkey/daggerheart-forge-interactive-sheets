@@ -1,5 +1,4 @@
-
-import { cn } from "@/lib/utils";
+import { cn } from "../../../lib/utils";
 import { ReactNode } from "react";
 
 interface GradientBoxProps {
@@ -11,14 +10,16 @@ interface GradientBoxProps {
 const gradientStyles = {
   primary: "bg-gradient-to-r from-yellow-400 to-orange-500",
   secondary: "bg-gradient-to-br from-purple-800/40 to-slate-800/40",
-  card: "bg-gradient-to-br from-slate-800/80 to-slate-900/80"
+  card: "bg-gradient-to-br from-slate-800/80 to-slate-900/80",
 };
 
-const GradientBox = ({ children, variant = "primary", className }: GradientBoxProps) => {
+const GradientBox = ({
+  children,
+  variant = "primary",
+  className,
+}: GradientBoxProps) => {
   return (
-    <div className={cn(gradientStyles[variant], className)}>
-      {children}
-    </div>
+    <div className={cn(gradientStyles[variant], className)}>{children}</div>
   );
 };
 

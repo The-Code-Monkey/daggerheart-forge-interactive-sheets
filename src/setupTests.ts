@@ -1,14 +1,21 @@
+import "@testing-library/jest-dom";
+import { TextEncoder, TextDecoder } from 'node:util';
 
-import '@testing-library/jest-dom';
+global.TextEncoder = TextEncoder;
+// @ts-expect-error this is wrong
+global.TextDecoder = TextDecoder;
 
 // Mock IntersectionObserver
 class MockIntersectionObserver {
   root = null;
-  rootMargin = '';
+  rootMargin = "";
   thresholds = [];
-  
-  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverInit) {}
-  
+
+  constructor(
+    callback: IntersectionObserverCallback,
+    options?: IntersectionObserverInit
+  ) {}
+
   observe() {}
   unobserve() {}
   disconnect() {}
@@ -28,9 +35,9 @@ global.ResizeObserver = class ResizeObserver {
 };
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,

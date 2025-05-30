@@ -1,4 +1,3 @@
-
 import { Sparkles } from "lucide-react";
 import CTAButtonGroup from "@/components/molecules/CTAButtonGroup";
 import HeroStats from "@/components/molecules/HeroStats";
@@ -37,7 +36,11 @@ const HeroSection = () => {
           </span>
         </Text>
 
-        <Text variant="body" color="secondary" className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto">
+        <Text
+          variant="body"
+          color="secondary"
+          className="text-xl md:text-2xl mb-10 max-w-4xl mx-auto"
+        >
           Create characters, manage campaigns, and enhance your Daggerheart
           experience with our comprehensive digital toolset designed for players
           and Game Masters.

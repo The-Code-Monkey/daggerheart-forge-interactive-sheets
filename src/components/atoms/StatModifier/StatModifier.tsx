@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +15,11 @@ const getModifierColor = (mod: number) => {
   return mod >= 0 ? "bg-green-600/50" : "bg-red-600/50";
 };
 
-const StatModifier = ({ modifier, size = "md", className }: StatModifierProps) => {
+const StatModifier = ({
+  modifier,
+  size = "md",
+  className,
+}: StatModifierProps) => {
   return (
     <Badge
       variant="secondary"

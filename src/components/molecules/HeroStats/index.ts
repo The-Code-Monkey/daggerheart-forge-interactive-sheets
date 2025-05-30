@@ -1,2 +1,1 @@
-
-export { default } from './HeroStats';
+export { default } from "./HeroStats";

@@ -1,2 +1,1 @@
-
-export { default } from './IconCard';
+export { default } from "./IconCard";

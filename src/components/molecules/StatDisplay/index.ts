@@ -1,2 +1,1 @@
-
-export { default } from './StatDisplay';
+export { default } from "./StatDisplay";

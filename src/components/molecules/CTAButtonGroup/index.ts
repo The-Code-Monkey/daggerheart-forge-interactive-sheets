@@ -1,2 +1,1 @@
-
-export { default } from './CTAButtonGroup';
+export { default } from "./CTAButtonGroup";

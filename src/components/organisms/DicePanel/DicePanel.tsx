@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -44,9 +43,16 @@ const DicePanel = () => {
       <CardContent className="space-y-4">
         {/* Last Roll Display */}
         {lastRoll && (
-          <GradientBox variant="secondary" className="rounded-lg p-4 text-center">
-            <Text variant="h3" color="accent">{lastRoll.result}</Text>
-            <Text variant="caption" color="secondary">{lastRoll.dice}</Text>
+          <GradientBox
+            variant="secondary"
+            className="rounded-lg p-4 text-center"
+          >
+            <Text variant="h3" color="accent">
+              {lastRoll.result}
+            </Text>
+            <Text variant="caption" color="secondary">
+              {lastRoll.dice}
+            </Text>
           </GradientBox>
         )}
 
@@ -55,36 +61,52 @@ const DicePanel = () => {
           <DiceButton
             label="2d12 Hope"
             variant="hope"
-            onClick={() => rollDice(12, 2, "2d12 (Hope)")}
+            onClick={() => {
+              rollDice(12, 2, "2d12 (Hope)");
+            }}
           />
           <DiceButton
             label="2d12 Fear"
             variant="fear"
-            onClick={() => rollDice(12, 2, "2d12 (Fear)")}
+            onClick={() => {
+              rollDice(12, 2, "2d12 (Fear)");
+            }}
           />
           <DiceButton
             label="d20"
-            onClick={() => rollDice(20, 1, "1d20")}
+            onClick={() => {
+              rollDice(20, 1, "1d20");
+            }}
           />
           <DiceButton
             label="d12"
-            onClick={() => rollDice(12, 1, "1d12")}
+            onClick={() => {
+              rollDice(12, 1, "1d12");
+            }}
           />
           <DiceButton
             label="d10"
-            onClick={() => rollDice(10, 1, "1d10")}
+            onClick={() => {
+              rollDice(10, 1, "1d10");
+            }}
           />
           <DiceButton
             label="d8"
-            onClick={() => rollDice(8, 1, "1d8")}
+            onClick={() => {
+              rollDice(8, 1, "1d8");
+            }}
           />
           <DiceButton
             label="d6"
-            onClick={() => rollDice(6, 1, "1d6")}
+            onClick={() => {
+              rollDice(6, 1, "1d6");
+            }}
           />
           <DiceButton
             label="d4"
-            onClick={() => rollDice(4, 1, "1d4")}
+            onClick={() => {
+              rollDice(4, 1, "1d4");
+            }}
           />
         </div>
 
@@ -92,7 +114,9 @@ const DicePanel = () => {
         {rollHistory.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Text variant="caption" color="secondary">Recent Rolls</Text>
+              <Text variant="caption" color="secondary">
+                Recent Rolls
+              </Text>
               <Button
                 variant="ghost"
                 size="sm"
@@ -108,7 +132,9 @@ const DicePanel = () => {
                   key={index}
                   className="flex justify-between items-center text-sm"
                 >
-                  <Text variant="caption" color="secondary">{roll.dice}</Text>
+                  <Text variant="caption" color="secondary">
+                    {roll.dice}
+                  </Text>
                   <Badge
                     variant="secondary"
                     className="bg-slate-700 text-white"

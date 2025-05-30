@@ -1,4 +1,3 @@
-
 import { Database, Json as SupabaseJson } from "@/integrations/supabase/types";
 
 export interface Feature {

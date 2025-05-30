@@ -1,2 +1,1 @@
-
-export { default } from './StatValue';
+export { default } from "./StatValue";
