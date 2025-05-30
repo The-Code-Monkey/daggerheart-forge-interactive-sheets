@@ -26,9 +26,7 @@ const IconCard = ({ icon, title, description }: IconCardProps) => {
         >
           <Icon icon={icon} className="text-black" />
         </GradientBox>
-        <CardTitle>
-            {title}
-        </CardTitle>
+        <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
         <CardDescription>

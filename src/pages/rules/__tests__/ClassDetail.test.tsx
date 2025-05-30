@@ -1,4 +1,3 @@
-
 import { render } from "../../../test-utils";
 import ClassDetail from "../ClassDetail";
 

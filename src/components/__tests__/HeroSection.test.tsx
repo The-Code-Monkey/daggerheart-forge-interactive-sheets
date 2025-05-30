@@ -1,4 +1,3 @@
-
 import { render, screen } from "../../test-utils";
 import HeroSection from "../HeroSection";
 

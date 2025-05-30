@@ -1,5 +1,5 @@
-import '@testing-library/jest-dom';
-import { TextEncoder, TextDecoder } from 'node:util';
+import "@testing-library/jest-dom";
+import { TextEncoder, TextDecoder } from "node:util";
 
 (global as any).TextEncoder = TextEncoder;
 (global as any).TextDecoder = TextDecoder;
@@ -7,17 +7,25 @@ import { TextEncoder, TextDecoder } from 'node:util';
 // Mock IntersectionObserver
 class MockIntersectionObserver implements IntersectionObserver {
   root: Element | null = null;
-  rootMargin: string = '';
-  thresholds: ReadonlyArray<number> = [];
+  rootMargin = "";
+  thresholds: readonly number[] = [];
 
   constructor(
     private callback: IntersectionObserverCallback,
     private options?: IntersectionObserverInit
-  ) {}
+  ) {
+    jest.fn();
+  }
 
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  observe() {
+    jest.fn();
+  }
+  unobserve() {
+    jest.fn();
+  }
+  disconnect() {
+    jest.fn();
+  }
   takeRecords(): IntersectionObserverEntry[] {
     return [];
   }
@@ -27,14 +35,22 @@ class MockIntersectionObserver implements IntersectionObserver {
 
 // Mock ResizeObserver
 (global as any).ResizeObserver = class ResizeObserver {
-  constructor(callback: ResizeObserverCallback) {}
-  observe() {}
-  unobserve() {}
-  disconnect() {}
+  constructor(_: ResizeObserverCallback) {
+    jest.fn();
+  }
+  observe() {
+    jest.fn();
+  }
+  unobserve() {
+    jest.fn();
+  }
+  disconnect() {
+    jest.fn();
+  }
 };
 
 // Mock matchMedia
-Object.defineProperty(window, 'matchMedia', {
+Object.defineProperty(window, "matchMedia", {
   writable: true,
   value: jest.fn().mockImplementation((query: string) => ({
     matches: false,

@@ -8,9 +8,9 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/dashboard");
+      void navigate("/dashboard");
     } else {
-      navigate("/auth");
+      void navigate("/auth");
     }
   }, [user, navigate]);
 

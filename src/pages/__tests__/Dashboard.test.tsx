@@ -1,14 +1,13 @@
-
 import { render, screen } from "../../test-utils";
 import Dashboard from "../Dashboard";
 
 // Mock useAuth hook
 jest.mock("@/contexts/AuthContext", () => ({
   useAuth: () => ({
-    user: { 
-      id: "1", 
+    user: {
+      id: "1",
       email: "test@example.com",
-      user_metadata: { username: "TestUser" }
+      user_metadata: { username: "TestUser" },
     },
     loading: false,
     signOut: jest.fn(),
