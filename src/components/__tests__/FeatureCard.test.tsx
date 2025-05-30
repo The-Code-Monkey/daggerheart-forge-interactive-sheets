@@ -20,7 +20,7 @@ describe("FeatureCard", () => {
   });
 
   it("renders with hover effects", () => {
-    render(
+    const { container } = render(
       <FeatureCard
         icon={Sword}
         title="Test Feature"
@@ -29,8 +29,7 @@ describe("FeatureCard", () => {
     );
 
     const card = screen
-      .getByText("Test Feature")
-      .closest('.group, [class*="hover:"]')?.parentElement;
+      .getByText("Test Feature")?.parentElement?.parentElement;
 
     expect(card).toHaveClass("hover:scale-105");
   });
