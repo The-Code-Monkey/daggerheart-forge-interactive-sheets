@@ -1,3 +1,4 @@
+
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
@@ -21,4 +22,8 @@ module.exports = {
   ],
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html'],
+  // Snapshot serializer options
+  snapshotSerializers: [],
+  // Update snapshots automatically in CI
+  updateSnapshot: process.env.CI ? false : true,
 };

@@ -17,10 +17,23 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => jest.fn(),
 }));
 
+// Mock @tanstack/react-query
+jest.mock("@tanstack/react-query", () => ({
+  useQuery: () => ({
+    data: null,
+    isLoading: true,
+    error: null,
+  }),
+}));
+
 describe("CharacterSheet", () => {
   it("renders character sheet", () => {
     render(<CharacterSheet />);
-    // Add specific assertions based on CharacterSheet content
     expect(document.body).toContainHTML("div");
+  });
+
+  it("renders correctly", () => {
+    const { container } = render(<CharacterSheet />);
+    expect(container.firstChild).toMatchSnapshot();
   });
 });
