@@ -17,10 +17,12 @@ import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
 import ClassDetail from "./pages/rules/ClassDetail";
 import AncestryDetail from "./pages/rules/AncestryDetail";
+import CampaignBuilder from "./pages/CampaignBuilder";
+import { JSX } from "react";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = (): JSX.Element => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <TooltipProvider>
@@ -33,7 +35,6 @@ const App = () => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/game-rules" element={<GameRules />} />
-              {/* <Route path="/rules/domains/:domainName" element={<DomainDetail />} /> */}
               <Route
                 path="/rules/classes/:className"
                 element={<ClassDetail />}
@@ -55,6 +56,14 @@ const App = () => (
                 element={
                   <ProtectedRoute>
                     <CharacterBuilder />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/campaign-builder/:campaignId?"
+                element={
+                  <ProtectedRoute>
+                    <CampaignBuilder />
                   </ProtectedRoute>
                 }
               />

@@ -22,6 +22,8 @@ export type Character = Database["public"]["Tables"]["characters"]["Row"];
 
 export type Community = Database["public"]["Tables"]["communities"]["Row"];
 
+export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+
 export type Class = Database["public"]["Tables"]["classes"]["Row"] & {
   domains: Partial<Domain>[];
   features: Partial<Feature>[];

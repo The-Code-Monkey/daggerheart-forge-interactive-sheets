@@ -1,4 +1,4 @@
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -22,10 +22,25 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { Campaign } from "@/lib/types";
+import { getOwnedCampaigns } from "@/integrations/supabase/helpers";
 
 const Dashboard = (): JSX.Element => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
+
+  const [campaigns, setCampaigns] = useState<Partial<Campaign>[]>([]);
+
+  const fetchCampaigns = async () => {
+    const data = await getOwnedCampaigns();
+    if (data) {
+      setCampaigns(data);
+    }
+  };
+
+  useEffect(() => {
+    void fetchCampaigns();
+  }, []);
 
   const { data: characters = [], isLoading } = useQuery({
     queryKey: ["characters", user?.id],
@@ -55,6 +70,12 @@ const Dashboard = (): JSX.Element => {
   const characterCount = characters.length;
   const maxCharacters = 5;
   const canCreateMore = characterCount < maxCharacters;
+
+  const campaignCount = campaigns.length;
+  const maxCampaigns = 3;
+  const canCreateMoreCampaigns = campaignCount < maxCampaigns;
+
+  console.log(campaigns);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
@@ -110,8 +131,14 @@ const Dashboard = (): JSX.Element => {
               <Sword className="h-4 w-4 text-yellow-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">Coming Soon</div>
-              <p className="text-xs text-purple-200">Campaign management</p>
+              <div className="text-2xl font-bold text-white">
+                {campaignCount}/{maxCampaigns}
+              </div>
+              <p className="text-xs text-purple-200">
+                {canCreateMoreCampaigns
+                  ? `${maxCampaigns - campaignCount} slots remaining`
+                  : "Maximum reached"}
+              </p>
             </CardContent>
           </Card>
 
@@ -129,134 +156,203 @@ const Dashboard = (): JSX.Element => {
           </Card>
         </div>
 
-        {/* Characters Section */}
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <CardTitle className="text-white text-xl">
-                Your Characters
-              </CardTitle>
-              <CardDescription className="text-purple-200">
-                Manage your Daggerheart characters
-              </CardDescription>
-            </div>
-            {canCreateMore && (
-              <Link to="/character-builder">
-                <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Create Character
-                </Button>
-              </Link>
-            )}
-          </CardHeader>
-          <CardContent>
-            {isLoading ? (
-              <div className="text-center py-8">
-                <p className="text-purple-200">Loading characters...</p>
+        <div className="flex flex-col gap-4">
+          {/* Characters Section */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-white text-xl">
+                  Your Characters
+                </CardTitle>
+                <CardDescription className="text-purple-200">
+                  Manage your Daggerheart characters
+                </CardDescription>
               </div>
-            ) : characters.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {characters.map((character) => {
-                  const link = character.complete
-                    ? `/character-sheet/${character.id}`
-                    : `/character-builder/${character.id}`;
-
-                  return (
-                    <Card
-                      key={character.id}
-                      className="bg-slate-800/30 border-purple-500/20"
-                    >
-                      <CardHeader className="pb-2">
-                        <CardTitle className="text-white text-lg">
-                          {character.name}
-                        </CardTitle>
-                        <div className="flex gap-2">
-                          <Badge variant="secondary" className="text-xs">
-                            Level {character.level}
-                          </Badge>
-                          {character.ancestry && (
-                            <Badge
-                              variant="outline"
-                              className="text-xs border-purple-400 text-purple-200"
-                            >
-                              {character.ancestry.name ?? "Unknown"}
-                            </Badge>
-                          )}
-                        </div>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-purple-200 text-sm mb-3">
-                          {character.class?.name ?? "No class selected"}
-                          {character.subclass
-                            ? ` - (${String(character.subclass.name)})`
-                            : ""}
-                        </p>
-                        <Link to={link}>
-                          <Button
-                            size="sm"
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                          >
-                            {character.complete ? (
-                              <>
-                                <Eye className="w-4 h-4 mr-2" />
-                                View Sheet
-                              </>
-                            ) : (
-                              <>
-                                <Pencil className="w-4 h-4 mr-2" />
-                                Edit Sheet
-                              </>
-                            )}
-                          </Button>
-                        </Link>
-                      </CardContent>
-                    </Card>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-purple-200 mb-4">
-                  You haven't created any characters yet.
-                </p>
-                {canCreateMore && (
-                  <Link to="/character-builder">
-                    <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Create Your First Character
-                    </Button>
-                  </Link>
-                )}
-              </div>
-            )}
-
-            {!canCreateMore && (
-              <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
-                <p className="text-orange-200 text-sm">
-                  You've reached the maximum of {maxCharacters} characters.
-                  Delete a character to create a new one.
-                </p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Coming Soon Features */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <Card className="bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
-            <CardHeader>
-              <CardTitle className="text-white">Campaign Management</CardTitle>
-              <CardDescription className="text-gray-300">
-                Create and manage your Daggerheart campaigns
-              </CardDescription>
+              {canCreateMore && characters.length > 0 && (
+                <Link to="/character-builder">
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create Character
+                  </Button>
+                </Link>
+              )}
             </CardHeader>
             <CardContent>
-              <Badge variant="secondary" className="bg-gray-600">
-                Coming Soon
-              </Badge>
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <p className="text-purple-200">Loading characters...</p>
+                </div>
+              ) : characters.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {characters.map((character) => {
+                    const link = character.complete
+                      ? `/character-sheet/${character.id}`
+                      : `/character-builder/${character.id}`;
+
+                    return (
+                      <Card
+                        key={character.id}
+                        className="bg-slate-800/30 border-purple-500/20"
+                      >
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-white text-lg">
+                            {character.name}
+                          </CardTitle>
+                          <div className="flex gap-2">
+                            <Badge variant="secondary" className="text-xs">
+                              Level {character.level}
+                            </Badge>
+                            {character.ancestry && (
+                              <Badge
+                                variant="outline"
+                                className="text-xs border-purple-400 text-purple-200"
+                              >
+                                {character.ancestry.name ?? "Unknown"}
+                              </Badge>
+                            )}
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-purple-200 text-sm mb-3">
+                            {character.class?.name ?? "No class selected"}
+                            {character.subclass
+                              ? ` - (${String(character.subclass.name)})`
+                              : ""}
+                          </p>
+                          <Link to={link}>
+                            <Button
+                              size="sm"
+                              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              {character.complete ? (
+                                <>
+                                  <Eye className="w-4 h-4 mr-2" />
+                                  View Sheet
+                                </>
+                              ) : (
+                                <>
+                                  <Pencil className="w-4 h-4 mr-2" />
+                                  Edit Sheet
+                                </>
+                              )}
+                            </Button>
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-purple-200 mb-4">
+                    You haven't created any characters yet.
+                  </p>
+                  {canCreateMore && (
+                    <Link to="/character-builder">
+                      <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Your First Character
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {!canCreateMore && (
+                <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
+                  <p className="text-orange-200 text-sm">
+                    You've reached the maximum of {maxCharacters} characters.
+                    Delete a character to create a new one.
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
 
+          {/* Campaigns Section */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-white text-xl">
+                  Campaign Management
+                </CardTitle>
+                <CardDescription className="text-purple-200">
+                  Manage your Daggerheart campaigns
+                </CardDescription>
+              </div>
+              {canCreateMoreCampaigns && campaigns.length > 0 && (
+                <Link to="/campaign-builder">
+                  <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create Campaign
+                  </Button>
+                </Link>
+              )}
+            </CardHeader>
+            <CardContent>
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <p className="text-purple-200">Loading campaigns...</p>
+                </div>
+              ) : campaigns.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {campaigns.map((campaign) => {
+                    return (
+                      <Card
+                        key={campaign.id}
+                        className="bg-slate-800/30 border-purple-500/20"
+                      >
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-white text-lg">
+                            {campaign.name}
+                          </CardTitle>
+                          <div className="flex gap-2"></div>
+                        </CardHeader>
+                        <CardContent>
+                          <Link to={`/campaigns/${String(campaign.id)}`}>
+                            <Button
+                              size="sm"
+                              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              <Eye className="w-4 h-4 mr-2" />
+                              View Campaign
+                            </Button>
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-purple-200 mb-4">
+                    You haven't created any campaigns yet.
+                  </p>
+                  {canCreateMore && (
+                    <Link to="/campaign-builder">
+                      <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
+                        <Plus className="w-4 h-4 mr-2" />
+                        Create Your First Campaign
+                      </Button>
+                    </Link>
+                  )}
+                </div>
+              )}
+
+              {!canCreateMoreCampaigns && (
+                <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
+                  <p className="text-orange-200 text-sm">
+                    You've reached the maximum of {maxCampaigns} campaigns.
+                    Delete a campaign to create a new one.
+                  </p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Coming Soon Features */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           <Card className="bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
             <CardHeader>
               <CardTitle className="text-white">Digital Dice & Tools</CardTitle>

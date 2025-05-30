@@ -1,4 +1,11 @@
-import { Class, Domain, Subclass, Ancestry, Community } from "@/lib/types";
+import {
+  Class,
+  Domain,
+  Subclass,
+  Ancestry,
+  Community,
+  Campaign,
+} from "@/lib/types";
 import { supabase } from "./client";
 
 export const getSingleClassBySlug = async (
@@ -197,4 +204,19 @@ export const getSingleAncestryBySlug = async (
     return null;
   }
   return data as Ancestry;
+};
+
+export const getOwnedCampaigns = async (
+  limit = 99
+): Promise<Campaign[] | null> => {
+  const { data, error } = await supabase
+    .from("campaigns")
+    .select("*")
+    .limit(limit);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Campaign[];
 };

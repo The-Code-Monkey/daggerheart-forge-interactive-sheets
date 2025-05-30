@@ -11,8 +11,9 @@ import { Link } from "react-router-dom";
 import HeroSection from "@/components/HeroSection";
 import FeatureCard from "@/components/FeatureCard";
 import FeaturedCampaigns from "@/components/FeaturedCampaigns";
+import { JSX } from "react";
 
-const Index = () => {
+const Index = (): JSX.Element => {
   const features = [
     {
       icon: BookOpen,
