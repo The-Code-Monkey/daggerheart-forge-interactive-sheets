@@ -1,4 +1,4 @@
-import { Class, Domain, Subclass, Ancestry, Communit, CharacterWithRelations } from "@/lib/types";
+import { Class, Domain, Subclass, Ancestry, Community, CharacterWithRelations } from "@/lib/types";
 import { supabase } from "./client";
 
 export const getSingleClassBySlug = async (
