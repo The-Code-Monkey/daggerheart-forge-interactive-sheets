@@ -1,7 +1,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "../../ui/card";
@@ -29,11 +28,9 @@ const IconCard = ({ icon, title, description }: IconCardProps) => {
         <CardTitle>{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <CardDescription>
-          <Text variant="body" color="secondary">
-            {description}
-          </Text>
-        </CardDescription>
+        <Text variant="body" color="secondary">
+          {description}
+        </Text>
       </CardContent>
     </Card>
   );
