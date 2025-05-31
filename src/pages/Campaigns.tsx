@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   Card,
@@ -44,7 +45,7 @@ const Campaigns = () => {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
@@ -52,7 +53,7 @@ const Campaigns = () => {
             <h1 className="text-4xl font-bold text-white mb-4">
               Campaign Manager
             </h1>
-            <p className="text-xl text-purple-200">
+            <p className="text-xl text-brand-200">
               Organize and track your Daggerheart campaigns
             </p>
           </div>
@@ -67,7 +68,7 @@ const Campaigns = () => {
           {campaigns.map((campaign) => (
             <Card
               key={campaign.id}
-              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300"
+              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
@@ -89,28 +90,28 @@ const Campaigns = () => {
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-purple-300 hover:text-white"
+                    className="text-brand-300 hover:text-white"
                   >
                     <Settings className="w-4 h-4" />
                   </Button>
                 </div>
-                <CardDescription className="text-purple-200">
+                <CardDescription className="text-brand-200">
                   {campaign.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2 text-purple-200">
+                  <div className="flex items-center gap-2 text-brand-200">
                     <Users className="w-4 h-4" />
                     {campaign.players} Players
                   </div>
-                  <div className="flex items-center gap-2 text-purple-200">
+                  <div className="flex items-center gap-2 text-brand-200">
                     <Calendar className="w-4 h-4" />
                     {campaign.sessions} Sessions
                   </div>
                 </div>
 
-                <div className="text-sm text-purple-300">
+                <div className="text-sm text-brand-300">
                   Last played:{" "}
                   {new Date(campaign.lastPlayed).toLocaleDateString()}
                 </div>
@@ -118,14 +119,14 @@ const Campaigns = () => {
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
-                    className="flex-1 border-purple-400 text-purple-100 "
+                    className="flex-1 border-brand-400 text-brand-100"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     View
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-purple-400 text-purple-100 "
+                    className="border-brand-400 text-brand-100"
                   >
                     <MapPin className="w-4 h-4" />
                   </Button>
@@ -151,10 +152,10 @@ const Campaigns = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-purple-800/40 to-pink-800/40 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-brand-800/40 to-pink-800/40 border-brand-500/30 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
-              <div className="text-3xl font-bold text-purple-900 mb-2">44</div>
-              <div className="text-purple-900">Sessions Played</div>
+              <div className="text-3xl font-bold text-brand-900 mb-2">44</div>
+              <div className="text-brand-900">Sessions Played</div>
             </CardContent>
           </Card>
 

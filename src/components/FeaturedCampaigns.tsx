@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -53,7 +54,7 @@ const FeaturedCampaigns = () => {
           <h2 className="text-4xl font-bold text-white mb-4">
             Featured <span className="text-yellow-400">Campaigns</span>
           </h2>
-          <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+          <p className="text-xl text-brand-200 max-w-3xl mx-auto">
             Explore these expertly crafted campaign modules designed to showcase
             the best of Daggerheart gameplay.
           </p>
@@ -63,7 +64,7 @@ const FeaturedCampaigns = () => {
           {featuredCampaigns.map((campaign) => (
             <Card
               key={campaign.id}
-              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300"
+              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
             >
               <CardHeader>
                 <div className="flex items-start justify-between mb-2">
@@ -83,23 +84,23 @@ const FeaturedCampaigns = () => {
                 <CardTitle className="text-white text-xl mb-2">
                   {campaign.name}
                 </CardTitle>
-                <CardDescription className="text-purple-200">
+                <CardDescription className="text-brand-200">
                   {campaign.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2 text-purple-200">
+                  <div className="flex items-center gap-2 text-brand-200">
                     <Users className="w-4 h-4" />
                     {campaign.players}
                   </div>
-                  <div className="flex items-center gap-2 text-purple-200">
+                  <div className="flex items-center gap-2 text-brand-200">
                     <Calendar className="w-4 h-4" />
                     {campaign.sessions}
                   </div>
                 </div>
 
-                <div className="text-sm text-purple-300">
+                <div className="text-sm text-brand-300">
                   Difficulty:{" "}
                   <span className="text-white font-medium">
                     {campaign.difficulty}
@@ -111,7 +112,7 @@ const FeaturedCampaigns = () => {
                     <Badge
                       key={index}
                       variant="outline"
-                      className="border-purple-400/50 text-purple-200 text-xs"
+                      className="border-brand-400/50 text-brand-200 text-xs"
                     >
                       {tag}
                     </Badge>
