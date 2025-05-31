@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -11,7 +12,7 @@ interface DiceButtonProps {
 const variantStyles = {
   hope: "border-green-500 text-green-400 hover:bg-green-500/20",
   fear: "border-red-500 text-red-400 hover:bg-red-500/20",
-  default: "border-purple-400 text-purple-300 hover:bg-purple-500/20",
+  default: "border-brand-400 text-brand-300 hover:bg-brand-500/20",
 };
 
 const DiceButton = ({

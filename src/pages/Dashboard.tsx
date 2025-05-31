@@ -1,3 +1,4 @@
+
 import { JSX } from "react";
 import {
   Card,
@@ -57,7 +58,7 @@ const Dashboard = (): JSX.Element => {
   const canCreateMore = characterCount < maxCharacters;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -65,7 +66,7 @@ const Dashboard = (): JSX.Element => {
             <h1 className="text-4xl font-bold text-white mb-2">
               Welcome back, {user?.user_metadata.username ?? "Adventurer"}!
             </h1>
-            <p className="text-purple-200">
+            <p className="text-brand-200">
               Manage your characters and campaigns
             </p>
           </div>
@@ -74,7 +75,7 @@ const Dashboard = (): JSX.Element => {
               void handleSignOut();
             }}
             variant="outline"
-            className="border-purple-400 text-purple-100 "
+            className="border-brand-400 text-brand-100"
           >
             <LogOut className="w-4 h-4 mr-2" />
             Sign Out
@@ -94,7 +95,7 @@ const Dashboard = (): JSX.Element => {
               <div className="text-2xl font-bold text-white">
                 {characterCount}/{maxCharacters}
               </div>
-              <p className="text-xs text-purple-200">
+              <p className="text-xs text-brand-200">
                 {canCreateMore
                   ? `${maxCharacters - characterCount} slots remaining`
                   : "Maximum reached"}
@@ -111,7 +112,7 @@ const Dashboard = (): JSX.Element => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-white">Coming Soon</div>
-              <p className="text-xs text-purple-200">Campaign management</p>
+              <p className="text-xs text-brand-200">Campaign management</p>
             </CardContent>
           </Card>
 
@@ -124,7 +125,7 @@ const Dashboard = (): JSX.Element => {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-white">Coming Soon</div>
-              <p className="text-xs text-purple-200">Digital rule access</p>
+              <p className="text-xs text-brand-200">Digital rule access</p>
             </CardContent>
           </Card>
         </div>
@@ -136,7 +137,7 @@ const Dashboard = (): JSX.Element => {
               <CardTitle className="text-white text-xl">
                 Your Characters
               </CardTitle>
-              <CardDescription className="text-purple-200">
+              <CardDescription className="text-brand-200">
                 Manage your Daggerheart characters
               </CardDescription>
             </div>
@@ -152,7 +153,7 @@ const Dashboard = (): JSX.Element => {
           <CardContent>
             {isLoading ? (
               <div className="text-center py-8">
-                <p className="text-purple-200">Loading characters...</p>
+                <p className="text-brand-200">Loading characters...</p>
               </div>
             ) : characters.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -164,7 +165,7 @@ const Dashboard = (): JSX.Element => {
                   return (
                     <Card
                       key={character.id}
-                      className="bg-slate-800/30 border-purple-500/20"
+                      className="bg-slate-800/30 border-brand-500/20"
                     >
                       <CardHeader className="pb-2">
                         <CardTitle className="text-white text-lg">
@@ -177,7 +178,7 @@ const Dashboard = (): JSX.Element => {
                           {character.ancestry && (
                             <Badge
                               variant="outline"
-                              className="text-xs border-purple-400 text-purple-200"
+                              className="text-xs border-brand-400 text-brand-200"
                             >
                               {character.ancestry.name ?? "Unknown"}
                             </Badge>
@@ -185,7 +186,7 @@ const Dashboard = (): JSX.Element => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-purple-200 text-sm mb-3">
+                        <p className="text-brand-200 text-sm mb-3">
                           {character.class?.name ?? "No class selected"}
                           {character.subclass
                             ? ` - (${String(character.subclass.name)})`
@@ -216,7 +217,7 @@ const Dashboard = (): JSX.Element => {
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-purple-200 mb-4">
+                <p className="text-brand-200 mb-4">
                   You haven't created any characters yet.
                 </p>
                 {canCreateMore && (

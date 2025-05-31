@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import {
   Card,
@@ -72,8 +73,8 @@ const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 flex items-center justify-center px-4">
-      <Card className="w-full max-w-md bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
+    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center px-4">
+      <Card className="w-full max-w-md bg-gradient-to-br from-brand-800/40 to-slate-800/40 border-brand-500/30 backdrop-blur-sm">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-8 h-8 text-yellow-400" />
@@ -84,7 +85,7 @@ const Auth = () => {
           <CardTitle className="text-white text-2xl">
             {isLogin ? "Welcome Back" : "Create Account"}
           </CardTitle>
-          <CardDescription className="text-purple-200">
+          <CardDescription className="text-brand-200">
             {isLogin
               ? "Sign in to access your characters and campaigns"
               : "Join the adventure and create your first character"}
@@ -104,7 +105,7 @@ const Auth = () => {
                   onChange={(e) => {
                     setUsername(e.target.value);
                   }}
-                  className="bg-slate-800/50 border-purple-500/50 text-white"
+                  className="bg-slate-800/50 border-brand-500/50 text-white"
                   placeholder="Choose a username"
                   required={!isLogin}
                 />
@@ -121,7 +122,7 @@ const Auth = () => {
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
-                className="bg-slate-800/50 border-purple-500/50 text-white"
+                className="bg-slate-800/50 border-brand-500/50 text-white"
                 placeholder="Enter your email"
                 required
               />
@@ -137,7 +138,7 @@ const Auth = () => {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-                className="bg-slate-800/50 border-purple-500/50 text-white"
+                className="bg-slate-800/50 border-brand-500/50 text-white"
                 placeholder="Enter your password"
                 required
               />
@@ -151,15 +152,15 @@ const Auth = () => {
             </Button>
           </form>
 
-          <Separator className="bg-purple-500/30" />
+          <Separator className="bg-brand-500/30" />
 
           <div className="text-center space-y-4">
-            <p className="text-purple-200 text-sm">
+            <p className="text-brand-200 text-sm">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
             </p>
             <Button
               variant="outline"
-              className="w-full border-purple-400 text-purple-100 "
+              className="w-full border-brand-400 text-brand-100"
               onClick={() => {
                 setIsLogin(!isLogin);
               }}

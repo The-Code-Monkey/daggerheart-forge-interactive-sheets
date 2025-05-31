@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import Icon from "@/components/atoms/Icon";
 import Text from "@/components/atoms/Text";
@@ -14,7 +15,7 @@ interface StatDisplayProps {
 
 const StatDisplay = ({ name, value, modifier, icon }: StatDisplayProps) => {
   return (
-    <Card className="bg-slate-800/30 border-purple-500/20 hover:border-purple-400/40 transition-colors">
+    <Card className="bg-slate-800/30 border-brand-500/20 hover:border-brand-400/40 transition-colors">
       <CardContent className="p-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-2">
           {icon}

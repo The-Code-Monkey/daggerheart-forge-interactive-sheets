@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ const Navigation = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-purple-900/90 backdrop-blur-sm border-b border-purple-700/50 sticky top-0 z-50">
+    <nav className="bg-brand-900/90 backdrop-blur-sm border-b border-brand-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -101,7 +102,7 @@ const Navigation = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="lg:hidden py-4 border-t border-purple-700/50">
+          <div className="lg:hidden py-4 border-t border-brand-700/50">
             <div className="flex flex-col space-y-2">
               {publicNavItems.map((item) => (
                 <Link

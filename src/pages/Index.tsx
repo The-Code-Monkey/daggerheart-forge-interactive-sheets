@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -53,7 +54,7 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900">
       <HeroSection />
 
       {/* Features Section */}
@@ -64,7 +65,7 @@ const Index = () => {
               Everything You Need for{" "}
               <span className="text-yellow-400">Daggerheart</span>
             </h2>
-            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+            <p className="text-xl text-brand-200 max-w-3xl mx-auto">
               A comprehensive digital toolset designed specifically for
               Daggerheart campaigns and character management.
             </p>
@@ -84,12 +85,12 @@ const Index = () => {
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <Card className="bg-gradient-to-r from-purple-800/50 to-blue-800/50 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-gradient-to-r from-brand-800/50 to-blue-800/50 border-brand-500/30 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-white mb-4">
                 Ready to Begin Your Adventure?
               </CardTitle>
-              <CardDescription className="text-xl text-purple-200">
+              <CardDescription className="text-xl text-brand-200">
                 Join thousands of players using our tools to enhance their
                 Daggerheart experience.
               </CardDescription>
@@ -108,7 +109,7 @@ const Index = () => {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-purple-400 text-purple-100  px-8 py-3"
+                    className="border-brand-400 text-brand-100 px-8 py-3"
                   >
                     Manage Campaigns
                   </Button>

@@ -1,3 +1,4 @@
+
 import {
   Card,
   CardContent,
@@ -17,7 +18,7 @@ interface IconCardProps {
 
 const IconCard = ({ icon, title, description }: IconCardProps) => {
   return (
-    <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300 hover:scale-105">
+    <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105">
       <CardHeader>
         <GradientBox
           variant="primary"
@@ -25,12 +26,12 @@ const IconCard = ({ icon, title, description }: IconCardProps) => {
         >
           <Icon icon={icon} className="text-black" />
         </GradientBox>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="text-white">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Text variant="body" color="secondary">
+        <Text variant="body" color="primary" className="text-white">
           {description}
-        </Text>
+         </Text>
       </CardContent>
     </Card>
   );

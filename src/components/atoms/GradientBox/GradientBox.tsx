@@ -1,3 +1,4 @@
+
 import { cn } from "../../../lib/utils";
 import { ReactNode } from "react";
 
@@ -9,7 +10,7 @@ interface GradientBoxProps {
 
 const gradientStyles = {
   primary: "bg-gradient-to-r from-yellow-400 to-orange-500",
-  secondary: "bg-gradient-to-br from-purple-800/40 to-slate-800/40",
+  secondary: "bg-gradient-to-br from-brand-800/40 to-slate-800/40",
   card: "bg-gradient-to-br from-slate-800/80 to-slate-900/80",
 };
 
