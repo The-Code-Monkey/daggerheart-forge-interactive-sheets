@@ -1,4 +1,4 @@
-import { Class, Domain, Subclass, Ancestry, Community } from "@/lib/types";
+import { Class, Domain, Subclass, Ancestry, Community, CharacterWithRelations } from "@/lib/types";
 import { supabase } from "./client";
 
 export const getSingleClassBySlug = async (
@@ -197,4 +197,20 @@ export const getSingleAncestryBySlug = async (
     return null;
   }
   return data as Ancestry;
+};
+
+export const getCharacterById = async (cId: string) = {
+  const { data, error } = await supabase
+    .from("characters")
+    .select(
+      "*, class(name), ancestry(name), subclass(name), community(name)"
+    )
+    .eq("id", characterId)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  };
+  return data as CharacterWithRelations;
 };
