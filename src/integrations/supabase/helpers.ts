@@ -199,7 +199,7 @@ export const getSingleAncestryBySlug = async (
   return data as Ancestry;
 };
 
-export const getCharacterById = async (cId: string) = {
+export const getCharacterById = async (cId: string) => {
   const { data, error } = await supabase
     .from("characters")
     .select(

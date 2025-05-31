@@ -30,7 +30,7 @@ import {
 import { ArrowLeft, Heart, Sword, Plus, Trash2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getCharacterById } from "@/integrations/supabase/helpers";
 import { useToast } from "@/hooks/use-toast";
 import { debounce } from "lodash";
 import { Character, CharacterWithRelations, Json } from "@/lib/types";
@@ -47,7 +47,6 @@ const CharacterSheet = (): JSX.Element => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const queryClient = useQueryClient();
 
   const [currentHp, setCurrentHp] = useState(0);
   const [maxHp, setMaxHp] = useState(0);
@@ -57,6 +56,21 @@ const CharacterSheet = (): JSX.Element => {
     description: "",
   });
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
+  const [character, setCharacter] = useState<CharacterWithRelations | null>(null);
+
+  const fetchCharacter = async () => {
+    const data = await getCharacterById(characterId);
+
+    if (data) {
+      setCharacter(data);
+    };
+  };
+
+  useEffect(() = {
+    if (characterId) {
+      void fetchCharacter();
+    }
+  }, [characterId]}
 
   const { data: character, isLoading } = useQuery({
     queryKey: ["character", characterId],

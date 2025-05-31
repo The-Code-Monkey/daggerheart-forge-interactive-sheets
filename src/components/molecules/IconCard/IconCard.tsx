@@ -2,7 +2,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "../../ui/card";
@@ -30,11 +29,9 @@ const IconCard = ({ icon, title, description }: IconCardProps) => {
         <CardTitle className="text-white">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <CardDescription>
-          <Text variant="body" color="primary" className="text-white">
-            {description}
-          </Text>
-        </CardDescription>
+        <Text variant="body" color="primary" className="text-white">
+          {description}
+         </Text>
       </CardContent>
     </Card>
   );
