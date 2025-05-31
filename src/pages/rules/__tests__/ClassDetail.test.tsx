@@ -1,4 +1,4 @@
-import { render } from "../../../test-utils";
+import { render, act } from "../../../test-utils";
 import ClassDetail from "../ClassDetail";
 
 // Mock react-router-dom
@@ -63,8 +63,12 @@ jest.mock("@/integrations/supabase/helpers", () => ({
 }));
 
 describe("ClassDetail Page", () => {
-  it("renders correctly", () => {
-    const { container } = render(<ClassDetail />);
+  it("renders correctly", async () => {
+    let container;
+    await act(async () => {
+      const { container: cont } = render(<ClassDetail />);
+      container = cont;
+    })
     expect(container.firstChild).toMatchSnapshot();
   });
 });
