@@ -54,7 +54,7 @@ const FeaturedCampaigns = () => {
           <h2 className="text-4xl font-bold text-white mb-4">
             Featured <span className="text-yellow-400">Campaigns</span>
           </h2>
-          <p className="text-xl text-brand-200 max-w-3xl mx-auto">
+          <p className="text-xl text-white max-w-3xl mx-auto">
             Explore these expertly crafted campaign modules designed to showcase
             the best of Daggerheart gameplay.
           </p>
@@ -84,23 +84,23 @@ const FeaturedCampaigns = () => {
                 <CardTitle className="text-white text-xl mb-2">
                   {campaign.name}
                 </CardTitle>
-                <CardDescription className="text-brand-200">
+                <CardDescription className="text-white">
                   {campaign.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div className="flex items-center gap-2 text-brand-200">
+                  <div className="flex items-center gap-2 text-white">
                     <Users className="w-4 h-4" />
                     {campaign.players}
                   </div>
-                  <div className="flex items-center gap-2 text-brand-200">
+                  <div className="flex items-center gap-2 text-white">
                     <Calendar className="w-4 h-4" />
                     {campaign.sessions}
                   </div>
                 </div>
 
-                <div className="text-sm text-brand-300">
+                <div className="text-sm text-white">
                   Difficulty:{" "}
                   <span className="text-white font-medium">
                     {campaign.difficulty}
@@ -112,7 +112,7 @@ const FeaturedCampaigns = () => {
                     <Badge
                       key={index}
                       variant="outline"
-                      className="border-brand-400/50 text-brand-200 text-xs"
+                      className="border-brand-400/50 text-white text-xs"
                     >
                       {tag}
                     </Badge>
