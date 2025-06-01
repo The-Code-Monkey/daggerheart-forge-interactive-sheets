@@ -381,26 +381,6 @@ const CharacterSheet = (): JSX.Element => {
                           className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                         />
                       </div>
-                      <div>
-                        <Label
-                          htmlFor="item-description"
-                          className="text-white"
-                        >
-                          Description (Optional)
-                        </Label>
-                        <Input
-                          id="item-description"
-                          value={newItem.description}
-                          onChange={(e) => {
-                            setNewItem({
-                              ...newItem,
-                              description: e.target.value,
-                            });
-                          }}
-                          className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                          placeholder="Item description"
-                        />
-                      </div>
                       <Button
                         onClick={addInventoryItem}
                         className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
