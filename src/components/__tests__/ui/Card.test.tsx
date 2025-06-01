@@ -27,7 +27,7 @@ describe("Card", () => {
       "bg-gradient-to-br",
       "from-slate-800/80",
       "to-slate-900/80",
-      "border-purple-500/30",
+      "border-brand-500/30",
       "backdrop-blur-sm"
     );
   });

@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { JSX } from "react";
 
 interface StatModifierProps {
   modifier: number;
@@ -8,7 +9,7 @@ interface StatModifierProps {
 }
 
 const getModifierString = (mod: number) => {
-  return mod >= 0 ? `+${mod}` : `${mod}`;
+  return mod >= 0 ? `+${String(mod)}` : String(mod);
 };
 
 const getModifierColor = (mod: number) => {
@@ -19,7 +20,7 @@ const StatModifier = ({
   modifier,
   size = "md",
   className,
-}: StatModifierProps) => {
+}: StatModifierProps): JSX.Element => {
   return (
     <Badge
       variant="secondary"

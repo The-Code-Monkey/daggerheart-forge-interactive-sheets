@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 interface TextProps {
   children: ReactNode;
@@ -30,7 +30,7 @@ const Text = ({
   variant = "body",
   color = "primary",
   className,
-}: TextProps) => {
+}: TextProps): JSX.Element => {
   const Component = variant.startsWith("h") ? variant : "p";
 
   return (

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { JSX } from "react";
 import { Link } from "react-router-dom";
 
 interface CTAButtonGroupProps {
@@ -14,7 +15,7 @@ const CTAButtonGroup = ({
   primaryLink = "/character-builder",
   secondaryText = "View Demo",
   secondaryLink = "/demo",
-}: CTAButtonGroupProps) => {
+}: CTAButtonGroupProps): JSX.Element => {
   return (
     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
       <Link to={primaryLink}>

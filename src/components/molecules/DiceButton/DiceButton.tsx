@@ -1,6 +1,6 @@
-
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { JSX } from "react";
 
 interface DiceButtonProps {
   label: string;
@@ -20,7 +20,7 @@ const DiceButton = ({
   onClick,
   variant = "default",
   className,
-}: DiceButtonProps) => {
+}: DiceButtonProps): JSX.Element => {
   return (
     <Button
       variant="outline"

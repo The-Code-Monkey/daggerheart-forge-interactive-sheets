@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import IconCard from "./molecules/IconCard";
 import { LucideIcon } from "lucide-react";
 
@@ -7,7 +8,11 @@ interface FeatureCardProps {
   description: string;
 }
 
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
+const FeatureCard = ({
+  icon,
+  title,
+  description,
+}: FeatureCardProps): JSX.Element => {
   return <IconCard icon={icon} title={title} description={description} />;
 };
 

@@ -1,6 +1,7 @@
 import Text from "@/components/atoms/Text";
+import { JSX } from "react";
 
-const HeroStats = () => {
+const HeroStats = (): JSX.Element => {
   return (
     <div className="mt-16 flex justify-center items-center space-x-8 text-purple-300">
       <div className="text-center">

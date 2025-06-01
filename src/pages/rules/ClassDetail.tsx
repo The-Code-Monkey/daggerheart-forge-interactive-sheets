@@ -194,7 +194,7 @@ const ClassDetail = (): JSX.Element => {
             const subclass = classData.additional.subclasses![key];
 
             return (
-              <TabsContent value={key} className="space-y-6">
+              <TabsContent value={key} key={key} className="space-y-6">
                 <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-white">

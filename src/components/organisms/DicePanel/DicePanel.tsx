@@ -7,7 +7,7 @@ import DiceButton from "@/components/molecules/DiceButton";
 import Text from "@/components/atoms/Text";
 import GradientBox from "@/components/atoms/GradientBox";
 
-const DicePanel = () => {
+const DicePanel = (): React.JSX.Element => {
   const [lastRoll, setLastRoll] = useState<{
     dice: string;
     result: number;

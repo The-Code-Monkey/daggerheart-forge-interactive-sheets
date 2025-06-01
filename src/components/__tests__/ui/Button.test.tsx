@@ -2,7 +2,7 @@ import { screen, fireEvent, render } from "../../../test-utils";
 import { Button } from "../../ui/button";
 
 describe("Button", () => {
-  it("renders button with text", async () => {
+  it("renders button with text", () => {
     render(<Button>Click me</Button>);
 
     expect(screen.getByText("Click me")).toBeInTheDocument();

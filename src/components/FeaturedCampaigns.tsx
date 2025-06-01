@@ -1,4 +1,3 @@
-
 import {
   Card,
   CardContent,
@@ -9,8 +8,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, Calendar, Eye, Star } from "lucide-react";
+import { JSX } from "react";
 
-const FeaturedCampaigns = () => {
+const FeaturedCampaigns = (): JSX.Element => {
   const featuredCampaigns = [
     {
       id: 1,

@@ -1,6 +1,4 @@
-
 import { Card, CardContent } from "@/components/ui/card";
-import Icon from "@/components/atoms/Icon";
 import Text from "@/components/atoms/Text";
 import StatValue from "@/components/atoms/StatValue";
 import StatModifier from "@/components/atoms/StatModifier";
@@ -13,7 +11,12 @@ interface StatDisplayProps {
   icon: ReactNode;
 }
 
-const StatDisplay = ({ name, value, modifier, icon }: StatDisplayProps) => {
+const StatDisplay = ({
+  name,
+  value,
+  modifier,
+  icon,
+}: StatDisplayProps): React.JSX.Element => {
   return (
     <Card className="bg-slate-800/30 border-brand-500/20 hover:border-brand-400/40 transition-colors">
       <CardContent className="p-4 text-center">

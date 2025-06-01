@@ -1,5 +1,6 @@
+import { JSX } from "react";
 
-const Footer = () => {
+const Footer = (): JSX.Element => {
   return (
     <footer className="bg-brand-900/90 backdrop-blur-sm p-4 text-white">
       <p>

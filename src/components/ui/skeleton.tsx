@@ -1,9 +1,10 @@
 import { cn } from "@/lib/utils";
+import { JSX } from "react";
 
-function Skeleton({
+const Skeleton = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: React.HTMLAttributes<HTMLDivElement>): JSX.Element => {
   return (
     <div
       className={cn(
@@ -13,6 +14,6 @@ function Skeleton({
       {...props}
     />
   );
-}
+};
 
 export { Skeleton };

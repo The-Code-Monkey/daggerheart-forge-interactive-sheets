@@ -1,5 +1,5 @@
 import StatDisplay from "@/components/molecules/StatDisplay";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 interface StatBlockProps {
   name: string;
@@ -8,7 +8,12 @@ interface StatBlockProps {
   icon: ReactNode;
 }
 
-const StatBlock = ({ name, value, modifier, icon }: StatBlockProps) => {
+const StatBlock = ({
+  name,
+  value,
+  modifier,
+  icon,
+}: StatBlockProps): JSX.Element => {
   return (
     <StatDisplay name={name} value={value} modifier={modifier} icon={icon} />
   );

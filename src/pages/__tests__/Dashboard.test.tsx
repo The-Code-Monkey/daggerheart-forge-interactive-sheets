@@ -14,15 +14,6 @@ jest.mock("@/contexts/AuthContext", () => ({
   }),
 }));
 
-// Mock @tanstack/react-query
-jest.mock("@tanstack/react-query", () => ({
-  useQuery: () => ({
-    data: [],
-    isLoading: false,
-    error: null,
-  }),
-}));
-
 // Mock react-router-dom
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
