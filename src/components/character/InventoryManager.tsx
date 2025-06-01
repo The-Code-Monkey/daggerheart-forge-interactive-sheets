@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -58,7 +57,7 @@ const InventoryManager = ({ character, onUpdate }: InventoryManagerProps) => {
         type: item.type || "Unknown",
         tier: item.tier || 1,
         quantity: inventoryEntry?.quantity || 1,
-        description: item.description || undefined
+        description: undefined // Remove description since it doesn't exist on the item type
       };
     });
 

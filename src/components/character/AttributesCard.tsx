@@ -20,7 +20,7 @@ const AttributesCard = ({ character }: AttributesCardProps) => {
           {Object.entries(character.stats).map(([stat, value]) => (
             <div key={stat} className="text-center">
               <div className="text-sm text-purple-300 capitalize">{stat}</div>
-              <div className="text-2xl font-bold text-white">{value}</div>
+              <div className="text-2xl font-bold text-white">{String(value)}</div>
             </div>
           ))}
         </div>
