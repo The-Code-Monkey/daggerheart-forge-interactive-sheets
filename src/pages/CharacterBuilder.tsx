@@ -1,11 +1,5 @@
 import { useState, useEffect, JSX } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -176,27 +170,20 @@ const CharacterBuilder = (): JSX.Element => {
 
     if (data) {
       setFormData({
-        name: data.name || "",
-        level: data.level || 1,
-        age: data.age || undefined,
-        pronouns: data.pronouns || undefined,
-        gender: data.gender || undefined,
-        background: data.background || undefined,
+        name: data.name,
+        level: data.level ?? 1,
+        age: data.age ?? undefined,
+        pronouns: data.pronouns ?? undefined,
+        gender: data.gender ?? undefined,
+        background: data.background ?? undefined,
         ancestry: data.ancestry ? String(data.ancestry) : undefined,
         class: data.class ? String(data.class) : undefined,
         community: data.community ? String(data.community) : undefined,
         subclass: data.subclass ? String(data.subclass) : undefined,
-        stats: (data.stats as unknown as FormData["stats"]) || {
-          agility: undefined,
-          strength: undefined,
-          finesse: undefined,
-          instinct: undefined,
-          presence: undefined,
-          knowledge: undefined,
-        },
-        stressSlots: data.stressSlots || 6,
-        stress: data.stress || 0,
-        hope: data.hope || 2,
+        stats: data.stats as unknown as FormData["stats"],
+        stressSlots: data.stressSlots ?? 6,
+        stress: data.stress ?? 0,
+        hope: data.hope ?? 2,
       } satisfies FormData);
     }
   };
@@ -221,21 +208,21 @@ const CharacterBuilder = (): JSX.Element => {
     try {
       const characterData = {
         user_id: user.id,
-        name: formData.name || "Unnamed Character",
+        name: formData.name ?? "Unnamed Character",
         ancestry: formData.ancestry ? parseInt(formData.ancestry, 10) : null,
         class: formData.class ? parseInt(formData.class, 10) : null,
         subclass: formData.subclass ? parseInt(formData.subclass, 10) : null,
         community: formData.community ? parseInt(formData.community, 10) : null,
         level: formData.level,
-        background: formData.background || null,
+        background: formData.background ?? null,
         stats: formData.stats,
-        stressSlots: formData.stressSlots || 6,
-        stress: formData.stress || 0,
-        hope: formData.hope || 2,
+        stressSlots: formData.stressSlots ?? 6,
+        stress: formData.stress ?? 0,
+        hope: formData.hope ?? 2,
         complete: currentStep === 4,
-        age: formData.age || null,
-        pronouns: formData.pronouns || null,
-        gender: formData.gender || null,
+        age: formData.age ?? null,
+        pronouns: formData.pronouns ?? null,
+        gender: formData.gender ?? null,
       };
 
       if (characterId) {
@@ -255,7 +242,7 @@ const CharacterBuilder = (): JSX.Element => {
           .single();
 
         if (error) throw error;
-        if (data) setCharacterId(data.id);
+        setCharacterId(data.id);
       }
 
       toast({
@@ -280,7 +267,7 @@ const CharacterBuilder = (): JSX.Element => {
       setCurrentStep(currentStep + 1);
     } else {
       // Character complete, redirect to dashboard
-      navigate("/dashboard");
+      void navigate("/dashboard");
     }
   };
 
@@ -293,7 +280,7 @@ const CharacterBuilder = (): JSX.Element => {
   const selectedCounts = Object.values(formData.stats).reduce<
     Record<string, number>
   >((acc, mod) => {
-    if (mod) acc[mod] = (acc[mod] || 0) + 1;
+    if (mod) acc[mod] = (acc[mod] ?? 0) + 1;
     return acc;
   }, {});
 
@@ -546,7 +533,7 @@ const CharacterBuilder = (): JSX.Element => {
                         <SelectItem value="none">Select modifier</SelectItem>
                         {Object.entries(allowedMods).map(([mod, max]) => {
                           const currentSelection = formData.stats[key];
-                          const count = selectedCounts[mod] || 0;
+                          const count = selectedCounts[mod] ?? 0;
                           const isSelected = currentSelection === mod;
                           const isDisabled = !isSelected && count >= max;
 
@@ -587,7 +574,7 @@ const CharacterBuilder = (): JSX.Element => {
             </h3>
             <Card className="p-4 rounded-lg space-y-2">
               <h4 className="text-lg font-medium text-white">
-                {formData.name || "Unnamed Character"}
+                {formData.name ?? "Unnamed Character"}
               </h4>
               <p className="text-purple-200">
                 Level {formData.level} | {cls?.name} ({subclass?.name})
@@ -698,7 +685,9 @@ const CharacterBuilder = (): JSX.Element => {
               </Button>
 
               <Button
-                onClick={handleNext}
+                onClick={() => {
+                  void handleNext();
+                }}
                 disabled={isLoading || nextIsDisabled()}
                 className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               >

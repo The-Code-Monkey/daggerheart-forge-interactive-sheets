@@ -1,4 +1,4 @@
-import { render } from "../../../test-utils";
+import { render, act } from "../../../test-utils";
 import AncestryDetail from "../AncestryDetail";
 
 // Mock react-router-dom
@@ -27,8 +27,11 @@ jest.mock("@/integrations/supabase/helpers", () => ({
 }));
 
 describe("AncestryDetail Page", () => {
-  it("renders correctly", () => {
+  it("renders correctly", async () => {
     const { container } = render(<AncestryDetail />);
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    });
     expect(container.firstChild).toMatchSnapshot();
   });
 });

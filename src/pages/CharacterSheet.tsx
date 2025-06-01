@@ -1,12 +1,6 @@
 import { useState, useEffect, useRef, JSX } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,11 +23,13 @@ import {
 } from "@/components/ui/table";
 import { ArrowLeft, Heart, Sword, Plus, Trash2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
-import { getCharacterById } from "@/integrations/supabase/helpers";
 import { useToast } from "@/hooks/use-toast";
 import { debounce } from "lodash";
 import { Character, CharacterWithRelations, Json } from "@/lib/types";
+import {
+  getCharacterById,
+  updateCharacter,
+} from "@/integrations/supabase/helpers";
 
 interface InventoryItem extends Json {
   id: string;
@@ -45,7 +41,7 @@ interface InventoryItem extends Json {
 const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const _navigate = useNavigate();
   const { toast } = useToast();
 
   const [currentHp, setCurrentHp] = useState(0);
@@ -56,41 +52,25 @@ const CharacterSheet = (): JSX.Element => {
     description: "",
   });
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
-  const [character, setCharacter] = useState<CharacterWithRelations | null>(null);
+  const [character, setCharacter] = useState<CharacterWithRelations | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(true);
 
-  const fetchCharacter = async () => {
-    const data = await getCharacterById(characterId);
-
+  const fetchCharacterById = async (id: string) => {
+    setIsLoading(true);
+    const data = await getCharacterById(id);
     if (data) {
       setCharacter(data);
-    };
+    }
+    setIsLoading(false);
   };
 
-  useEffect(() = {
+  useEffect(() => {
     if (characterId) {
-      void fetchCharacter();
+      void fetchCharacterById(characterId);
     }
-  }, [characterId]}
-
-  const { data: character, isLoading } = useQuery({
-    queryKey: ["character", characterId],
-    queryFn: async (): Promise<CharacterWithRelations | null> => {
-      if (!user || !characterId) return null;
-
-      const { data, error } = await supabase
-        .from("characters")
-        .select(
-          "*, class(name), ancestry(name), subclass(name), community(name)"
-        )
-        .eq("id", characterId)
-        .eq("user_id", user.id)
-        .single();
-
-      if (error) throw error;
-      return data as CharacterWithRelations;
-    },
-    enabled: !!user && !!characterId,
-  });
+  }, [characterId, user]);
 
   useEffect(() => {
     if (character) {
@@ -100,38 +80,35 @@ const CharacterSheet = (): JSX.Element => {
     }
   }, [character]);
 
-  const updateCharacterMutation = useMutation({
-    mutationFn: async (updates: Partial<Character>) => {
-      if (!characterId) throw new Error("No character ID");
-
-      const { error } = await supabase
-        .from("characters")
-        .update(updates)
-        .eq("id", characterId);
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: ["character", characterId],
+  const updateCharacterData = async (updates: Partial<Character>) => {
+    if (!characterId) {
+      toast({
+        title: "Error",
+        description: "No character ID found.",
+        variant: "destructive",
       });
+      return;
+    }
+
+    const updatedCharacter = await updateCharacter(characterId, updates);
+    if (updatedCharacter) {
+      setCharacter(updatedCharacter);
       toast({
         title: "Character updated",
         description: "Your character has been saved.",
       });
-    },
-    onError: () => {
+    } else {
       toast({
         title: "Error",
         description: "Failed to update character.",
         variant: "destructive",
       });
-    },
-  });
+    }
+  };
 
-  const debouncedMutation = useRef(
+  const debouncedUpdate = useRef(
     debounce((data: { current_hp?: number; max_hp?: number }) => {
-      updateCharacterMutation.mutate(data);
+      void updateCharacterData(data);
     }, 500)
   ).current;
 
@@ -139,12 +116,12 @@ const CharacterSheet = (): JSX.Element => {
     if (type === "current") {
       const newCurrentHp = Math.max(0, Math.min(value, maxHp));
       setCurrentHp(newCurrentHp);
-      debouncedMutation({ current_hp: newCurrentHp });
+      debouncedUpdate({ current_hp: newCurrentHp });
     } else {
       const newMaxHp = Math.max(1, value);
       setMaxHp(newMaxHp);
       setCurrentHp(Math.min(currentHp, newMaxHp));
-      debouncedMutation({
+      debouncedUpdate({
         max_hp: newMaxHp,
         current_hp: Math.min(currentHp, newMaxHp),
       });
@@ -161,14 +138,14 @@ const CharacterSheet = (): JSX.Element => {
 
     const updatedInventory = [...inventory, item];
     setInventory(updatedInventory);
-    updateCharacterMutation.mutate({ inventory: updatedInventory });
+    void updateCharacterData({ inventory: updatedInventory });
     setNewItem({ name: "", quantity: 1, description: "" });
   };
 
   const removeInventoryItem = (itemId: string) => {
     const updatedInventory = inventory.filter((item) => item.id !== itemId);
     setInventory(updatedInventory);
-    updateCharacterMutation.mutate({ inventory: updatedInventory });
+    void updateCharacterData({ inventory: updatedInventory });
   };
 
   if (isLoading) {

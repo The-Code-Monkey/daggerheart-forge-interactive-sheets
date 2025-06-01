@@ -13,7 +13,10 @@ interface StatsGridProps {
   columns?: number;
 }
 
-const StatsGrid = ({ stats, columns = 3 }: StatsGridProps) => {
+const StatsGrid = ({
+  stats,
+  columns = 3,
+}: StatsGridProps): React.JSX.Element => {
   const gridCols = {
     2: "grid-cols-2",
     3: "grid-cols-3",

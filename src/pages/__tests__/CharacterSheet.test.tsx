@@ -1,4 +1,4 @@
-import { render, screen } from "../../test-utils";
+import { render } from "../../test-utils";
 import CharacterSheet from "../CharacterSheet";
 
 // Mock useAuth hook
@@ -14,15 +14,6 @@ jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
   useParams: () => ({ id: "123" }),
   useNavigate: () => jest.fn(),
-}));
-
-// Mock @tanstack/react-query
-jest.mock("@tanstack/react-query", () => ({
-  useQuery: () => ({
-    data: null,
-    isLoading: true,
-    error: null,
-  }),
 }));
 
 describe("CharacterSheet", () => {

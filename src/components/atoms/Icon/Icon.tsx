@@ -1,5 +1,6 @@
 import { LucideIcon } from "lucide-react";
 import { cn } from "../../../lib/utils";
+import { JSX } from "react";
 
 interface IconProps {
   icon: LucideIcon;
@@ -20,7 +21,7 @@ const Icon = ({
   size = "md",
   className,
   color,
-}: IconProps) => {
+}: IconProps): JSX.Element => {
   return <IconComponent className={cn(sizeMap[size], color, className)} />;
 };
 

@@ -1,10 +1,4 @@
-
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "../../ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/card";
 import Icon from "../../atoms/Icon";
 import GradientBox from "../../atoms/GradientBox";
 import Text from "../../atoms/Text";
@@ -16,7 +10,11 @@ interface IconCardProps {
   description: string;
 }
 
-const IconCard = ({ icon, title, description }: IconCardProps) => {
+const IconCard = ({
+  icon,
+  title,
+  description,
+}: IconCardProps): React.JSX.Element => {
   return (
     <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105">
       <CardHeader>
@@ -31,7 +29,7 @@ const IconCard = ({ icon, title, description }: IconCardProps) => {
       <CardContent>
         <Text variant="body" color="primary" className="text-white">
           {description}
-         </Text>
+        </Text>
       </CardContent>
     </Card>
   );

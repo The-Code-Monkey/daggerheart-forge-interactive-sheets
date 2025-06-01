@@ -290,7 +290,7 @@ const GameRules = (): JSX.Element => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Link to={`/rules/ancestries/${ancestry.slug}`}>
+                    <Link to={`/rules/ancestries/${String(ancestry.slug)}`}>
                       <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                         Learn More
                         <ArrowRight className="w-4 h-4 ml-2" />

@@ -1,4 +1,4 @@
-import { prettyDOM, render, screen } from "../../test-utils";
+import { render, screen } from "../../test-utils";
 import { Sword } from "lucide-react";
 import FeatureCard from "../FeatureCard";
 
@@ -19,7 +19,7 @@ describe("FeatureCard", () => {
   });
 
   it("renders with hover effects", () => {
-    const { container } = render(
+    render(
       <FeatureCard
         icon={Sword}
         title="Test Feature"

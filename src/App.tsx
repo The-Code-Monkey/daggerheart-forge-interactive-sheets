@@ -16,8 +16,9 @@ import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
 import ClassDetail from "./pages/rules/ClassDetail";
 import AncestryDetail from "./pages/rules/AncestryDetail";
+import { JSX } from "react";
 
-const App = () => (
+const App = (): JSX.Element => (
   <AuthProvider>
     <TooltipProvider>
       <Toaster />
@@ -26,57 +27,54 @@ const App = () => (
         <div className="min-h-screen">
           <Navigation />
           <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/game-rules" element={<GameRules />} />
-              {/* <Route path="/rules/domains/:domainName" element={<DomainDetail />} /> */}
-              <Route
-                path="/rules/classes/:className"
-                element={<ClassDetail />}
-              />
-              <Route
-                path="/rules/ancestries/:ancestryName"
-                element={<AncestryDetail />}
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/character-builder/:characterId?"
-                element={
-                  <ProtectedRoute>
-                    <CharacterBuilder />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/character-sheet/:characterId"
-                element={
-                  <ProtectedRoute>
-                    <CharacterSheet />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/campaigns"
-                element={
-                  <ProtectedRoute>
-                    <Campaigns />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <Footer />
-          </div>
-        </BrowserRouter>
-      </TooltipProvider>
-    </AuthProvider>
+            <Route path="/" element={<Index />} />
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/game-rules" element={<GameRules />} />
+            {/* <Route path="/rules/domains/:domainName" element={<DomainDetail />} /> */}
+            <Route path="/rules/classes/:className" element={<ClassDetail />} />
+            <Route
+              path="/rules/ancestries/:ancestryName"
+              element={<AncestryDetail />}
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/character-builder/:characterId?"
+              element={
+                <ProtectedRoute>
+                  <CharacterBuilder />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/character-sheet/:characterId"
+              element={
+                <ProtectedRoute>
+                  <CharacterSheet />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/campaigns"
+              element={
+                <ProtectedRoute>
+                  <Campaigns />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </div>
+      </BrowserRouter>
+    </TooltipProvider>
+  </AuthProvider>
 );
 
 export default App;

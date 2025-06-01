@@ -1,11 +1,11 @@
-
 import { Sparkles } from "lucide-react";
 import CTAButtonGroup from "@/components/molecules/CTAButtonGroup";
 import HeroStats from "@/components/molecules/HeroStats";
 import Text from "@/components/atoms/Text";
 import { Badge } from "@/components/ui/badge";
+import { JSX } from "react";
 
-const HeroSection = () => {
+const HeroSection = (): JSX.Element => {
   return (
     <section className="relative py-32 px-4 overflow-hidden">
       {/* Animated background elements */}

@@ -1,5 +1,4 @@
-
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -20,30 +19,27 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
+import { getCharacters } from "@/integrations/supabase/helpers";
+import { CharacterWithRelations } from "@/lib/types";
 
 const Dashboard = (): JSX.Element => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
 
-  const { data: characters = [], isLoading } = useQuery({
-    queryKey: ["characters", user?.id],
-    queryFn: async () => {
-      if (!user) return [];
+  const [characters, setCharacters] = useState<CharacterWithRelations[]>([]);
 
-      const { data, error } = await supabase
-        .from("characters")
-        .select("*, class(name), ancestry(name), subclass(name)")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+  useEffect(() => {
+    const fetchCharacters = async () => {
+      const data = await getCharacters();
 
-      if (error) throw error;
-      return data;
-    },
-    enabled: !!user,
-  });
+      if (data) {
+        setCharacters(data);
+      }
+    };
+
+    void fetchCharacters();
+  }, [user]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -97,7 +93,7 @@ const Dashboard = (): JSX.Element => {
               </div>
               <p className="text-xs text-brand-200">
                 {canCreateMore
-                  ? `${maxCharacters - characterCount} slots remaining`
+                  ? `${String(maxCharacters - characterCount)} slots remaining`
                   : "Maximum reached"}
               </p>
             </CardContent>
@@ -151,11 +147,7 @@ const Dashboard = (): JSX.Element => {
             )}
           </CardHeader>
           <CardContent>
-            {isLoading ? (
-              <div className="text-center py-8">
-                <p className="text-brand-200">Loading characters...</p>
-              </div>
-            ) : characters.length > 0 ? (
+            {characters.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {characters.map((character) => {
                   const link = character.complete

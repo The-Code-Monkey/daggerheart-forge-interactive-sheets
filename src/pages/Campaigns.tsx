@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { JSX, useState } from "react";
 import {
   Card,
   CardContent,
@@ -11,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Calendar, MapPin, Plus, Settings, Eye } from "lucide-react";
 
-const Campaigns = () => {
+const Campaigns = (): JSX.Element => {
   const [campaigns] = useState([
     {
       id: 1,

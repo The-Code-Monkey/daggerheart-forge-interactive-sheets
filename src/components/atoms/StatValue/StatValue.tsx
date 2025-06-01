@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { JSX } from "react";
 
 interface StatValueProps {
   value: number;
@@ -12,7 +13,11 @@ const sizeStyles = {
   lg: "text-4xl font-bold",
 };
 
-const StatValue = ({ value, size = "md", className }: StatValueProps) => {
+const StatValue = ({
+  value,
+  size = "md",
+  className,
+}: StatValueProps): JSX.Element => {
   return (
     <div className={cn(sizeStyles[size], "text-white", className)}>{value}</div>
   );

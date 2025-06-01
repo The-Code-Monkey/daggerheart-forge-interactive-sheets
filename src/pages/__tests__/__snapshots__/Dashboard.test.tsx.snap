@@ -1,0 +1,381 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard renders correctly 1`] = `
+<div
+  data-testid="auth-provider"
+>
+  <div
+    class="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 p-4"
+  >
+    <div
+      class="max-w-6xl mx-auto"
+    >
+      <div
+        class="flex justify-between items-center mb-8"
+      >
+        <div>
+          <h1
+            class="text-4xl font-bold text-white mb-2"
+          >
+            Welcome back, 
+            TestUser
+            !
+          </h1>
+          <p
+            class="text-brand-200"
+          >
+            Manage your characters and campaigns
+          </p>
+        </div>
+        <button
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+        >
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-log-out w-4 h-4 mr-2"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m16 17 5-5-5-5"
+            />
+            <path
+              d="M21 12H9"
+            />
+            <path
+              d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+            />
+          </svg>
+          Sign Out
+        </button>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"
+      >
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm"
+        >
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h3
+              class="tracking-tight text-sm font-medium text-white"
+            >
+              Characters
+            </h3>
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-users h-4 w-4 text-yellow-400"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+              />
+              <path
+                d="M16 3.128a4 4 0 0 1 0 7.744"
+              />
+              <path
+                d="M22 21v-2a4 4 0 0 0-3-3.87"
+              />
+              <circle
+                cx="9"
+                cy="7"
+                r="4"
+              />
+            </svg>
+          </div>
+          <div
+            class="p-6 pt-0"
+          >
+            <div
+              class="text-2xl font-bold text-white"
+            >
+              0
+              /
+              5
+            </div>
+            <p
+              class="text-xs text-brand-200"
+            >
+              5 slots remaining
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm"
+        >
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h3
+              class="tracking-tight text-sm font-medium text-white"
+            >
+              Campaigns
+            </h3>
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-sword h-4 w-4 text-yellow-400"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <polyline
+                points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"
+              />
+              <line
+                x1="13"
+                x2="19"
+                y1="19"
+                y2="13"
+              />
+              <line
+                x1="16"
+                x2="20"
+                y1="16"
+                y2="20"
+              />
+              <line
+                x1="19"
+                x2="21"
+                y1="21"
+                y2="19"
+              />
+            </svg>
+          </div>
+          <div
+            class="p-6 pt-0"
+          >
+            <div
+              class="text-2xl font-bold text-white"
+            >
+              Coming Soon
+            </div>
+            <p
+              class="text-xs text-brand-200"
+            >
+              Campaign management
+            </p>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm"
+        >
+          <div
+            class="p-6 flex flex-row items-center justify-between space-y-0 pb-2"
+          >
+            <h3
+              class="tracking-tight text-sm font-medium text-white"
+            >
+              Rule Books
+            </h3>
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-book-open h-4 w-4 text-yellow-400"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 7v14"
+              />
+              <path
+                d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"
+              />
+            </svg>
+          </div>
+          <div
+            class="p-6 pt-0"
+          >
+            <div
+              class="text-2xl font-bold text-white"
+            >
+              Coming Soon
+            </div>
+            <p
+              class="text-xs text-brand-200"
+            >
+              Digital rule access
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm"
+      >
+        <div
+          class="space-y-1.5 p-6 flex flex-row items-center justify-between"
+        >
+          <div>
+            <h3
+              class="font-semibold tracking-tight text-white text-xl"
+            >
+              Your Characters
+            </h3>
+            <p
+              class="text-sm text-brand-200"
+            >
+              Manage your Daggerheart characters
+            </p>
+          </div>
+          <a
+            href="/character-builder"
+          >
+            <button
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-plus w-4 h-4 mr-2"
+                fill="none"
+                height="24"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 12h14"
+                />
+                <path
+                  d="M12 5v14"
+                />
+              </svg>
+              Create Character
+            </button>
+          </a>
+        </div>
+        <div
+          class="p-6 pt-0"
+        >
+          <div
+            class="text-center py-8"
+          >
+            <p
+              class="text-brand-200 mb-4"
+            >
+              You haven't created any characters yet.
+            </p>
+            <a
+              href="/character-builder"
+            >
+              <button
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="lucide lucide-plus w-4 h-4 mr-2"
+                  fill="none"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 12h14"
+                  />
+                  <path
+                    d="M12 5v14"
+                  />
+                </svg>
+                Create Your First Character
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8"
+      >
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm backdrop-blur-sm bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <h3
+              class="text-2xl font-semibold leading-none tracking-tight text-white"
+            >
+              Campaign Management
+            </h3>
+            <p
+              class="text-sm text-gray-300"
+            >
+              Create and manage your Daggerheart campaigns
+            </p>
+          </div>
+          <div
+            class="p-6 pt-0"
+          >
+            <div
+              class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-secondary-foreground hover:bg-secondary/80 bg-gray-600"
+            >
+              Coming Soon
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm backdrop-blur-sm bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <h3
+              class="text-2xl font-semibold leading-none tracking-tight text-white"
+            >
+              Digital Dice & Tools
+            </h3>
+            <p
+              class="text-sm text-gray-300"
+            >
+              Dice rolling, initiative tracking, and more
+            </p>
+          </div>
+          <div
+            class="p-6 pt-0"
+          >
+            <div
+              class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-secondary-foreground hover:bg-secondary/80 bg-gray-600"
+            >
+              Coming Soon
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

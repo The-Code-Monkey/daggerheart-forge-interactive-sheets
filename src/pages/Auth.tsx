@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { JSX, useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-const Auth = () => {
+const Auth = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -42,7 +41,7 @@ const Auth = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/dashboard");
+        void navigate("/dashboard");
       } else {
         const { error } = await supabase.auth.signUp({
           email,
@@ -64,7 +63,7 @@ const Auth = () => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message,
+        description: String(error.message),
         variant: "destructive",
       });
     } finally {
@@ -92,7 +91,7 @@ const Auth = () => {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <form onSubmit={handleAuth} className="space-y-4">
+          <form onSubmit={(e) => void handleAuth(e)} className="space-y-4">
             {!isLogin && (
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-white">

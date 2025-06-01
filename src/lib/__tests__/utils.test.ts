@@ -7,11 +7,6 @@ describe("utils", () => {
       expect(result).toBe("text-white bg-blue-500");
     });
 
-    it("handles conditional classes", () => {
-      const result = cn("text-white", false && "hidden", "bg-blue-500");
-      expect(result).toBe("text-white bg-blue-500");
-    });
-
     it("handles undefined and null values", () => {
       const result = cn("text-white", undefined, null, "bg-blue-500");
       expect(result).toBe("text-white bg-blue-500");

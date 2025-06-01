@@ -1,9 +1,10 @@
 import { useTheme } from "next-themes";
+import { JSX } from "react";
 import { Toaster as Sonner, toast } from "sonner";
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
-const Toaster = ({ ...props }: ToasterProps) => {
+const Toaster = ({ ...props }: ToasterProps): JSX.Element => {
   const { theme = "system" } = useTheme();
 
   return (

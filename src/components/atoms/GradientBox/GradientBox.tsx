@@ -1,6 +1,5 @@
-
 import { cn } from "../../../lib/utils";
-import { ReactNode } from "react";
+import { JSX, ReactNode } from "react";
 
 interface GradientBoxProps {
   children: ReactNode;
@@ -18,7 +17,7 @@ const GradientBox = ({
   children,
   variant = "primary",
   className,
-}: GradientBoxProps) => {
+}: GradientBoxProps): JSX.Element => {
   return (
     <div className={cn(gradientStyles[variant], className)}>{children}</div>
   );

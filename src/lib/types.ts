@@ -31,9 +31,9 @@ export type Character = Database["public"]["Tables"]["characters"]["Row"] & {
   stats: CharacterStats;
 };
 
-export type CharacterWithRelations = Character & {
+export type CharacterWithRelations = Omit<Character, "ancestry"> & {
   class: { name: string } | null;
-  ancestry: { name: string } | null;
+  ancestry?: { name?: string } | null;
   subclass: { name: string } | null;
   community: { name: string } | null;
 };

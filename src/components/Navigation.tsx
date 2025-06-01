@@ -1,11 +1,10 @@
-
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
-const Navigation = () => {
+const Navigation = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const { user } = useAuth();
