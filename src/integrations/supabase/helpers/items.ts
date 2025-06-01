@@ -20,7 +20,7 @@ export const searchItems = async (
     return [];
   }
 
-  return data;
+  return data as Item[];
 };
 
 export const getItemById = async (id: number): Promise<Item | null> => {
@@ -35,7 +35,7 @@ export const getItemById = async (id: number): Promise<Item | null> => {
     return null;
   }
 
-  return data;
+  return data as Item;
 };
 
 export const getItemsByIds = async (ids: number[]): Promise<Item[]> => {
@@ -53,5 +53,5 @@ export const getItemsByIds = async (ids: number[]): Promise<Item[]> => {
     return [];
   }
 
-  return data;
+  return data as Item[];
 };

@@ -21,7 +21,9 @@ export const getCharacterById = async (
 ): Promise<CharacterWithRelations | null> => {
   const { data, error } = await supabase
     .from("characters")
-    .select("*, class(name), ancestry(name), subclass(name), community(name)")
+    .select(
+      "*, class(name, base_evasion, base_hp), ancestry(name), subclass(name), community(name)"
+    )
     .eq("id", cId)
     .single();
 

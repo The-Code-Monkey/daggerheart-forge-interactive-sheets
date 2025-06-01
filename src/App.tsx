@@ -16,6 +16,8 @@ import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
 import ClassDetail from "./pages/rules/ClassDetail";
 import AncestryDetail from "./pages/rules/AncestryDetail";
+import Homebrew from "./pages/Homebrew";
+import HomebrewClassForm from "./pages/homebrew/homebrewClassForm";
 import { JSX } from "react";
 
 const App = (): JSX.Element => (
@@ -65,6 +67,22 @@ const App = (): JSX.Element => (
               element={
                 <ProtectedRoute>
                   <Campaigns />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homebrew"
+              element={
+                <ProtectedRoute>
+                  <Homebrew />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homebrew/class"
+              element={
+                <ProtectedRoute>
+                  <HomebrewClassForm />
                 </ProtectedRoute>
               }
             />

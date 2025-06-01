@@ -3,7 +3,7 @@ import IconCard from "./molecules/IconCard";
 import { LucideIcon } from "lucide-react";
 
 interface FeatureCardProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
   title: string;
   description: string;
 }

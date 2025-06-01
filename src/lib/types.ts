@@ -1,9 +1,20 @@
 import { Database, Json as SupabaseJson } from "@/integrations/supabase/types";
 
+export enum Traits {
+  AGILITY = "Agility",
+  STRENGTH = "Strength",
+  FINESSE = "Finesse",
+  INSTINCT = "Instinct",
+  PRESENCE = "Presence",
+  KNOWLEDGE = "Knowledge",
+  EVASION = "Evasion",
+}
+
 export interface Feature {
   name: string;
   description: string;
-  list: string[];
+  list?: string[];
+  modifiers?: Record<Traits, number>;
 }
 
 export interface ClassSubclass {
@@ -32,7 +43,7 @@ export type Character = Database["public"]["Tables"]["characters"]["Row"] & {
 };
 
 export type CharacterWithRelations = Omit<Character, "ancestry"> & {
-  class: { name: string } | null;
+  class: { name: string; base_hp: number; base_evasion: number } | null;
   ancestry?: { name?: string } | null;
   subclass: { name: string } | null;
   community: { name: string } | null;
@@ -55,6 +66,11 @@ export type Ancestry = Omit<
 
 export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"];
 
-export type Item = Database["public"]["Tables"]["items"]["Row"];
+export type Item = Omit<
+  Database["public"]["Tables"]["items"]["Row"],
+  "features"
+> & {
+  features?: Partial<Feature>[];
+};
 
 export type Json = Record<string, SupabaseJson | undefined>;

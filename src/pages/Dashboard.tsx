@@ -16,6 +16,7 @@ import {
   LogOut,
   Eye,
   Pencil,
+  Beer,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -66,16 +67,24 @@ const Dashboard = (): JSX.Element => {
               Manage your characters and campaigns
             </p>
           </div>
-          <Button
-            onClick={() => {
-              void handleSignOut();
-            }}
-            variant="outline"
-            className="border-brand-400 text-brand-100"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex flex-row gap-2">
+            <Button asChild>
+              <Link to="/homebrew">
+                <Beer className="w-4 h-4 mr-2" />
+                Homebrew
+              </Link>
+            </Button>
+            <Button
+              onClick={() => {
+                void handleSignOut();
+              }}
+              variant="outline"
+              className="border-brand-400 text-brand-100"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
 
         {/* Character Overview */}
