@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef, JSX } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,11 +30,27 @@ import { Character, CharacterWithRelations, Json } from "@/lib/types";
 import {
   getCharacterById,
   updateCharacter,
+  getItemsByIds,
 } from "@/integrations/supabase/helpers";
+import ItemSearch from "@/components/ItemSearch";
 
 interface InventoryItem extends Json {
   id: string;
   name: string;
+  quantity: number;
+  description?: string;
+}
+
+interface ItemInventoryEntry {
+  itemId: number;
+  quantity: number;
+}
+
+interface ItemWithQuantity {
+  id: number;
+  name: string;
+  type: string;
+  tier: number;
   quantity: number;
   description?: string;
 }
@@ -52,6 +69,7 @@ const CharacterSheet = (): JSX.Element => {
     description: "",
   });
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
+  const [itemsInventory, setItemsInventory] = useState<ItemWithQuantity[]>([]);
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
     null
   );
@@ -66,6 +84,26 @@ const CharacterSheet = (): JSX.Element => {
     setIsLoading(false);
   };
 
+  const loadItemsInventory = async (itemsInventoryData: ItemInventoryEntry[]) => {
+    if (!itemsInventoryData || itemsInventoryData.length === 0) {
+      setItemsInventory([]);
+      return;
+    }
+
+    const itemIds = itemsInventoryData.map(entry => entry.itemId);
+    const items = await getItemsByIds(itemIds);
+    
+    const itemsWithQuantity = items.map(item => {
+      const inventoryEntry = itemsInventoryData.find(entry => entry.itemId === item.id);
+      return {
+        ...item,
+        quantity: inventoryEntry?.quantity || 1
+      };
+    });
+
+    setItemsInventory(itemsWithQuantity);
+  };
+
   useEffect(() => {
     if (characterId) {
       void fetchCharacterById(characterId);
@@ -77,6 +115,10 @@ const CharacterSheet = (): JSX.Element => {
       setCurrentHp(character.current_hp ?? 0);
       setMaxHp(character.max_hp ?? 0);
       setInventory((character.inventory ?? []) as unknown as InventoryItem[]);
+      
+      // Load items from items_inventory
+      const itemsInventoryData = (character.items_inventory ?? []) as unknown as ItemInventoryEntry[];
+      void loadItemsInventory(itemsInventoryData);
     }
   }, [character]);
 
@@ -142,10 +184,39 @@ const CharacterSheet = (): JSX.Element => {
     setNewItem({ name: "", quantity: 1, description: "" });
   };
 
+  const handleItemSelect = (item: { id: number; name: string; type: string; tier: number }, quantity: number) => {
+    const currentItemsInventory = (character?.items_inventory ?? []) as unknown as ItemInventoryEntry[];
+    
+    // Check if item already exists
+    const existingItemIndex = currentItemsInventory.findIndex(entry => entry.itemId === item.id);
+    
+    let updatedItemsInventory: ItemInventoryEntry[];
+    
+    if (existingItemIndex >= 0) {
+      // Update existing item quantity
+      updatedItemsInventory = [...currentItemsInventory];
+      updatedItemsInventory[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item
+      updatedItemsInventory = [...currentItemsInventory, { itemId: item.id, quantity }];
+    }
+
+    void updateCharacterData({ items_inventory: updatedItemsInventory });
+    void loadItemsInventory(updatedItemsInventory);
+  };
+
   const removeInventoryItem = (itemId: string) => {
     const updatedInventory = inventory.filter((item) => item.id !== itemId);
     setInventory(updatedInventory);
     void updateCharacterData({ inventory: updatedInventory });
+  };
+
+  const removeItemInventoryItem = (itemId: number) => {
+    const currentItemsInventory = (character?.items_inventory ?? []) as unknown as ItemInventoryEntry[];
+    const updatedItemsInventory = currentItemsInventory.filter(entry => entry.itemId !== itemId);
+    
+    void updateCharacterData({ items_inventory: updatedItemsInventory });
+    void loadItemsInventory(updatedItemsInventory);
   };
 
   if (isLoading) {
@@ -345,55 +416,62 @@ const CharacterSheet = (): JSX.Element => {
                         Add Inventory Item
                       </SheetTitle>
                       <SheetDescription className="text-purple-200">
-                        Add a new item to your character's inventory.
+                        Search for items from the database or add custom items to your character's inventory.
                       </SheetDescription>
                     </SheetHeader>
-                    <div className="space-y-4 mt-6">
-                      <div>
-                        <Label htmlFor="item-name" className="text-white">
-                          Item Name
-                        </Label>
-                        <Input
-                          id="item-name"
-                          value={newItem.name}
-                          onChange={(e) => {
-                            setNewItem({ ...newItem, name: e.target.value });
-                          }}
-                          className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                          placeholder="Enter item name"
-                        />
+                    <div className="space-y-6 mt-6">
+                      <ItemSearch onItemSelect={handleItemSelect} />
+                      
+                      <div className="border-t border-purple-500/30 pt-4">
+                        <h4 className="text-white font-medium mb-3">Or add custom item:</h4>
+                        <div className="space-y-4">
+                          <div>
+                            <Label htmlFor="item-name" className="text-white">
+                              Item Name
+                            </Label>
+                            <Input
+                              id="item-name"
+                              value={newItem.name}
+                              onChange={(e) => {
+                                setNewItem({ ...newItem, name: e.target.value });
+                              }}
+                              className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                              placeholder="Enter item name"
+                            />
+                          </div>
+                          <div>
+                            <Label htmlFor="item-quantity" className="text-white">
+                              Quantity
+                            </Label>
+                            <Input
+                              id="item-quantity"
+                              type="number"
+                              min="1"
+                              value={newItem.quantity}
+                              onChange={(e) => {
+                                setNewItem({
+                                  ...newItem,
+                                  quantity: parseInt(e.target.value) || 1,
+                                });
+                              }}
+                              className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                            />
+                          </div>
+                          <Button
+                            onClick={addInventoryItem}
+                            className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
+                            disabled={!newItem.name.trim()}
+                          >
+                            Add Custom Item
+                          </Button>
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="item-quantity" className="text-white">
-                          Quantity
-                        </Label>
-                        <Input
-                          id="item-quantity"
-                          type="number"
-                          min="1"
-                          value={newItem.quantity}
-                          onChange={(e) => {
-                            setNewItem({
-                              ...newItem,
-                              quantity: parseInt(e.target.value) || 1,
-                            });
-                          }}
-                          className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                        />
-                      </div>
-                      <Button
-                        onClick={addInventoryItem}
-                        className="w-full bg-yellow-500 hover:bg-yellow-600 text-black"
-                        disabled={!newItem.name.trim()}
-                      >
-                        Add Item
-                      </Button>
                     </div>
                   </SheetContent>
                 </Sheet>
               </CardHeader>
               <CardContent>
-                {inventory.length > 0 ? (
+                {(itemsInventory.length > 0 || inventory.length > 0) ? (
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -403,6 +481,40 @@ const CharacterSheet = (): JSX.Element => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
+                      {itemsInventory.map((item) => (
+                        <TableRow key={`item-${item.id}`}>
+                          <TableCell className="text-white">
+                            <div>
+                              <div className="font-medium">{item.name}</div>
+                              <div className="flex gap-1 mt-1">
+                                <Badge variant="outline" className="text-xs border-purple-400 text-purple-200">
+                                  {item.type}
+                                </Badge>
+                                {item.tier && (
+                                  <Badge variant="outline" className="text-xs border-yellow-400 text-yellow-200">
+                                    Tier {item.tier}
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-white">
+                            {item.quantity}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => {
+                                removeItemInventoryItem(item.id);
+                              }}
+                              className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
                       {inventory.map((item) => (
                         <TableRow key={item.id}>
                           <TableCell className="text-white">
@@ -413,6 +525,9 @@ const CharacterSheet = (): JSX.Element => {
                                   {item.description}
                                 </div>
                               )}
+                              <Badge variant="outline" className="text-xs border-gray-400 text-gray-200 mt-1">
+                                Custom
+                              </Badge>
                             </div>
                           </TableCell>
                           <TableCell className="text-white">
