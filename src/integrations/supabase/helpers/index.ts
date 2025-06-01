@@ -1,10 +1,5 @@
-
 // Character helpers
-export {
-  getCharacters,
-  getCharacterById,
-  updateCharacter,
-} from "./characters";
+export { getCharacters, getCharacterById, updateCharacter } from "./characters";
 
 // Class helpers
 export {
@@ -24,19 +19,10 @@ export {
 } from "./domains";
 
 // Ancestry helpers
-export {
-  getAllAncestries,
-  getSingleAncestryBySlug,
-} from "./ancestries";
+export { getAllAncestries, getSingleAncestryBySlug } from "./ancestries";
 
 // Community helpers
-export {
-  getAllCommunities,
-} from "./communities";
+export { getAllCommunities } from "./communities";
 
 // Item helpers
-export {
-  searchItems,
-  getItemById,
-  getItemsByIds,
-} from "./items";
+export { searchItems, getItemById, getItemsByIds } from "./items";

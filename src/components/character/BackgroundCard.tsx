@@ -1,11 +1,14 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CharacterWithRelations } from "@/lib/types";
+import { JSX } from "react";
 
 interface BackgroundCardProps {
-  character: any;
+  character: CharacterWithRelations;
 }
 
-const BackgroundCard = ({ character }: BackgroundCardProps) => {
+const BackgroundCard = ({
+  character,
+}: BackgroundCardProps): JSX.Element | null => {
   if (!character.background) return null;
 
   return (

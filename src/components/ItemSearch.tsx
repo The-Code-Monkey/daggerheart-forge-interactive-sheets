@@ -1,5 +1,4 @@
-
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, JSX } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -20,7 +19,7 @@ interface ItemSearchProps {
   onItemSelect: (item: Item, quantity: number) => void;
 }
 
-const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
+const ItemSearch = ({ onItemSelect }: ItemSearchProps): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Item[]>([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -44,12 +43,12 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
   );
 
   useEffect(() => {
-    debouncedSearch(searchQuery);
+    void debouncedSearch(searchQuery);
   }, [searchQuery, debouncedSearch]);
 
   const handleItemSelect = (item: Item) => {
     setSelectedItem(item);
-    setSearchQuery(item.name);
+    setSearchQuery("");
     setSearchResults([]);
   };
 
@@ -73,12 +72,14 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
           <Input
             id="item-search"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             className="bg-slate-800/50 border-purple-500/50 text-white pl-10"
             placeholder="Search for items..."
           />
         </div>
-        
+
         {isSearching && (
           <div className="text-purple-300 text-sm mt-1">Searching...</div>
         )}
@@ -88,7 +89,9 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
             {searchResults.map((item) => (
               <button
                 key={item.id}
-                onClick={() => handleItemSelect(item)}
+                onClick={() => {
+                  handleItemSelect(item);
+                }}
                 className="w-full p-2 text-left hover:bg-purple-500/20 border-b border-purple-500/20 last:border-b-0"
               >
                 <div className="flex items-center justify-between">
@@ -96,11 +99,17 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
                     <div className="text-white font-medium">{item.name}</div>
                     {item.type && (
                       <div className="flex gap-1 mt-1">
-                        <Badge variant="outline" className="text-xs border-purple-400 text-purple-200">
+                        <Badge
+                          variant="outline"
+                          className="text-xs border-purple-400 text-purple-200"
+                        >
                           {item.type}
                         </Badge>
                         {item.tier && (
-                          <Badge variant="outline" className="text-xs border-yellow-400 text-yellow-200">
+                          <Badge
+                            variant="outline"
+                            className="text-xs border-yellow-400 text-yellow-200"
+                          >
                             Tier {item.tier}
                           </Badge>
                         )}
@@ -118,16 +127,22 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
         <div className="p-3 border border-purple-500/30 rounded-md bg-slate-800/50">
           <div className="text-white font-medium mb-2">{selectedItem.name}</div>
           <div className="flex gap-2 mb-2">
-            <Badge variant="outline" className="border-purple-400 text-purple-200">
+            <Badge
+              variant="outline"
+              className="border-purple-400 text-purple-200"
+            >
               {selectedItem.type}
             </Badge>
             {selectedItem.tier && (
-              <Badge variant="outline" className="border-yellow-400 text-yellow-200">
+              <Badge
+                variant="outline"
+                className="border-yellow-400 text-yellow-200"
+              >
                 Tier {selectedItem.tier}
               </Badge>
             )}
           </div>
-          
+
           <div>
             <Label htmlFor="item-quantity" className="text-white">
               Quantity
@@ -137,7 +152,9 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
               type="number"
               min="1"
               value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
+              onChange={(e) => {
+                setQuantity(parseInt(e.target.value) || 1);
+              }}
               className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
             />
           </div>
@@ -145,7 +162,7 @@ const ItemSearch = ({ onItemSelect }: ItemSearchProps) => {
           <Button
             onClick={handleAddItem}
             className="w-full mt-3 bg-yellow-500 hover:bg-yellow-600 text-black"
-            disabled={!selectedItem || quantity < 1}
+            disabled={quantity < 1}
           >
             <Plus className="w-4 h-4 mr-1" />
             Add to Inventory

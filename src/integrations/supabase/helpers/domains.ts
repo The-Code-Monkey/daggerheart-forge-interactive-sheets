@@ -1,4 +1,3 @@
-
 import { Domain } from "@/lib/types";
 import { supabase } from "../client";
 

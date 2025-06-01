@@ -1,4 +1,3 @@
-
 import { Ancestry } from "@/lib/types";
 import { supabase } from "../client";
 

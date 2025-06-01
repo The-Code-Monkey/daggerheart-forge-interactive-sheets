@@ -1,7 +1,10 @@
-
+import { Item } from "@/lib/types";
 import { supabase } from "../client";
 
-export const searchItems = async (query: string, limit = 10) => {
+export const searchItems = async (
+  query: string,
+  limit = 10
+): Promise<Item[]> => {
   if (!query.trim()) {
     return [];
   }
@@ -9,7 +12,7 @@ export const searchItems = async (query: string, limit = 10) => {
   const { data, error } = await supabase
     .from("items")
     .select("*")
-    .textSearch("name", query, { type: "websearch" })
+    .ilike("name", `%${query.toLowerCase()}%`)
     .limit(limit);
 
   if (error) {
@@ -20,7 +23,7 @@ export const searchItems = async (query: string, limit = 10) => {
   return data;
 };
 
-export const getItemById = async (id: number) => {
+export const getItemById = async (id: number): Promise<Item | null> => {
   const { data, error } = await supabase
     .from("items")
     .select("*")
@@ -35,7 +38,7 @@ export const getItemById = async (id: number) => {
   return data;
 };
 
-export const getItemsByIds = async (ids: number[]) => {
+export const getItemsByIds = async (ids: number[]): Promise<Item[]> => {
   if (ids.length === 0) {
     return [];
   }

@@ -1,4 +1,3 @@
-
 import { Community } from "@/lib/types";
 import { supabase } from "../client";
 

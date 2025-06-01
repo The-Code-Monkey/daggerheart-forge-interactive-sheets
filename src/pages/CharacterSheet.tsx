@@ -1,10 +1,8 @@
-
 import { useState, useEffect, JSX } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { Character, CharacterWithRelations } from "@/lib/types";
 import {
@@ -18,12 +16,12 @@ import InventoryManager from "@/components/character/InventoryManager";
 import CharacterInfo from "@/components/character/CharacterInfo";
 
 const CharacterSheet = (): JSX.Element => {
-  const { id: characterId } = useParams();
-  const { user } = useAuth();
-  const _navigate = useNavigate();
+  const { characterId } = useParams();
   const { toast } = useToast();
 
-  const [character, setCharacter] = useState<CharacterWithRelations | null>(null);
+  const [character, setCharacter] = useState<CharacterWithRelations | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchCharacterById = async (id: string) => {
@@ -39,7 +37,7 @@ const CharacterSheet = (): JSX.Element => {
     if (characterId) {
       void fetchCharacterById(characterId);
     }
-  }, [characterId, user]);
+  }, [characterId]);
 
   const updateCharacterData = async (updates: Partial<Character>) => {
     if (!characterId) {
@@ -141,17 +139,25 @@ const CharacterSheet = (): JSX.Element => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Character Stats */}
-          <div className="lg:col-span-2 space-y-6">
-            <HPManager character={character} onUpdate={updateCharacterData} />
+          <div className="lg:col-span-3 space-y-6">
+            <HPManager
+              character={character}
+              onUpdate={(updates) => void updateCharacterData(updates)}
+            />
             <AttributesCard character={character} />
             <BackgroundCard character={character} />
           </div>
 
           {/* Inventory and Info */}
-          <div className="space-y-6">
-            <InventoryManager character={character} onUpdate={updateCharacterData} />
+          <div className="space-y-6 lg:col-span-2">
+            <InventoryManager
+              character={character}
+              onUpdate={(updates) => {
+                void updateCharacterData(updates);
+              }}
+            />
             <CharacterInfo character={character} />
           </div>
         </div>

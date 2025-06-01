@@ -55,4 +55,6 @@ export type Ancestry = Omit<
 
 export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"];
 
+export type Item = Database["public"]["Tables"]["items"]["Row"];
+
 export type Json = Record<string, SupabaseJson | undefined>;

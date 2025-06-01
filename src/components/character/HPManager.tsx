@@ -1,18 +1,17 @@
-
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Heart } from "lucide-react";
 import { debounce } from "lodash";
-import { Character } from "@/lib/types";
+import { Character, CharacterWithRelations } from "@/lib/types";
 
 interface HPManagerProps {
-  character: any;
+  character: CharacterWithRelations;
   onUpdate: (updates: Partial<Character>) => void;
 }
 
-const HPManager = ({ character, onUpdate }: HPManagerProps) => {
+const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [currentHp, setCurrentHp] = useState(0);
   const [maxHp, setMaxHp] = useState(0);
 
@@ -23,10 +22,8 @@ const HPManager = ({ character, onUpdate }: HPManagerProps) => {
   ).current;
 
   useEffect(() => {
-    if (character) {
-      setCurrentHp(character.current_hp ?? 0);
-      setMaxHp(character.max_hp ?? 0);
-    }
+    setCurrentHp(character.current_hp ?? 0);
+    setMaxHp(character.max_hp ?? 0);
   }, [character]);
 
   const handleHpChange = (type: "current" | "max", value: number) => {
@@ -90,11 +87,15 @@ const HPManager = ({ character, onUpdate }: HPManagerProps) => {
         <div className="grid grid-cols-2 gap-4">
           <div className="text-center">
             <div className="text-sm text-green-300">Hope</div>
-            <div className="text-2xl font-bold text-white">{character.hope}</div>
+            <div className="text-2xl font-bold text-white">
+              {character.hope}
+            </div>
           </div>
           <div className="text-center">
             <div className="text-sm text-red-300">Stress</div>
-            <div className="text-2xl font-bold text-white">{character.stress}</div>
+            <div className="text-2xl font-bold text-white">
+              {character.stress}
+            </div>
           </div>
         </div>
       </CardContent>

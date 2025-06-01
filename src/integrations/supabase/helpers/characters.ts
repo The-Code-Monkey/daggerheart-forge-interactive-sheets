@@ -1,8 +1,4 @@
-
-import {
-  Character,
-  CharacterWithRelations,
-} from "@/lib/types";
+import { Character, CharacterWithRelations } from "@/lib/types";
 import { supabase } from "../client";
 
 export const getCharacters = async (): Promise<

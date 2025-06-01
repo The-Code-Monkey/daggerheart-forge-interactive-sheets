@@ -1,4 +1,3 @@
-
 import { Json } from "@/lib/types";
 
 export interface InventoryItem extends Json {
@@ -11,6 +10,7 @@ export interface InventoryItem extends Json {
 export interface ItemInventoryEntry {
   itemId: number;
   quantity: number;
+  equipped?: boolean;
 }
 
 export interface ItemWithQuantity {
@@ -20,4 +20,5 @@ export interface ItemWithQuantity {
   tier: number;
   quantity: number;
   description?: string;
+  equipped?: boolean;
 }

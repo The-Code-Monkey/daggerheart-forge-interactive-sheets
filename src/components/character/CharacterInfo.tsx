@@ -1,11 +1,11 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { JSX } from "react";
 
 interface CharacterInfoProps {
   character: any;
 }
 
-const CharacterInfo = ({ character }: CharacterInfoProps) => {
+const CharacterInfo = ({ character }: CharacterInfoProps): JSX.Element => {
   return (
     <Card>
       <CardHeader>
