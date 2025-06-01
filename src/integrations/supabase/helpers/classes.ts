@@ -1,4 +1,4 @@
-import { Class, Domain, Subclass } from "@/lib/types";
+import { Class, Domain, Feature, Subclass } from "@/lib/types";
 import { supabase } from "../client";
 
 export const getSingleClassBySlug = async (
@@ -73,11 +73,12 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
 };
 
 export const getAllClassesWithDomains = async (
-  limit = 99
+  { limit, homebrew } = { limit: 99, homebrew: false }
 ): Promise<Class[] | null> => {
   const { data, error } = await supabase
     .from("classes")
     .select("*, classes_domains ( domains ( * ) )")
+    .eq("isHomebrew", homebrew)
     .limit(limit);
 
   if (error) {
@@ -107,4 +108,52 @@ export const getSubclassesByClassId = async (
     return null;
   }
   return data;
+};
+
+interface ClassFormData {
+  name: string;
+  description: string;
+  base_hp: number;
+  base_evasion: number;
+  class_items: string;
+  features: Partial<Feature>[];
+  domains: number[];
+  isHomebrew: true;
+}
+
+export const createNewHomebrewClass = async (
+  newClass: ClassFormData
+): Promise<Class | null> => {
+  const formattedData = {
+    name: newClass.name,
+    description: newClass.description,
+    base_hp: newClass.base_hp,
+    base_evasion: newClass.base_evasion,
+    class_items: newClass.class_items,
+    features: newClass.features,
+    isHomebrew: true,
+  };
+
+  const { data: classData, error } = await supabase
+    .from("classes")
+    .insert(formattedData)
+    .select()
+    .single();
+
+  console.log(classData);
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  const id = classData.id;
+
+  await supabase.from("classes_domains").insert(
+    newClass.domains.map((domainId) => ({
+      class_id: id,
+      domain_id: domainId,
+    }))
+  );
+
+  return classData as Class;
 };

@@ -27,34 +27,72 @@ exports[`Dashboard renders correctly 1`] = `
             Manage your characters and campaigns
           </p>
         </div>
-        <button
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+        <div
+          class="flex flex-row gap-2"
         >
-          <svg
-            aria-hidden="true"
-            class="lucide lucide-log-out w-4 h-4 mr-2"
-            fill="none"
-            height="24"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
+          <a
+            href="/homebrew"
           >
-            <path
-              d="m16 17 5-5-5-5"
-            />
-            <path
-              d="M21 12H9"
-            />
-            <path
-              d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
-            />
-          </svg>
-          Sign Out
-        </button>
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-beer w-4 h-4 mr-2"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17 11h1a3 3 0 0 1 0 6h-1"
+              />
+              <path
+                d="M9 12v6"
+              />
+              <path
+                d="M13 12v6"
+              />
+              <path
+                d="M14 7.5c-1 0-1.44.5-3 .5s-2-.5-3-.5-1.72.5-2.5.5a2.5 2.5 0 0 1 0-5c.78 0 1.57.5 2.5.5S9.44 2 11 2s2 1.5 3 1.5 1.72-.5 2.5-.5a2.5 2.5 0 0 1 0 5c-.78 0-1.5-.5-2.5-.5Z"
+              />
+              <path
+                d="M5 8v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"
+              />
+            </svg>
+            Homebrew
+          </a>
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-log-out w-4 h-4 mr-2"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m16 17 5-5-5-5"
+              />
+              <path
+                d="M21 12H9"
+              />
+              <path
+                d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"
+              />
+            </svg>
+            Sign Out
+          </button>
+        </div>
       </div>
       <div
         class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8"

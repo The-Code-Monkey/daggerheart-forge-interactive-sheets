@@ -18,7 +18,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [maxHp, setMaxHp] = useState(
     character.max_hp ?? character.class?.base_hp ?? 0
   );
-  const [evasion, setEvasion] = useState();
+  const [evasion, setEvasion] = useState<number | undefined>(undefined);
 
   const debouncedUpdate = useRef(
     debounce((data: { current_hp?: number; max_hp?: number }) => {

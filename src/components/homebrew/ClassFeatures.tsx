@@ -1,6 +1,5 @@
-
 import { JSX, useState } from "react";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "../ui/form";
+import { FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
@@ -50,13 +49,20 @@ const ClassFeatures = ({ form }: ClassFeaturesProps): JSX.Element => {
       </div>
 
       {features.map((feature, index) => (
-        <div key={index} className="bg-slate-800/30 p-4 rounded-lg border border-brand-500/20">
+        <div
+          key={index}
+          className="bg-slate-800/30 p-4 rounded-lg border border-brand-500/20"
+        >
           <div className="flex items-center justify-between mb-4">
-            <h4 className="text-lg font-medium text-white">Feature {index + 1}</h4>
+            <h4 className="text-lg font-medium text-white">
+              Feature {index + 1}
+            </h4>
             {features.length > 1 && (
               <Button
                 type="button"
-                onClick={() => removeFeature(index)}
+                onClick={() => {
+                  removeFeature(index);
+                }}
                 variant="ghost"
                 size="sm"
                 className="text-red-400 hover:text-red-300 hover:bg-red-400/10"
@@ -73,7 +79,9 @@ const ClassFeatures = ({ form }: ClassFeaturesProps): JSX.Element => {
                 placeholder="Enter feature name"
                 className="bg-slate-800/50 border-brand-500/30 text-white"
                 value={feature.name}
-                onChange={(e) => updateFeature(index, "name", e.target.value)}
+                onChange={(e) => {
+                  updateFeature(index, "name", e.target.value);
+                }}
               />
             </div>
 
@@ -83,7 +91,9 @@ const ClassFeatures = ({ form }: ClassFeaturesProps): JSX.Element => {
                 placeholder="Describe what this feature does"
                 className="bg-slate-800/50 border-brand-500/30 text-white min-h-[100px]"
                 value={feature.description}
-                onChange={(e) => updateFeature(index, "description", e.target.value)}
+                onChange={(e) => {
+                  updateFeature(index, "description", e.target.value);
+                }}
               />
             </div>
           </div>

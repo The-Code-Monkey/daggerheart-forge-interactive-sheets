@@ -1,5 +1,4 @@
-
-import { JSX, useState } from "react";
+import { JSX, useState, MouseEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
@@ -11,6 +10,8 @@ import ClassFeatures from "@/components/homebrew/ClassFeatures";
 import ClassDomains from "@/components/homebrew/ClassDomains";
 import { ArrowLeft, Save } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Feature } from "@/lib/types";
+import { createNewHomebrewClass } from "@/integrations/supabase/helpers/classes";
 
 interface ClassFormData {
   name: string;
@@ -18,23 +19,40 @@ interface ClassFormData {
   base_hp: number;
   base_evasion: number;
   class_items: string;
-  features: Array<{ name: string; description: string }>;
+  features: Partial<Feature>[];
   domains: number[];
-  isHomebrew: boolean;
+  isHomebrew: true;
 }
 
 const HomebrewClassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
-  
+
   const form = useForm<ClassFormData>({
     defaultValues: {
-      name: "",
-      description: "",
-      base_hp: 0,
-      base_evasion: 0,
-      class_items: "",
-      features: [{ name: "", description: "" }],
-      domains: [],
+      name: "Soulforge",
+      description:
+        "Some people in this world possess souls that are so deep and vast that they act as incubators, developing objects within themselves that can manifest in the material world. These beings are known as Soulforges, and the most important tool they will manifest is their Soul Weapon- a unique armament whose abilities and ornamentations are a direct reflection of the Soulforge's soul. Soulforges that are more upbeat and light tend to channel smooth, aethereal energy through their Soul Weapon, whereas more solemn Soulforges with an unstable demeanor tend to channel rough, abyssal energy instead. No matter the energy channeled, Soulforges are useful as long as their souls remain intact, undisturbed, and consistent.",
+      base_hp: 6,
+      base_evasion: 11,
+      class_items: "A broken chain or a wicker basket",
+      features: [
+        {
+          name: "Permanency",
+          description:
+            "Spend 3 Hope to cause an object manifested with your Soulforged Objects Feature to become permanent and not vanish when it would normally vanish.",
+        },
+        {
+          name: "Soulforged Objects",
+          description:
+            "Make a Spellcast Roll (10). On a success, you manifest a mundane item that’s useful to your situation. Work with the GM to figure out what item you forge from your soul. This object vanishes one hour after you manifest it or when you manifest another mundane item using this feature.",
+        },
+        {
+          name: "Soul Weapon",
+          description:
+            "Soul Weapon: When you choose your starting equipment during character creation, instead of selecting any from the Tier 1 Weapon Tables, you gain a Soul Weapon- a magic weapon forged from the depths of your soul. This is available as a home-brew item. Below is how it works:\n\nName\tTrait\tRange\tDamage\tBurden\tFeatures\nSoul Weapon\t(Choose when you gain this weapon)\tClose\td8 mag\tTwo-Handed\tReturning: When this weapon is thrown within range, it appears in your hand immediately after the attack. Bonded: Gain a bonus to your damage rolls equal to your level",
+        },
+      ],
+      domains: [2, 3],
       isHomebrew: true,
     },
   });
@@ -46,12 +64,41 @@ const HomebrewClassForm = (): JSX.Element => {
     { title: "Domains", component: ClassDomains },
   ];
 
-  const onSubmit = (data: ClassFormData) => {
-    console.log("Class form data:", data);
-    // TODO: Save to database
+  const onSubmit = async (_: ClassFormData) => {
+    // console.log("Class form data:", data);
+    const data = await createNewHomebrewClass({
+      name: "Soulforge",
+      description:
+        "Some people in this world possess souls that are so deep and vast that they act as incubators, developing objects within themselves that can manifest in the material world. These beings are known as Soulforges, and the most important tool they will manifest is their Soul Weapon- a unique armament whose abilities and ornamentations are a direct reflection of the Soulforge's soul. Soulforges that are more upbeat and light tend to channel smooth, aethereal energy through their Soul Weapon, whereas more solemn Soulforges with an unstable demeanor tend to channel rough, abyssal energy instead. No matter the energy channeled, Soulforges are useful as long as their souls remain intact, undisturbed, and consistent.",
+      base_hp: 6,
+      base_evasion: 11,
+      class_items: "A broken chain or a wicker basket",
+      features: [
+        {
+          name: "Permanency",
+          description:
+            "Spend 3 Hope to cause an object manifested with your Soulforged Objects Feature to become permanent and not vanish when it would normally vanish.",
+        },
+        {
+          name: "Soulforged Objects",
+          description:
+            "Make a Spellcast Roll (10). On a success, you manifest a mundane item that’s useful to your situation. Work with the GM to figure out what item you forge from your soul. This object vanishes one hour after you manifest it or when you manifest another mundane item using this feature.",
+        },
+        {
+          name: "Soul Weapon",
+          description:
+            "Soul Weapon: When you choose your starting equipment during character creation, instead of selecting any from the Tier 1 Weapon Tables, you gain a Soul Weapon- a magic weapon forged from the depths of your soul. This is available as a home-brew item. Below is how it works:\n\nName\tTrait\tRange\tDamage\tBurden\tFeatures\nSoul Weapon\t(Choose when you gain this weapon)\tClose\td8 mag\tTwo-Handed\tReturning: When this weapon is thrown within range, it appears in your hand immediately after the attack. Bonded: Gain a bonus to your damage rolls equal to your level",
+        },
+      ],
+      domains: [2, 3],
+      isHomebrew: true,
+    });
+
+    console.log(data);
   };
 
-  const nextStep = () => {
+  const nextStep = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1);
     }
@@ -70,8 +117,8 @@ const HomebrewClassForm = (): JSX.Element => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <Link 
-            to="/homebrew" 
+          <Link
+            to="/homebrew"
             className="inline-flex items-center text-purple-200 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -127,7 +174,12 @@ const HomebrewClassForm = (): JSX.Element => {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={(...args) => {
+                  void form.handleSubmit(onSubmit)(...args);
+                }}
+                className="space-y-6"
+              >
                 <CurrentStepComponent form={form} />
 
                 <Separator className="bg-brand-500/20" />
@@ -144,7 +196,7 @@ const HomebrewClassForm = (): JSX.Element => {
                     Previous
                   </Button>
 
-                  {currentStep === steps.length - 1 ? (
+                  {currentStep === steps.length - 1 && (
                     <Button
                       type="submit"
                       className="bg-brand-500 hover:bg-brand-600 text-white"
@@ -152,7 +204,8 @@ const HomebrewClassForm = (): JSX.Element => {
                       <Save className="w-4 h-4 mr-2" />
                       Save Class
                     </Button>
-                  ) : (
+                  )}
+                  {currentStep < steps.length - 1 && (
                     <Button
                       type="button"
                       onClick={nextStep}

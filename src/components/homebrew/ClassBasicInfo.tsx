@@ -1,6 +1,11 @@
-
 import { JSX } from "react";
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from "../ui/form";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { UseFormReturn } from "react-hook-form";
@@ -12,8 +17,10 @@ interface ClassBasicInfoProps {
 const ClassBasicInfo = ({ form }: ClassBasicInfoProps): JSX.Element => {
   return (
     <div className="space-y-6">
-      <h3 className="text-2xl font-semibold text-white mb-4">Basic Information</h3>
-      
+      <h3 className="text-2xl font-semibold text-white mb-4">
+        Basic Information
+      </h3>
+
       <FormField
         control={form.control}
         name="name"
@@ -21,10 +28,10 @@ const ClassBasicInfo = ({ form }: ClassBasicInfoProps): JSX.Element => {
           <FormItem>
             <FormLabel className="text-white">Class Name</FormLabel>
             <FormControl>
-              <Input 
-                placeholder="Enter class name" 
+              <Input
+                placeholder="Enter class name"
                 className="bg-slate-800/50 border-brand-500/30 text-white"
-                {...field} 
+                {...field}
               />
             </FormControl>
             <FormMessage />
@@ -39,10 +46,10 @@ const ClassBasicInfo = ({ form }: ClassBasicInfoProps): JSX.Element => {
           <FormItem>
             <FormLabel className="text-white">Description</FormLabel>
             <FormControl>
-              <Textarea 
+              <Textarea
                 placeholder="Describe your class"
                 className="bg-slate-800/50 border-brand-500/30 text-white min-h-[100px]"
-                {...field} 
+                {...field}
               />
             </FormControl>
             <FormMessage />
