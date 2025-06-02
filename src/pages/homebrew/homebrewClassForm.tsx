@@ -29,30 +29,6 @@ const HomebrewClassForm = (): JSX.Element => {
 
   const form = useForm<ClassFormData>({
     defaultValues: {
-      name: "Soulforge",
-      description:
-        "Some people in this world possess souls that are so deep and vast that they act as incubators, developing objects within themselves that can manifest in the material world. These beings are known as Soulforges, and the most important tool they will manifest is their Soul Weapon- a unique armament whose abilities and ornamentations are a direct reflection of the Soulforge's soul. Soulforges that are more upbeat and light tend to channel smooth, aethereal energy through their Soul Weapon, whereas more solemn Soulforges with an unstable demeanor tend to channel rough, abyssal energy instead. No matter the energy channeled, Soulforges are useful as long as their souls remain intact, undisturbed, and consistent.",
-      base_hp: 6,
-      base_evasion: 11,
-      class_items: "A broken chain or a wicker basket",
-      features: [
-        {
-          name: "Permanency",
-          description:
-            "Spend 3 Hope to cause an object manifested with your Soulforged Objects Feature to become permanent and not vanish when it would normally vanish.",
-        },
-        {
-          name: "Soulforged Objects",
-          description:
-            "Make a Spellcast Roll (10). On a success, you manifest a mundane item that’s useful to your situation. Work with the GM to figure out what item you forge from your soul. This object vanishes one hour after you manifest it or when you manifest another mundane item using this feature.",
-        },
-        {
-          name: "Soul Weapon",
-          description:
-            "Soul Weapon: When you choose your starting equipment during character creation, instead of selecting any from the Tier 1 Weapon Tables, you gain a Soul Weapon- a magic weapon forged from the depths of your soul. This is available as a home-brew item. Below is how it works:\n\nName\tTrait\tRange\tDamage\tBurden\tFeatures\nSoul Weapon\t(Choose when you gain this weapon)\tClose\td8 mag\tTwo-Handed\tReturning: When this weapon is thrown within range, it appears in your hand immediately after the attack. Bonded: Gain a bonus to your damage rolls equal to your level",
-        },
-      ],
-      domains: [2, 3],
       isHomebrew: true,
     },
   });
@@ -64,35 +40,8 @@ const HomebrewClassForm = (): JSX.Element => {
     { title: "Domains", component: ClassDomains },
   ];
 
-  const onSubmit = async (_: ClassFormData) => {
-    // console.log("Class form data:", data);
-    const data = await createNewHomebrewClass({
-      name: "Soulforge",
-      description:
-        "Some people in this world possess souls that are so deep and vast that they act as incubators, developing objects within themselves that can manifest in the material world. These beings are known as Soulforges, and the most important tool they will manifest is their Soul Weapon- a unique armament whose abilities and ornamentations are a direct reflection of the Soulforge's soul. Soulforges that are more upbeat and light tend to channel smooth, aethereal energy through their Soul Weapon, whereas more solemn Soulforges with an unstable demeanor tend to channel rough, abyssal energy instead. No matter the energy channeled, Soulforges are useful as long as their souls remain intact, undisturbed, and consistent.",
-      base_hp: 6,
-      base_evasion: 11,
-      class_items: "A broken chain or a wicker basket",
-      features: [
-        {
-          name: "Permanency",
-          description:
-            "Spend 3 Hope to cause an object manifested with your Soulforged Objects Feature to become permanent and not vanish when it would normally vanish.",
-        },
-        {
-          name: "Soulforged Objects",
-          description:
-            "Make a Spellcast Roll (10). On a success, you manifest a mundane item that’s useful to your situation. Work with the GM to figure out what item you forge from your soul. This object vanishes one hour after you manifest it or when you manifest another mundane item using this feature.",
-        },
-        {
-          name: "Soul Weapon",
-          description:
-            "Soul Weapon: When you choose your starting equipment during character creation, instead of selecting any from the Tier 1 Weapon Tables, you gain a Soul Weapon- a magic weapon forged from the depths of your soul. This is available as a home-brew item. Below is how it works:\n\nName\tTrait\tRange\tDamage\tBurden\tFeatures\nSoul Weapon\t(Choose when you gain this weapon)\tClose\td8 mag\tTwo-Handed\tReturning: When this weapon is thrown within range, it appears in your hand immediately after the attack. Bonded: Gain a bonus to your damage rolls equal to your level",
-        },
-      ],
-      domains: [2, 3],
-      isHomebrew: true,
-    });
+  const onSubmit = async (formData: ClassFormData) => {
+    const data = await createNewHomebrewClass(formData);
 
     console.log(data);
   };
