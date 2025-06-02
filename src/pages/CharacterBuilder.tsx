@@ -304,7 +304,7 @@ const CharacterBuilder = (): JSX.Element => {
             </h3>
             <div>
               <Label htmlFor="name" className="text-white">
-                Character Name
+                Character Name <span className="text-red-500">*</span>
               </Label>
               <Input
                 id="name"
@@ -314,17 +314,19 @@ const CharacterBuilder = (): JSX.Element => {
                 }}
                 className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
                 placeholder="Enter character name"
+                required
               />
             </div>
             <div>
               <Label htmlFor="level" className="text-white">
-                Level
+                Level <span className="text-red-500">*</span>
               </Label>
               <Select
                 value={formData.level.toString()}
                 onValueChange={(value) => {
                   updateFormData("level", parseInt(value));
                 }}
+                required
               >
                 <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                   <SelectValue placeholder="Select level" />
@@ -394,13 +396,14 @@ const CharacterBuilder = (): JSX.Element => {
             </h3>
             <div>
               <Label htmlFor="ancestry" className="text-white">
-                Ancestry
+                Ancestry <span className="text-red-500">*</span>
               </Label>
               <Select
                 value={formData.ancestry}
                 onValueChange={(value) => {
                   updateFormData("ancestry", value);
                 }}
+                required
               >
                 <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                   <SelectValue placeholder="Select ancestry" />
@@ -419,13 +422,14 @@ const CharacterBuilder = (): JSX.Element => {
             </div>
             <div>
               <Label htmlFor="class" className="text-white">
-                Class
+                Class <span className="text-red-500">*</span>
               </Label>
               <Select
                 value={formData.class}
                 onValueChange={(value) => {
                   updateFormData("class", value);
                 }}
+                required
               >
                 <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                   <SelectValue placeholder="Select class" />
@@ -442,13 +446,14 @@ const CharacterBuilder = (): JSX.Element => {
             {formData.class && (
               <div>
                 <Label htmlFor="subclass" className="text-white">
-                  Subclass
+                  Subclass <span className="text-red-500">*</span>
                 </Label>
                 <Select
                   value={formData.subclass}
                   onValueChange={(value) => {
                     updateFormData("subclass", value);
                   }}
+                  required
                 >
                   <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                     <SelectValue placeholder="Select subclass" />
@@ -465,13 +470,14 @@ const CharacterBuilder = (): JSX.Element => {
             )}
             <div>
               <Label htmlFor="community" className="text-white">
-                Community
+                Community <span className="text-red-500">*</span>
               </Label>
               <Select
                 value={formData.community}
                 onValueChange={(value) => {
                   updateFormData("community", value);
                 }}
+                required
               >
                 <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                   <SelectValue placeholder="Select community" />
@@ -517,13 +523,14 @@ const CharacterBuilder = (): JSX.Element => {
                 return (
                   <div key={key}>
                     <Label htmlFor={key} className="text-white capitalize">
-                      {key}
+                      {key} <span className="text-red-500">*</span>
                     </Label>
                     <Select
                       value={formData.stats[key]}
                       onValueChange={(value) => {
                         handleChangeStats(key, value);
                       }}
+                      required
                     >
                       <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                         <SelectValue placeholder="Select modifier" />
@@ -579,9 +586,6 @@ const CharacterBuilder = (): JSX.Element => {
               <p className="text-purple-200">
                 Level {formData.level} | {cls?.name} ({subclass?.name})
               </p>
-              <p className="text-purple-200">
-                Background: {formData.background}
-              </p>
               <p className="text-purple-200">Ancestry: {ancestry?.name}</p>
               <p className="text-purple-200">Community: {community?.name}</p>
               <div className="grid grid-cols-3 gap-2 mt-4">
@@ -612,19 +616,13 @@ const CharacterBuilder = (): JSX.Element => {
   const nextIsDisabled = () => {
     switch (currentStep) {
       case 1:
-        return (
-          !formData.name ||
-          !formData.age ||
-          !formData.gender ||
-          !formData.pronouns
-        );
+        return !formData.name || !formData.level;
       case 2:
         return (
           !formData.ancestry ||
           !formData.class ||
           !formData.community ||
-          !formData.subclass ||
-          !formData.background
+          !formData.subclass
         );
       case 3:
         return !Object.keys(formData.stats).every(
