@@ -33,6 +33,10 @@ const CharacterSheet = (): JSX.Element => {
     setIsLoading(false);
   };
 
+  const refetch = () => {
+    void fetchCharacterById(String(characterId));
+  };
+
   useEffect(() => {
     if (characterId) {
       void fetchCharacterById(characterId);
@@ -132,7 +136,9 @@ const CharacterSheet = (): JSX.Element => {
                   className="border-purple-400 text-purple-200"
                 >
                   {character.class?.name ?? "Unknown"}
-                  {character.subclass ? ` - (${character.subclass.name})` : ""}
+                  {character.subclass
+                    ? ` - (${String(character.subclass.name)})`
+                    : ""}
                 </Badge>
               </div>
             </div>
@@ -158,7 +164,7 @@ const CharacterSheet = (): JSX.Element => {
                 void updateCharacterData(updates);
               }}
             />
-            <CharacterInfo character={character} />
+            <CharacterInfo character={character} refetch={refetch} />
           </div>
         </div>
       </div>

@@ -6,7 +6,9 @@ export const getCharacters = async (): Promise<
 > => {
   const { data, error } = await supabase
     .from("characters")
-    .select("*, class(name), ancestry(name), subclass(name), community(name)")
+    .select(
+      "*, class(name), ancestry(id, name), subclass(id, name), community(id, name)"
+    )
     .limit(5);
 
   if (error) {
@@ -22,7 +24,7 @@ export const getCharacterById = async (
   const { data, error } = await supabase
     .from("characters")
     .select(
-      "*, class(name, base_evasion, base_hp), ancestry(name), subclass(name), community(name)"
+      "*, class(name, base_evasion, base_hp, features), ancestry(id, name), subclass(id, name, features), community(id, name)"
     )
     .eq("id", cId)
     .single();
@@ -42,7 +44,9 @@ export const updateCharacter = async (
     .from("characters")
     .update(updates)
     .eq("id", characterId)
-    .select("*, class(name), ancestry(name), subclass(name), community(name)")
+    .select(
+      "*, class(name, base_evasion, base_hp), ancestry(id, name), subclass(id, name, features), community(id, name)"
+    )
     .single();
 
   if (error) {

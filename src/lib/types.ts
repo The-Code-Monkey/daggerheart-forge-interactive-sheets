@@ -10,11 +10,25 @@ export enum Traits {
   EVASION = "Evasion",
 }
 
+export enum ItemType {
+  ARMOR = "Armor",
+  PHYSICAL = "Physical",
+  MAGICAL = "Magical",
+  CONSUMABLE = "Consumable",
+  PRIMARY = "Primary",
+  SECONDARY = "Secondary",
+}
+
 export interface Feature {
   name: string;
   description: string;
   list?: string[];
   modifiers?: Record<Traits, number>;
+}
+
+export interface Threshold {
+  major: number;
+  severe: number;
 }
 
 export interface ClassSubclass {
@@ -36,17 +50,32 @@ export interface CharacterStats {
   knowledge: number;
 }
 
+export interface CharacterAdditional {
+  hope?: number;
+  subclass?: Record<
+    string,
+    {
+      specialization?: boolean;
+      mastery?: boolean;
+    }
+  >;
+}
+
 export type Domain = Database["public"]["Tables"]["domains"]["Row"];
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"] & {
   stats: CharacterStats;
 };
 
-export type CharacterWithRelations = Omit<Character, "ancestry"> & {
+export type CharacterWithRelations = Omit<
+  Character,
+  "ancestry" | "additional"
+> & {
   class: { name: string; base_hp: number; base_evasion: number } | null;
   ancestry?: { name?: string } | null;
-  subclass: { name: string } | null;
+  subclass: Partial<ClassSubclass> | null;
   community: { name: string } | null;
+  additional?: Partial<CharacterAdditional>;
 };
 
 export type Community = Database["public"]["Tables"]["communities"]["Row"];
@@ -66,11 +95,32 @@ export type Ancestry = Omit<
 
 export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"];
 
-export type Item = Omit<
+export type ItemArmor = Omit<
   Database["public"]["Tables"]["items"]["Row"],
   "features"
 > & {
-  features?: Partial<Feature>[];
+  equipped?: boolean;
+  type: ItemType.ARMOR;
+  features?: {
+    features?: Partial<Feature>[];
+    thresholds: Partial<Threshold>;
+  };
 };
+
+export type ItemOther = Omit<
+  Database["public"]["Tables"]["items"]["Row"],
+  "features"
+> & {
+  equipped?: boolean;
+  features?: Partial<Feature>[];
+  type: ItemType.MAGICAL | ItemType.PHYSICAL | ItemType.CONSUMABLE;
+};
+
+export type ItemCustom = Omit<
+  Database["public"]["Tables"]["items"]["Row"],
+  "features"
+>;
+
+export type Item = ItemOther | ItemArmor | ItemCustom;
 
 export type Json = Record<string, SupabaseJson | undefined>;

@@ -71,6 +71,7 @@ export type Database = {
       }
       characters: {
         Row: {
+          additional: Json | null
           age: number | null
           ancestry: number | null
           background: string | null
@@ -96,6 +97,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          additional?: Json | null
           age?: number | null
           ancestry?: number | null
           background?: string | null
@@ -121,6 +123,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          additional?: Json | null
           age?: number | null
           ancestry?: number | null
           background?: string | null
@@ -411,6 +414,7 @@ export type Database = {
           class_id: number | null
           created_at: string
           description: string | null
+          features: Json | null
           id: number
           isHomebrew: boolean | null
           name: string | null
@@ -419,6 +423,7 @@ export type Database = {
           class_id?: number | null
           created_at?: string
           description?: string | null
+          features?: Json | null
           id?: number
           isHomebrew?: boolean | null
           name?: string | null
@@ -427,6 +432,7 @@ export type Database = {
           class_id?: number | null
           created_at?: string
           description?: string | null
+          features?: Json | null
           id?: number
           isHomebrew?: boolean | null
           name?: string | null
