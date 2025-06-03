@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 interface CTAButtonGroupProps {
   primaryText?: string;
   primaryLink?: string;
-  secondaryText?: string;
-  secondaryLink?: string;
+  // secondaryText?: string;
+  // secondaryLink?: string;
 }
 
 const CTAButtonGroup = ({
   primaryText = "Start Building",
   primaryLink = "/character-builder",
-  secondaryText = "View Demo",
-  secondaryLink = "/demo",
+  // secondaryText = "View Demo",
+  // secondaryLink = "/demo",
 }: CTAButtonGroupProps): JSX.Element => {
   return (
     <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
@@ -28,7 +28,7 @@ const CTAButtonGroup = ({
         </Button>
       </Link>
 
-      <Link to={secondaryLink}>
+{/*       <Link to={secondaryLink}>
         <Button
           size="lg"
           variant="ghost"
@@ -36,7 +36,7 @@ const CTAButtonGroup = ({
         >
           {secondaryText}
         </Button>
-      </Link>
+      </Link> */}
     </div>
   );
 };
