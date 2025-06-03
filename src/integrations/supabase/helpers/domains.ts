@@ -1,4 +1,4 @@
-import { Domain } from "@/lib/types";
+import { Domain, Card } from "@/lib/types";
 import { supabase } from "../client";
 
 export const getSingleDomainBySlug = async (
@@ -42,4 +42,38 @@ export const getAllDomains = async (limit = 99): Promise<Domain[] | null> => {
     return null;
   }
   return data as Domain[];
+};
+
+export const getDomainEffectsById = async (
+  cardIds: number[]
+): Promise<Card[]> => {
+  const { data, error } = await supabase
+    .from("cards")
+    .select("*")
+    .in("id", cardIds);
+
+  if (error) {
+    console.log(error);
+    return [];
+  }
+  return data as Card[];
+};
+
+export const getDomainEffects = async (
+  domainIds: number[],
+  tier = 1
+): Promise<Card[]> => {
+  const { data, error } = await supabase
+    .from("cards")
+    .select("*")
+    .eq("tier", tier)
+    .in("domain_id", domainIds);
+
+  console.log(data);
+
+  if (error) {
+    console.log(error);
+    return [];
+  }
+  return data as Card[];
 };

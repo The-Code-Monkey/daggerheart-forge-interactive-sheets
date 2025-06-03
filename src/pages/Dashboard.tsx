@@ -1,4 +1,3 @@
-
 import { JSX, useEffect, useState } from "react";
 import {
   Card,
@@ -64,7 +63,10 @@ const Dashboard = (): JSX.Element => {
     });
   };
 
-  const handleDeleteCharacter = async (characterId: string, characterName: string) => {
+  const handleDeleteCharacter = async (
+    characterId: string,
+    characterName: string
+  ) => {
     try {
       const { error } = await supabase
         .from("characters")
@@ -81,8 +83,8 @@ const Dashboard = (): JSX.Element => {
       }
 
       // Remove the character from the local state
-      setCharacters(prev => prev.filter(char => char.id !== characterId));
-      
+      setCharacters((prev) => prev.filter((char) => char.id !== characterId));
+
       toast({
         title: "Character deleted",
         description: `${characterName} has been successfully deleted.`,
@@ -271,15 +273,24 @@ const Dashboard = (): JSX.Element => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>Delete Character</AlertDialogTitle>
+                                <AlertDialogTitle>
+                                  Delete Character
+                                </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete "{character.name}"? This action cannot be undone.
+                                  Are you sure you want to delete "
+                                  {character.name}"? This action cannot be
+                                  undone.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleDeleteCharacter(character.id, character.name)}
+                                  onClick={() =>
+                                    void handleDeleteCharacter(
+                                      character.id,
+                                      character.name
+                                    )
+                                  }
                                   className="bg-red-600 hover:bg-red-700"
                                 >
                                   Delete

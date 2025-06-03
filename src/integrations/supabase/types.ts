@@ -69,6 +69,47 @@ export type Database = {
         }
         Relationships: []
       }
+      cards: {
+        Row: {
+          additional: Json | null
+          cost: number | null
+          created_at: string
+          description: string | null
+          domain_id: number | null
+          id: number
+          name: string | null
+          tier: number | null
+        }
+        Insert: {
+          additional?: Json | null
+          cost?: number | null
+          created_at?: string
+          description?: string | null
+          domain_id?: number | null
+          id?: number
+          name?: string | null
+          tier?: number | null
+        }
+        Update: {
+          additional?: Json | null
+          cost?: number | null
+          created_at?: string
+          description?: string | null
+          domain_id?: number | null
+          id?: number
+          name?: string | null
+          tier?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cards_domain_id_fkey"
+            columns: ["domain_id"]
+            isOneToOne: false
+            referencedRelation: "domains"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       characters: {
         Row: {
           additional: Json | null

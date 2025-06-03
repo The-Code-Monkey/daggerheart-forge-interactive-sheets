@@ -60,6 +60,7 @@ export interface CharacterAdditional {
       mastery?: boolean;
     }
   >;
+  domain_features?: number[];
 }
 
 export type Domain = Database["public"]["Tables"]["domains"]["Row"];
@@ -76,6 +77,7 @@ export type CharacterWithRelations = Omit<
   ancestry?: { name?: string } | null;
   subclass: Partial<ClassSubclass> | null;
   community: { name: string } | null;
+  domains: Domain[];
   additional?: Partial<CharacterAdditional>;
 };
 
@@ -124,5 +126,27 @@ export type ItemCustom = Omit<
 >;
 
 export type Item = ItemOther | ItemArmor | ItemCustom;
+
+export interface CardAdditional {
+  if?: {
+    armor?: boolean;
+  };
+  tiers?: Record<
+    string,
+    {
+      thresholds?: {
+        major?: number;
+        severe?: number;
+      };
+    }
+  >;
+}
+
+export type Card = Omit<
+  Database["public"]["Tables"]["cards"]["Row"],
+  "additional"
+> & {
+  additional?: Partial<CardAdditional>;
+};
 
 export type Json = Record<string, SupabaseJson | undefined>;

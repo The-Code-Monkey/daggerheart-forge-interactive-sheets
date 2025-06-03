@@ -13,7 +13,9 @@ import HPManager from "@/components/character/HPManager";
 import AttributesCard from "@/components/character/AttributesCard";
 import BackgroundCard from "@/components/character/BackgroundCard";
 import InventoryManager from "@/components/character/InventoryManager";
-import CharacterInfo from "@/components/character/CharacterInfo";
+// import CharacterInfo from "@/components/character/CharacterInfo";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import EffectsFeaturesManager from "@/components/character/EffectsFeaturesManager";
 
 const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
@@ -31,10 +33,6 @@ const CharacterSheet = (): JSX.Element => {
       setCharacter(data);
     }
     setIsLoading(false);
-  };
-
-  const refetch = () => {
-    void fetchCharacterById(String(characterId));
   };
 
   useEffect(() => {
@@ -147,7 +145,7 @@ const CharacterSheet = (): JSX.Element => {
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           {/* Character Stats */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="col-span-5 space-y-6">
             <HPManager
               character={character}
               onUpdate={(updates) => void updateCharacterData(updates)}
@@ -156,8 +154,36 @@ const CharacterSheet = (): JSX.Element => {
             <BackgroundCard character={character} />
           </div>
 
+          <div className="col-span-5 space-y-6">
+            <Tabs defaultValue="inventory">
+              <TabsList className="grid w-full grid-cols-4 bg-purple-800/50 mb-8">
+                <TabsTrigger value="inventory">Inventory</TabsTrigger>
+                <TabsTrigger value="effects-features">
+                  Effects &amp; Features
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="inventory">
+                <InventoryManager
+                  character={character}
+                  onUpdate={(updates) => {
+                    void updateCharacterData(updates);
+                  }}
+                />
+              </TabsContent>
+              <TabsContent value="effects-features">
+                <EffectsFeaturesManager
+                  character={character}
+                  onUpdate={(updates) => {
+                    void updateCharacterData(updates);
+                  }}
+                />
+              </TabsContent>
+            </Tabs>
+          </div>
+
           {/* Inventory and Info */}
-          <div className="space-y-6 lg:col-span-2">
+          {/* <div className="space-y-6 lg:col-span-2">
             <InventoryManager
               character={character}
               onUpdate={(updates) => {
@@ -165,7 +191,7 @@ const CharacterSheet = (): JSX.Element => {
               }}
             />
             <CharacterInfo character={character} refetch={refetch} />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

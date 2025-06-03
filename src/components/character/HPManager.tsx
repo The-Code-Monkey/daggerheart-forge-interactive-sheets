@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Heart, Minus, Plus } from "lucide-react";
 import { debounce } from "lodash";
 import {
+  Card as CardType,
   Character,
   CharacterAdditional,
   CharacterWithRelations,
@@ -16,6 +17,8 @@ import {
 import { ItemInventoryEntry } from "./types";
 import { getItemsByIds } from "@/integrations/supabase/helpers";
 import { Button } from "../ui/button";
+import { getDomainEffectsById } from "@/integrations/supabase/helpers/domains";
+import { getCharacterTier } from "@/integrations/supabase/helpers/characters";
 
 interface HPManagerProps {
   character: CharacterWithRelations;
@@ -34,6 +37,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [itemsWithQuantity, setItemsWithQuantity] = useState<
     (ItemOther | ItemArmor)[]
   >([]);
+  const [domainCards, setDomainCards] = useState<CardType[]>([]);
 
   const debouncedUpdate = useRef(
     debounce(
@@ -53,19 +57,32 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     const target = e.target;
     const newHope = target.checked ? hope + 1 : hope - 1;
     setHope(newHope);
-    debouncedUpdate({ additional: { hope: newHope } });
+    debouncedUpdate({
+      additional: { ...(character.additional ?? {}), hope: newHope },
+    });
   };
 
   const handleStressChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     const newStress = target.checked ? stress + 1 : stress - 1;
     setStress(newStress);
-    debouncedUpdate({ additional: { stress: newStress } });
+    debouncedUpdate({
+      additional: { ...(character.additional ?? {}), stress: newStress },
+    });
+  };
+
+  const handleGetDomainCards = async (char: CharacterWithRelations) => {
+    console.log(char.additional?.domain_features);
+    const cards = await getDomainEffectsById(
+      char.additional?.domain_features ?? []
+    );
+    setDomainCards(cards);
   };
 
   useEffect(() => {
     setCurrentHp(character.current_hp ?? 0);
     setMaxHp(character.max_hp ?? character.class?.base_hp ?? 0);
+    void handleGetDomainCards(character);
   }, [character]);
 
   const handleHopeMaxChange = (value: number) => {
@@ -173,13 +190,16 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
 
   const calculateDamageThresholds = () => {
     const thresholds = {
-      major: character.level ?? 1,
-      severe: (character.level ?? 1) * 2,
+      major: 0,
+      severe: 0,
     };
+    const tier = getCharacterTier(Number(character.level ?? 0));
 
     const isWearingArmor: ItemArmor | undefined = itemsWithQuantity.find(
       (item) => item.type === ItemType.ARMOR && item.equipped
     ) as ItemArmor | undefined;
+
+    console.log(domainCards);
 
     if (isWearingArmor) {
       thresholds.major = Number(
@@ -188,6 +208,16 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       thresholds.severe = Number(
         isWearingArmor.features?.thresholds.severe ?? thresholds.severe
       );
+    } else if (domainCards.length > 0) {
+      domainCards.forEach((card) => {
+        if (card.additional?.if?.armor === false) {
+          thresholds.major =
+            card.additional.tiers?.[tier].thresholds?.major ?? thresholds.major;
+          thresholds.severe =
+            card.additional.tiers?.[tier].thresholds?.severe ??
+            thresholds.severe;
+        }
+      });
     }
 
     if (character.subclass?.features) {
@@ -226,7 +256,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
 
   const thresholds = useMemo(
     () => calculateDamageThresholds(),
-    [character, itemsWithQuantity]
+    [character, itemsWithQuantity, domainCards]
   );
 
   return (
@@ -281,7 +311,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               >
                 Minor
               </Button>
-              <div>{thresholds.major}</div>
+              <div>{thresholds.major + (character.level ?? 1)}</div>
               <Button
                 className=""
                 onClick={() => {
@@ -290,7 +320,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               >
                 Major
               </Button>
-              <div>{thresholds.severe}</div>
+              <div>{thresholds.severe + (character.level ?? 1) * 2}</div>
               <Button
                 className=""
                 onClick={() => {
