@@ -26,7 +26,11 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [currentHp, setCurrentHp] = useState(0);
   const [maxHp, setMaxHp] = useState(0);
   const [evasion, setEvasion] = useState<number | undefined>(undefined);
+  const [armor, setArmor] = useState<number | undefined>(undefined);
   const [hope, setHope] = useState<number>(character.additional?.hope ?? 0);
+  const [stress, setStress] = useState<number>(
+    character.additional?.stress ?? 0
+  );
   const [itemsWithQuantity, setItemsWithQuantity] = useState<
     (ItemOther | ItemArmor)[]
   >([]);
@@ -52,6 +56,13 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     debouncedUpdate({ additional: { hope: newHope } });
   };
 
+  const handleStressChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const newStress = target.checked ? stress + 1 : stress - 1;
+    setStress(newStress);
+    debouncedUpdate({ additional: { stress: newStress } });
+  };
+
   useEffect(() => {
     setCurrentHp(character.current_hp ?? 0);
     setMaxHp(character.max_hp ?? character.class?.base_hp ?? 0);
@@ -60,6 +71,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const handleHopeMaxChange = (value: number) => {
     debouncedUpdate({ hope: value });
   };
+
+  // const handleStressMaxChange = (value: number) => {
+  //   debouncedUpdate({ stress: value });
+  // };
 
   const handleHpChange = (type: "current" | "max", value: number) => {
     if (type === "current") {
@@ -102,6 +117,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     });
 
     let newEvasion = Number(character.class?.base_evasion ?? 0);
+    let newArmor = 0;
 
     (
       itemsWithQuantity.filter((item) => !!item.type) as (
@@ -113,6 +129,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
         (entry) => entry.itemId === item.id
       );
       if (!entry?.equipped) return;
+
+      if (item.type === ItemType.ARMOR && item.features) {
+        newArmor = newArmor + Number(item.features.base);
+      }
 
       (item.type !== ItemType.ARMOR
         ? (item.features ?? [])
@@ -127,6 +147,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     });
 
     setEvasion(newEvasion);
+    setArmor(newArmor);
     setItemsWithQuantity(
       (
         itemsWithQuantity.filter((item) => !!item.type) as (
@@ -152,8 +173,8 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
 
   const calculateDamageThresholds = () => {
     const thresholds = {
-      major: 1,
-      severe: 2,
+      major: character.level ?? 1,
+      severe: (character.level ?? 1) * 2,
     };
 
     const isWearingArmor: ItemArmor | undefined = itemsWithQuantity.find(
@@ -213,7 +234,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Heart className="w-5 h-5 text-red-400" />
-          Health & Combat
+          Health &amp; Combat
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -286,7 +307,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
             <div className="text-sm text-purple-300">Evasion</div>
             <div className="text-2xl font-bold text-white">{evasion}</div>
           </div>
-          <div className="text-center"></div>
+          <div className="text-center">
+            <div className="text-sm text-purple-300">Armor</div>
+            <div className="text-2xl font-bold text-white">{armor}</div>
+          </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div className="text-center">
@@ -299,7 +323,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               >
                 <Minus className="w-5 h-5" />
               </Button>
-              {character.hope}/6
+              {hope}/{character.hope}
               <Button
                 onClick={() => {
                   updateHope(Number(character.hope) + 1);
@@ -309,7 +333,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               </Button>
             </div>
             <div className="flex flex-row gap-2 items-center justify-center">
-              {Array(6)
+              {Array(character.hope)
                 .fill(null)
                 .map((_, index) => (
                   <Input
@@ -326,7 +350,21 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
           <div className="text-center">
             <div className="text-sm text-red-300">Stress</div>
             <div className="text-2xl font-bold text-white">
-              {character.stress}
+              {stress}/{character.stress}
+            </div>
+            <div className="flex flex-row gap-2 items-center justify-center">
+              {Array(character.stress ?? 0)
+                .fill(null)
+                .map((_, index) => (
+                  <Input
+                    type="checkbox"
+                    className="w-5 hover:cursor-pointer rounded-md"
+                    onChange={handleStressChange}
+                    key={index}
+                    checked={stress >= index + 1}
+                    disabled={index >= (character.stress ?? 0)}
+                  />
+                ))}
             </div>
           </div>
         </div>

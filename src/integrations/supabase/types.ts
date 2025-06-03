@@ -91,7 +91,6 @@ export type Database = {
           pronouns: string | null
           stats: Json | null
           stress: number | null
-          stressSlots: number | null
           subclass: number | null
           updated_at: string | null
           user_id: string
@@ -117,7 +116,6 @@ export type Database = {
           pronouns?: string | null
           stats?: Json | null
           stress?: number | null
-          stressSlots?: number | null
           subclass?: number | null
           updated_at?: string | null
           user_id: string
@@ -143,7 +141,6 @@ export type Database = {
           pronouns?: string | null
           stats?: Json | null
           stress?: number | null
-          stressSlots?: number | null
           subclass?: number | null
           updated_at?: string | null
           user_id?: string

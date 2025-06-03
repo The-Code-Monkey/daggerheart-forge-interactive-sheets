@@ -52,6 +52,7 @@ export interface CharacterStats {
 
 export interface CharacterAdditional {
   hope?: number;
+  stress?: number;
   subclass?: Record<
     string,
     {
@@ -102,6 +103,7 @@ export type ItemArmor = Omit<
   equipped?: boolean;
   type: ItemType.ARMOR;
   features?: {
+    base: number;
     features?: Partial<Feature>[];
     thresholds: Partial<Threshold>;
   };

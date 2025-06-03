@@ -60,7 +60,6 @@ interface FormData {
     presence: string | undefined;
     knowledge: string | undefined;
   };
-  stressSlots: number | undefined;
   stress: number | undefined;
   hope: number | undefined;
 }
@@ -101,8 +100,7 @@ const CharacterBuilder = (): JSX.Element => {
       presence: undefined,
       knowledge: undefined,
     },
-    stressSlots: 6,
-    stress: 0,
+    stress: 6,
     hope: 2,
   });
 
@@ -181,8 +179,7 @@ const CharacterBuilder = (): JSX.Element => {
         community: data.community ? String(data.community) : undefined,
         subclass: data.subclass ? String(data.subclass) : undefined,
         stats: data.stats as unknown as FormData["stats"],
-        stressSlots: data.stressSlots ?? 6,
-        stress: data.stress ?? 0,
+        stress: data.stress ?? 6,
         hope: data.hope ?? 2,
       } satisfies FormData);
     }
@@ -216,8 +213,7 @@ const CharacterBuilder = (): JSX.Element => {
         level: formData.level,
         background: formData.background ?? null,
         stats: formData.stats,
-        stressSlots: formData.stressSlots ?? 6,
-        stress: formData.stress ?? 0,
+        stress: formData.stress ?? 6,
         hope: formData.hope ?? 2,
         complete: currentStep === 4,
         age: formData.age ?? null,

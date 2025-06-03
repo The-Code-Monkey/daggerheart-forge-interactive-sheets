@@ -107,7 +107,7 @@ export const getSubclassesByClassId = async (
     console.log(error);
     return null;
   }
-  return data;
+  return data as Subclass[];
 };
 
 interface ClassFormData {
