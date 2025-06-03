@@ -20,6 +20,37 @@ const Footer = (): JSX.Element => {
         email:{" "}
         <a href="mailto:hello@voxoradigital.com">hello@voxoradigital.com</a>
       </p>
+
+      <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-md max-w-2xl mx-auto my-6 text-sm text-gray-800 dark:text-gray-200">
+        <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+          Copyright / Attribution: Daggerheart
+        </h2>
+        <p>
+          This product includes materials from the
+          <span className="font-medium">
+            Daggerheart System Reference Document 1.0
+          </span>
+          , &copy; Critical Role, LLC. under the terms of the
+          <a
+            href="https://darringtonpress.com/license/"
+            className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Darrington Press Community Gaming (DPCGL) License
+          </a>
+          . More information can be found at
+          <a
+            href="https://www.daggerheart.com"
+            className="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            https://www.daggerheart.com
+          </a>
+          . There are no previous modifications by others.
+        </p>
+      </div>
     </footer>
   );
 };
