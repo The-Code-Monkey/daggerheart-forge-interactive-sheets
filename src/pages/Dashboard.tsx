@@ -1,3 +1,4 @@
+
 import { JSX, useEffect, useState } from "react";
 import {
   Card,
@@ -9,6 +10,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Users,
   Sword,
   BookOpen,
@@ -17,12 +29,14 @@ import {
   Eye,
   Pencil,
   Beer,
+  Trash2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { getCharacters } from "@/integrations/supabase/helpers";
 import { CharacterWithRelations } from "@/lib/types";
+import { supabase } from "@/integrations/supabase/client";
 
 const Dashboard = (): JSX.Element => {
   const { user, signOut } = useAuth();
@@ -48,6 +62,39 @@ const Dashboard = (): JSX.Element => {
       title: "Signed out",
       description: "You have been successfully signed out.",
     });
+  };
+
+  const handleDeleteCharacter = async (characterId: string, characterName: string) => {
+    try {
+      const { error } = await supabase
+        .from("characters")
+        .delete()
+        .eq("id", characterId);
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to delete character. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Remove the character from the local state
+      setCharacters(prev => prev.filter(char => char.id !== characterId));
+      
+      toast({
+        title: "Character deleted",
+        description: `${characterName} has been successfully deleted.`,
+      });
+    } catch (error) {
+      console.error("Error deleting character:", error);
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const characterCount = characters.length;
@@ -193,24 +240,54 @@ const Dashboard = (): JSX.Element => {
                             ? ` - (${String(character.subclass.name)})`
                             : ""}
                         </p>
-                        <Link to={link}>
-                          <Button
-                            size="sm"
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-                          >
-                            {character.complete ? (
-                              <>
-                                <Eye className="w-4 h-4 mr-2" />
-                                View Sheet
-                              </>
-                            ) : (
-                              <>
-                                <Pencil className="w-4 h-4 mr-2" />
-                                Edit Sheet
-                              </>
-                            )}
-                          </Button>
-                        </Link>
+                        <div className="flex gap-2">
+                          <Link to={link} className="flex-1">
+                            <Button
+                              size="sm"
+                              className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                            >
+                              {character.complete ? (
+                                <>
+                                  <Eye className="w-4 h-4 mr-2" />
+                                  View Sheet
+                                </>
+                              ) : (
+                                <>
+                                  <Pencil className="w-4 h-4 mr-2" />
+                                  Edit Sheet
+                                </>
+                              )}
+                            </Button>
+                          </Link>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                className="px-3"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Delete Character</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Are you sure you want to delete "{character.name}"? This action cannot be undone.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDeleteCharacter(character.id, character.name)}
+                                  className="bg-red-600 hover:bg-red-700"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                        </div>
                       </CardContent>
                     </Card>
                   );
