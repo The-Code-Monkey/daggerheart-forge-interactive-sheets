@@ -21,8 +21,6 @@ const BackgroundCard = ({
   const { characterId } = useParams<{ characterId: string }>();
   const { toast } = useToast();
 
-  if (!character.background) return null;
-
   const switchComponent = () => {
     setEditing((prev) => !prev);
   };

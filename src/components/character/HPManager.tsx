@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, JSX, ChangeEvent, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Heart } from "lucide-react";
+import { Heart, Minus, Plus } from "lucide-react";
 import { debounce } from "lodash";
 import {
   Character,
@@ -36,6 +36,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       (data: {
         current_hp?: number;
         max_hp?: number;
+        hope?: number;
         additional?: Partial<CharacterAdditional>;
       }) => {
         onUpdate(data);
@@ -55,6 +56,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     setCurrentHp(character.current_hp ?? 0);
     setMaxHp(character.max_hp ?? character.class?.base_hp ?? 0);
   }, [character]);
+
+  const handleHopeMaxChange = (value: number) => {
+    debouncedUpdate({ hope: value });
+  };
 
   const handleHpChange = (type: "current" | "max", value: number) => {
     if (type === "current") {
@@ -104,6 +109,11 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
         | ItemArmor
       )[]
     ).forEach((item) => {
+      const entry = itemsInventoryData.find(
+        (entry) => entry.itemId === item.id
+      );
+      if (!entry?.equipped) return;
+
       (item.type !== ItemType.ARMOR
         ? (item.features ?? [])
         : (item.features?.features ?? [])
@@ -187,6 +197,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const handleDamageTaken = (type: "minor" | "major" | "severe") => {
     const damage = type === "minor" ? 1 : type === "major" ? 2 : 3;
     handleHpChange("current", Math.min(currentHp + damage, maxHp));
+  };
+
+  const updateHope = (value: number) => {
+    handleHopeMaxChange(Math.min(value, 6));
   };
 
   const thresholds = useMemo(
@@ -277,8 +291,22 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
         <div className="grid grid-cols-2 gap-4">
           <div className="text-center">
             <div className="text-sm text-green-300">Hope</div>
-            <div className="text-2xl font-bold text-white">
+            <div className="text-2xl font-bold text-white flex flex-row gap-2 items-center justify-center">
+              <Button
+                onClick={() => {
+                  updateHope(Number(character.hope) - 1);
+                }}
+              >
+                <Minus className="w-5 h-5" />
+              </Button>
               {character.hope}/6
+              <Button
+                onClick={() => {
+                  updateHope(Number(character.hope) + 1);
+                }}
+              >
+                <Plus className="w-5 h-5" />
+              </Button>
             </div>
             <div className="flex flex-row gap-2 items-center justify-center">
               {Array(6)

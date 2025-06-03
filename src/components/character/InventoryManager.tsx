@@ -116,7 +116,7 @@ const InventoryManager = ({
     } else {
       updatedItemsInventory = [
         ...currentItemsInventory,
-        { itemId: item.id, quantity },
+        { itemId: item.id, quantity, equipped: false },
       ];
     }
 

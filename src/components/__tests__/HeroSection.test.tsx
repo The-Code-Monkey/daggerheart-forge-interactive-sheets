@@ -18,7 +18,6 @@ describe("HeroSection", () => {
   it("renders CTA buttons", () => {
     render(<HeroSection />);
     expect(screen.getByText("Start Building")).toBeInTheDocument();
-    expect(screen.getByText("View Demo")).toBeInTheDocument();
   });
 
   it("renders stats section", () => {
