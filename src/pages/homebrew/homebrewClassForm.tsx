@@ -64,7 +64,7 @@ const HomebrewClassForm = (): JSX.Element => {
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -117,7 +117,7 @@ const HomebrewClassForm = (): JSX.Element => {
         </div>
 
         {/* Form */}
-        <Card className="bg-slate-800/50 border-brand-500/30 backdrop-blur-sm">
+        <Card className="bg-slate-800/50 border-brand-500/30 backdrop-blur-xs">
           <CardHeader>
             <CardTitle className="text-white text-2xl">
               {steps[currentStep].title}

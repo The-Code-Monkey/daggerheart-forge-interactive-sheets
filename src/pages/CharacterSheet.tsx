@@ -69,7 +69,7 @@ const CharacterSheet = (): JSX.Element => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
+      <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-purple-200 py-8">
             Loading character...
@@ -81,7 +81,7 @@ const CharacterSheet = (): JSX.Element => {
 
   if (!character) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
+      <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
         <div className="max-w-6xl mx-auto">
           <p className="text-center text-purple-200 py-8">
             Character not found.
@@ -103,7 +103,7 @@ const CharacterSheet = (): JSX.Element => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

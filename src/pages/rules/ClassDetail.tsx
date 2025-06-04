@@ -32,7 +32,7 @@ const ClassDetail = (): JSX.Element => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+      <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-white mb-4">
             Loading Class...
@@ -44,7 +44,7 @@ const ClassDetail = (): JSX.Element => {
 
   if (!classData) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+      <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-white mb-4">
             Class Not Found
@@ -63,7 +63,7 @@ const ClassDetail = (): JSX.Element => {
   const subclasses = Object.keys(classData.additional.subclasses ?? {});
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -78,7 +78,7 @@ const ClassDetail = (): JSX.Element => {
           </Link>
 
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+            <div className="w-16 h-16 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
               {/* {classData.icon} */}
             </div>
             <div>
@@ -92,7 +92,7 @@ const ClassDetail = (): JSX.Element => {
 
         {/* Class Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-white">Hit Points</CardTitle>
             </CardHeader>
@@ -101,7 +101,7 @@ const ClassDetail = (): JSX.Element => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-white">Evasion</CardTitle>
             </CardHeader>
@@ -110,7 +110,7 @@ const ClassDetail = (): JSX.Element => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-white">Available Domains</CardTitle>
             </CardHeader>
@@ -129,7 +129,7 @@ const ClassDetail = (): JSX.Element => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-white">Class Items</CardTitle>
             </CardHeader>
@@ -140,7 +140,7 @@ const ClassDetail = (): JSX.Element => {
         </div>
 
         {/* Class Features */}
-        <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm col-span-2">
+        <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs col-span-2">
           <CardHeader>
             <CardTitle className="text-white">Class Features</CardTitle>
             <CardDescription className="text-purple-200">
@@ -195,7 +195,7 @@ const ClassDetail = (): JSX.Element => {
 
             return (
               <TabsContent value={key} key={key} className="space-y-6">
-                <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm flex flex-col">
+                <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-white">
                       {subclass.name}

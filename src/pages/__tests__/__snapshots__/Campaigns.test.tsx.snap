@@ -5,7 +5,7 @@ exports[`Campaigns Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4"
+    class="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4"
   >
     <div
       class="max-w-7xl mx-auto"
@@ -26,7 +26,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </p>
         </div>
         <button
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 px-4 py-2 bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
         >
           <svg
             aria-hidden="true"
@@ -55,7 +55,7 @@ exports[`Campaigns Page renders correctly 1`] = `
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
       >
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -70,13 +70,13 @@ exports[`Campaigns Page renders correctly 1`] = `
                   The Shattered Crown
                 </h3>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-600/50 text-white"
                 >
                   active
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
               >
                 <svg
                   aria-hidden="true"
@@ -196,7 +196,7 @@ exports[`Campaigns Page renders correctly 1`] = `
               class="flex gap-2"
             >
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -223,7 +223,7 @@ exports[`Campaigns Page renders correctly 1`] = `
                 View
               </button>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -252,7 +252,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -267,13 +267,13 @@ exports[`Campaigns Page renders correctly 1`] = `
                   Shadows of the Deep
                 </h3>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-green-600/50 text-white"
                 >
                   active
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
               >
                 <svg
                   aria-hidden="true"
@@ -393,7 +393,7 @@ exports[`Campaigns Page renders correctly 1`] = `
               class="flex gap-2"
             >
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -420,7 +420,7 @@ exports[`Campaigns Page renders correctly 1`] = `
                 View
               </button>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -449,7 +449,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -464,13 +464,13 @@ exports[`Campaigns Page renders correctly 1`] = `
                   The Dragon's Bargain
                 </h3>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-gray-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-gray-600/50 text-white"
                 >
                   completed
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-9 rounded-md px-3 text-brand-300 hover:text-white"
               >
                 <svg
                   aria-hidden="true"
@@ -590,7 +590,7 @@ exports[`Campaigns Page renders correctly 1`] = `
               class="flex gap-2"
             >
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 flex-1 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -617,7 +617,7 @@ exports[`Campaigns Page renders correctly 1`] = `
                 View
               </button>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
               >
                 <svg
                   aria-hidden="true"
@@ -650,7 +650,7 @@ exports[`Campaigns Page renders correctly 1`] = `
         class="grid grid-cols-1 md:grid-cols-4 gap-6"
       >
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-green-800/40 to-emerald-800/40 border-green-500/30 backdrop-blur-sm"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-green-800/40 to-emerald-800/40 border-green-500/30 backdrop-blur-xs"
         >
           <div
             class="p-6 text-center"
@@ -668,7 +668,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-blue-800/40 to-cyan-800/40 border-blue-500/30 backdrop-blur-sm"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-blue-800/40 to-cyan-800/40 border-blue-500/30 backdrop-blur-xs"
         >
           <div
             class="p-6 text-center"
@@ -686,7 +686,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-brand-800/40 to-pink-800/40 border-brand-500/30 backdrop-blur-sm"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-brand-800/40 to-pink-800/40 border-brand-500/30 backdrop-blur-xs"
         >
           <div
             class="p-6 text-center"
@@ -704,7 +704,7 @@ exports[`Campaigns Page renders correctly 1`] = `
           </div>
         </div>
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-orange-800/40 to-red-800/40 border-orange-500/30 backdrop-blur-sm"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-orange-800/40 to-red-800/40 border-orange-500/30 backdrop-blur-xs"
         >
           <div
             class="p-6 text-center"

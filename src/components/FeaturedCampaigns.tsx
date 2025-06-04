@@ -64,7 +64,7 @@ const FeaturedCampaigns = (): JSX.Element => {
           {featuredCampaigns.map((campaign) => (
             <Card
               key={campaign.id}
-              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+              className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
             >
               <CardHeader>
                 <div className="flex items-start justify-between mb-2">
@@ -119,7 +119,7 @@ const FeaturedCampaigns = (): JSX.Element => {
                   ))}
                 </div>
 
-                <Button className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
+                <Button className="w-full bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
                   <Eye className="w-4 h-4 mr-2" />
                   View Campaign
                 </Button>

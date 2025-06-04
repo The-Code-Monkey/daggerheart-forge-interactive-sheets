@@ -32,7 +32,7 @@ const HeroSection = (): JSX.Element => {
         <Text variant="h1" color="primary" className="mb-6">
           Your Digital
           <br />
-          <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+          <span className="bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
             Adventure Hub
           </span>
         </Text>

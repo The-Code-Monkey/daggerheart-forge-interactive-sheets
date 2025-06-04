@@ -54,7 +54,7 @@ const Index = (): JSX.Element => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900">
+    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900">
       <HeroSection />
 
       {/* Features Section */}
@@ -85,7 +85,7 @@ const Index = (): JSX.Element => {
       {/* CTA Section */}
       <section className="py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <Card className="bg-gradient-to-r from-brand-800/50 to-blue-800/50 border-brand-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-r from-brand-800/50 to-blue-800/50 border-brand-500/30 backdrop-blur-xs">
             <CardHeader>
               <CardTitle className="text-3xl font-bold text-white mb-4">
                 Ready to Begin Your Adventure?

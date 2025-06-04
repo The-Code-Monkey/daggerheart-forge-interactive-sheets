@@ -5,7 +5,7 @@ exports[`AncestryDetail Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4"
+    class="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4"
   >
     <div
       class="max-w-4xl mx-auto"
@@ -17,7 +17,7 @@ exports[`AncestryDetail Page renders correctly 1`] = `
           href="/game-rules"
         >
           <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-10 px-4 py-2 text-purple-200 hover:text-white mb-4"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-accent h-10 px-4 py-2 text-purple-200 hover:text-white mb-4"
           >
             <svg
               aria-hidden="true"
@@ -46,7 +46,7 @@ exports[`AncestryDetail Page renders correctly 1`] = `
           class="flex items-center gap-4 mb-4"
         >
           <div
-            class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center"
+            class="w-16 h-16 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center"
           />
           <div>
             <h1
@@ -63,7 +63,7 @@ exports[`AncestryDetail Page renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm col-span-2"
+        class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs col-span-2"
       >
         <div
           class="flex flex-col space-y-1.5 p-6"

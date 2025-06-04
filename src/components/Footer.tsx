@@ -2,7 +2,7 @@ import { JSX } from "react";
 
 const Footer = (): JSX.Element => {
   return (
-    <footer className="bg-brand-900/90 backdrop-blur-sm p-4 text-white">
+    <footer className="bg-brand-900/90 backdrop-blur-xs p-4 text-white">
       <p>
         This site uses only official Public Game Content from the Darrington
         Press System Reference Document (SRD), shared under the Community Gaming

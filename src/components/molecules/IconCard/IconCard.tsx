@@ -13,7 +13,7 @@ interface IconCardProps {
 
 const IconCard = ({ icon, title, description }: IconCardProps): JSX.Element => {
   return (
-    <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105">
+    <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105">
       <CardHeader>
         {icon && (
           <GradientBox

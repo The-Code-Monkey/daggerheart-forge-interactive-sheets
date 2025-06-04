@@ -8,7 +8,7 @@ const Skeleton = ({
   return (
     <div
       className={cn(
-        "animate-pulse rounded-md bg-gradient-to-br from-slate-800/50 to-slate-900/50",
+        "animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50",
         className
       )}
       {...props}

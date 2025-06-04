@@ -5,10 +5,10 @@ exports[`Auth Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center px-4"
+    class="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center px-4"
   >
     <div
-      class="rounded-lg border text-card-foreground shadow-sm w-full max-w-md bg-gradient-to-br from-brand-800/40 to-slate-800/40 border-brand-500/30 backdrop-blur-sm"
+      class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br w-full max-w-md bg-linear-to-br from-brand-800/40 to-slate-800/40 border-brand-500/30 backdrop-blur-xs"
     >
       <div
         class="flex flex-col space-y-1.5 p-6 text-center"
@@ -79,7 +79,7 @@ exports[`Auth Page renders correctly 1`] = `
             </label>
             <input
               autocomplete="off"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm"
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm"
               id="website"
               tabindex="-1"
               type="text"
@@ -96,7 +96,7 @@ exports[`Auth Page renders correctly 1`] = `
               Email
             </label>
             <input
-              class="flex h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm bg-slate-800/50 border-brand-500/50 text-white"
+              class="flex h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm bg-slate-800/50 border-brand-500/50 text-white"
               id="email"
               placeholder="Enter your email"
               required=""
@@ -114,7 +114,7 @@ exports[`Auth Page renders correctly 1`] = `
               Password
             </label>
             <input
-              class="flex h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm bg-slate-800/50 border-brand-500/50 text-white"
+              class="flex h-10 w-full rounded-md border px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm bg-slate-800/50 border-brand-500/50 text-white"
               id="password"
               placeholder="Enter your password"
               required=""
@@ -123,14 +123,14 @@ exports[`Auth Page renders correctly 1`] = `
             />
           </div>
           <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
             type="submit"
           >
             Sign In
           </button>
         </form>
         <div
-          class="shrink-0 h-[1px] w-full bg-brand-500/30"
+          class="shrink-0 h-px w-full bg-brand-500/30"
           data-orientation="horizontal"
           role="none"
         />
@@ -143,7 +143,7 @@ exports[`Auth Page renders correctly 1`] = `
             Don't have an account?
           </p>
           <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 w-full border-brand-400 text-brand-100"
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 w-full border-brand-400 text-brand-100"
           >
             Create Account
           </button>

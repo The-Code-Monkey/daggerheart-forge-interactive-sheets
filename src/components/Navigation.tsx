@@ -26,7 +26,7 @@ const Navigation = (): JSX.Element => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="bg-brand-900/90 backdrop-blur-sm border-b border-brand-700/50 sticky top-0 z-50">
+    <nav className="bg-brand-900/90 backdrop-blur-xs border-b border-brand-700/50 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

@@ -33,7 +33,7 @@ const DicePanel = (): React.JSX.Element => {
   };
 
   return (
-    <Card className="bg-gradient-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-sm">
+    <Card className="bg-linear-to-br from-purple-800/40 to-slate-800/40 border-purple-500/30 backdrop-blur-xs">
       <CardHeader>
         <CardTitle className="text-white flex items-center gap-2">
           <Dice6 className="w-5 h-5" />

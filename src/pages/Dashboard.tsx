@@ -104,7 +104,7 @@ const Dashboard = (): JSX.Element => {
   const canCreateMore = characterCount < maxCharacters;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -333,7 +333,7 @@ const Dashboard = (): JSX.Element => {
 
         {/* Coming Soon Features */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <Card className="bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
+          <Card className="bg-linear-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
             <CardHeader>
               <CardTitle className="text-white">Campaign Management</CardTitle>
               <CardDescription className="text-gray-300">
@@ -347,7 +347,7 @@ const Dashboard = (): JSX.Element => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
+          <Card className="bg-linear-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
             <CardHeader>
               <CardTitle className="text-white">Digital Dice & Tools</CardTitle>
               <CardDescription className="text-gray-300">

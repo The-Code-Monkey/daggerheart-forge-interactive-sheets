@@ -5,7 +5,7 @@ exports[`NotFound Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen flex items-center justify-center bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900"
+    class="min-h-screen flex items-center justify-center bg-linear-to-b from-brand-900 via-brand-800 to-slate-900"
   >
     <div
       class="text-center"

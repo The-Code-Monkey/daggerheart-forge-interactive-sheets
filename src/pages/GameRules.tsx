@@ -160,7 +160,7 @@ const GameRules = (): JSX.Element => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -206,11 +206,11 @@ const GameRules = (): JSX.Element => {
                 ? classesData.map((cls) => (
                     <Card
                       key={cls.id}
-                      className="bg-gradient-to-br aspect-square from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
+                      className="bg-linear-to-br aspect-square from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
                     >
                       <CardHeader>
                         <div className="flex items-center gap-3 mb-2">
-                          <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
                             {icons[String(cls.slug)]}
                           </div>
                           <CardTitle className="text-white">
@@ -256,7 +256,7 @@ const GameRules = (): JSX.Element => {
                     .map((_, index) => (
                       <Card
                         key={index}
-                        className="bg-gradient-to-br from-slate-800/80 aspect-square to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col"
+                        className="bg-linear-to-br from-slate-800/80 aspect-square to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col"
                       >
                         <CardHeader>
                           <div className="flex items-center gap-3 mb-2">
@@ -279,7 +279,7 @@ const GameRules = (): JSX.Element => {
               {ancestriesData?.map((ancestry, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
+                  className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
                 >
                   <CardHeader>
                     <CardTitle className="text-white">
@@ -307,7 +307,7 @@ const GameRules = (): JSX.Element => {
           </TabsContent>
 
           <TabsContent value="domains" className="space-y-6">
-            <Card className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm text-center">
+            <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs text-center">
               <CardHeader>
                 <CardTitle className="text-white pb-2">Class Domains</CardTitle>
                 <CardContent className="text-purple-200">
@@ -333,7 +333,7 @@ const GameRules = (): JSX.Element => {
               {domains.map((domain, index) => (
                 <Card
                   key={index}
-                  className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-sm"
+                  className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs"
                 >
                   <CardHeader>
                     <CardTitle className="text-white">{domain.name}</CardTitle>

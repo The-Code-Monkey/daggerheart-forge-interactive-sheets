@@ -5,7 +5,7 @@ exports[`Index Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900"
+    class="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900"
   >
     <section
       class="relative py-32 px-4 overflow-hidden"
@@ -120,7 +120,7 @@ exports[`Index Page renders correctly 1`] = `
           class="mb-8"
         >
           <div
-            class="transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-primary/80 inline-flex items-center px-4 py-2 rounded-full bg-brand-800/50 text-brand-200 text-sm font-medium border border-brand-600/30"
+            class="transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-primary/80 inline-flex items-center px-4 py-2 rounded-full bg-brand-800/50 text-brand-200 text-sm font-medium border border-brand-600/30"
           >
             <svg
               aria-hidden="true"
@@ -160,7 +160,7 @@ exports[`Index Page renders correctly 1`] = `
           Your Digital
           <br />
           <span
-            class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"
+            class="bg-linear-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"
           >
             Adventure Hub
           </span>
@@ -177,7 +177,7 @@ exports[`Index Page renders correctly 1`] = `
             href="/character-builder"
           >
             <button
-              class="inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-11 rounded-md bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg group"
+              class="inline-flex items-center justify-center gap-2 whitespace-nowrap ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-11 rounded-md bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold px-8 py-4 text-lg group"
             >
               Start Building
               <svg
@@ -270,13 +270,13 @@ exports[`Index Page renders correctly 1`] = `
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -316,13 +316,13 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -370,13 +370,13 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -421,13 +421,13 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -482,13 +482,13 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -525,13 +525,13 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300 hover:scale-105"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
             >
               <div
-                class="bg-gradient-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
+                class="bg-linear-to-r from-yellow-400 to-orange-500 w-12 h-12 rounded-lg flex items-center justify-center mb-4"
               >
                 <svg
                   aria-hidden="true"
@@ -611,7 +611,7 @@ exports[`Index Page renders correctly 1`] = `
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
@@ -620,7 +620,7 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex items-start justify-between mb-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
                 >
                   Featured
                 </div>
@@ -752,23 +752,23 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex flex-wrap gap-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Epic Fantasy
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Political Intrigue
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Ancient Magic
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 w-full bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
               >
                 <svg
                   aria-hidden="true"
@@ -797,7 +797,7 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
@@ -806,7 +806,7 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex items-start justify-between mb-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
                 >
                   Featured
                 </div>
@@ -938,23 +938,23 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex flex-wrap gap-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Maritime
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Mystery
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Exploration
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 w-full bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
               >
                 <svg
                   aria-hidden="true"
@@ -983,7 +983,7 @@ exports[`Index Page renders correctly 1`] = `
             </div>
           </div>
           <div
-            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+            class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
           >
             <div
               class="flex flex-col space-y-1.5 p-6"
@@ -992,7 +992,7 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex items-start justify-between mb-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-secondary/80 bg-yellow-600/50 text-white"
                 >
                   Featured
                 </div>
@@ -1124,23 +1124,23 @@ exports[`Index Page renders correctly 1`] = `
                 class="flex flex-wrap gap-2"
               >
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   High Fantasy
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Planar Travel
                 </div>
                 <div
-                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
+                  class="inline-flex items-center rounded-full border px-2.5 py-0.5 font-semibold transition-colors focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 border-brand-400/50 text-white text-xs"
                 >
                   Reality Bending
                 </div>
               </div>
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:bg-primary/90 h-10 px-4 py-2 w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
+                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 w-full bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
               >
                 <svg
                   aria-hidden="true"
@@ -1178,7 +1178,7 @@ exports[`Index Page renders correctly 1`] = `
         class="max-w-4xl mx-auto text-center"
       >
         <div
-          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-r from-brand-800/50 to-blue-800/50 border-brand-500/30 backdrop-blur-sm"
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br bg-linear-to-r from-brand-800/50 to-blue-800/50 border-brand-500/30 backdrop-blur-xs"
         >
           <div
             class="flex flex-col space-y-1.5 p-6"
@@ -1204,7 +1204,7 @@ exports[`Index Page renders correctly 1`] = `
                 href="/character-builder"
               >
                 <button
-                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3"
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-11 rounded-md bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3"
                 >
                   Create Character
                 </button>
@@ -1213,7 +1213,7 @@ exports[`Index Page renders correctly 1`] = `
                 href="/campaigns"
               >
                 <button
-                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-11 rounded-md border-brand-400 text-brand-100 px-8 py-3"
+                  class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-11 rounded-md border-brand-400 text-brand-100 px-8 py-3"
                 >
                   Manage Campaigns
                 </button>

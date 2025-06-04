@@ -44,7 +44,7 @@ const Campaigns = (): JSX.Element => {
   ]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
@@ -56,7 +56,7 @@ const Campaigns = (): JSX.Element => {
               Organize and track your Daggerheart campaigns
             </p>
           </div>
-          <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
+          <Button className="bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
             <Plus className="w-4 h-4 mr-2" />
             New Campaign
           </Button>
@@ -67,7 +67,7 @@ const Campaigns = (): JSX.Element => {
           {campaigns.map((campaign) => (
             <Card
               key={campaign.id}
-              className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-sm hover:border-brand-400/50 transition-all duration-300"
+              className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
@@ -137,28 +137,28 @@ const Campaigns = (): JSX.Element => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="bg-gradient-to-br from-green-800/40 to-emerald-800/40 border-green-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-green-800/40 to-emerald-800/40 border-green-500/30 backdrop-blur-xs">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold mb-2 text-green-950">2</div>
               <div className="text-green-950">Active Campaigns</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-800/40 to-cyan-800/40 border-blue-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-blue-800/40 to-cyan-800/40 border-blue-500/30 backdrop-blur-xs">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold text-blue-900 mb-2">12</div>
               <div className="text-blue-900">Total Players</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-brand-800/40 to-pink-800/40 border-brand-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-brand-800/40 to-pink-800/40 border-brand-500/30 backdrop-blur-xs">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold text-brand-900 mb-2">44</div>
               <div className="text-brand-900">Sessions Played</div>
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-orange-800/40 to-red-800/40 border-orange-500/30 backdrop-blur-sm">
+          <Card className="bg-linear-to-br from-orange-800/40 to-red-800/40 border-orange-500/30 backdrop-blur-xs">
             <CardContent className="p-6 text-center">
               <div className="text-3xl font-bold text-orange-900 mb-2">156</div>
               <div className="text-orange-900">Hours Played</div>
