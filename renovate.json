@@ -3,7 +3,6 @@
     ":dependencyDashboard",
     ":semanticPrefixFixDepsChoreOthers",
     ":ignoreModulesAndTests",
-    ":autodetectPinVersions",
     "group:monorepos",
     "group:recommended",
     "workarounds:all"
@@ -12,9 +11,13 @@
   "automergeStrategy": "squash",
   "automerge": true,
   "prConcurrentLimit": 3,
-  "labels": ["dependencies"],
+  "labels": [
+    "dependencies"
+  ],
   "vulnerabilityAlerts": {
-    "labels": ["security"],
+    "labels": [
+      "security"
+    ],
     "enabled": true
   },
   "updateInternalDeps": true
