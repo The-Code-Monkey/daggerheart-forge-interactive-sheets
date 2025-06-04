@@ -130,6 +130,7 @@ export type Item = ItemOther | ItemArmor | ItemCustom;
 export interface CardAdditional {
   if?: {
     armor?: [boolean, Record<string, number>];
+    domainCardCount?: [number, Record<string, number>];
   };
   tiers?: Record<
     string,
