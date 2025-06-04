@@ -1,4 +1,12 @@
-import { useState, useEffect, useRef, JSX, ChangeEvent, useMemo } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  JSX,
+  ChangeEvent,
+  useMemo,
+  useCallback,
+} from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,8 +17,9 @@ import {
   Character,
   CharacterAdditional,
   CharacterWithRelations,
+  Feature,
+  Item,
   ItemArmor,
-  ItemOther,
   ItemType,
   Traits,
 } from "@/lib/types";
@@ -34,10 +43,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [stress, setStress] = useState<number>(
     character.additional?.stress ?? 0
   );
-  const [itemsWithQuantity, setItemsWithQuantity] = useState<
-    (ItemOther | ItemArmor)[]
-  >([]);
   const [domainCards, setDomainCards] = useState<CardType[]>([]);
+  const [thresholds, setThresholds] = useState<
+    { major: number; severe: number } | undefined
+  >(undefined);
 
   const debouncedUpdate = useRef(
     debounce(
@@ -72,7 +81,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   };
 
   const handleGetDomainCards = async (char: CharacterWithRelations) => {
-    console.log(char.additional?.domain_features);
+    // console.log(char.additional?.domain_features);
     const cards = await getDomainEffectsById(
       char.additional?.domain_features ?? []
     );
@@ -109,108 +118,110 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     }
   };
 
-  const fetchItemsInventory = async () => {
+  const getAllInventoryItems = useCallback(async (): Promise<
+    (Item & { equipped: boolean; quantity: number })[]
+  > => {
     const itemsInventoryData = (character.items_inventory ??
       []) as unknown as ItemInventoryEntry[];
     const itemIds = itemsInventoryData.map((entry) => entry.itemId);
     const items = await getItemsByIds(itemIds);
 
-    const itemsWithQuantity = items.filter((item) => {
+    const inventoryItems = items.map((item) => {
       const inventoryEntry = itemsInventoryData.find(
         (entry) => entry.itemId === item.id
       );
 
-      if (!inventoryEntry?.equipped && !item.type) return false;
-
-      const nonCustomItem = item as ItemOther | ItemArmor;
-
-      return nonCustomItem.type !== ItemType.ARMOR
-        ? nonCustomItem.features?.some(
-            (feature) => Object.keys(feature.modifiers ?? {}).length > 0
-          )
-        : nonCustomItem.features?.features?.some(
-            (feature) => Object.keys(feature.modifiers ?? {}).length > 0
-          );
+      return {
+        ...item,
+        quantity: inventoryEntry?.quantity ?? 0,
+        equipped: inventoryEntry?.equipped ?? false,
+      } as Item & { equipped: boolean; quantity: number };
     });
 
+    return inventoryItems;
+  }, [character.items_inventory]);
+
+  const allEquippedArmorItems = useMemo(async (): Promise<
+    (ItemArmor & {
+      equipped: boolean;
+      quantity: number;
+    })[]
+  > => {
+    const inventoryItems = await getAllInventoryItems();
+    const equippedArmorItems = inventoryItems.filter(
+      (item) => item.equipped && item.type === ItemType.ARMOR
+    );
+    return equippedArmorItems as (ItemArmor & {
+      equipped: boolean;
+      quantity: number;
+    })[];
+  }, [getAllInventoryItems]);
+
+  const fetchItemsInventory = async () => {
     let newEvasion = Number(character.class?.base_evasion ?? 0);
     let newArmor = 0;
 
-    (
-      itemsWithQuantity.filter((item) => !!item.type) as (
-        | ItemOther
-        | ItemArmor
-      )[]
-    ).forEach((item) => {
-      const entry = itemsInventoryData.find(
-        (entry) => entry.itemId === item.id
-      );
-      if (!entry?.equipped) return;
+    const equippedArmorItems = await allEquippedArmorItems;
 
-      if (item.type === ItemType.ARMOR && item.features) {
-        newArmor = newArmor + Number(item.features.base);
-      }
+    if (equippedArmorItems.length > 0) {
+      equippedArmorItems.forEach((armorItem) => {
+        if (armorItem.features) {
+          newArmor = newArmor + Number(armorItem.features.base);
 
-      (item.type !== ItemType.ARMOR
-        ? (item.features ?? [])
-        : (item.features?.features ?? [])
-      ).forEach((feature) => {
-        Object.keys(feature.modifiers ?? {}).forEach((key: string) => {
-          if (key.toLowerCase() === Traits.EVASION.toLowerCase()) {
-            newEvasion = newEvasion + Number(feature.modifiers![key]);
+          if (armorItem.features.features) {
+            armorItem.features.features.forEach((feature: Partial<Feature>) => {
+              Object.keys(
+                (feature.modifiers ?? {}) as Record<Traits, number>
+              ).forEach((key: Traits) => {
+                if (key.toLowerCase() === Traits.EVASION.toLowerCase()) {
+                  newEvasion = newEvasion + Number(feature.modifiers![key]);
+                }
+              });
+            });
           }
-        });
+        }
       });
+    }
+
+    domainCards.forEach((domainCard) => {
+      if (
+        domainCard.additional?.if?.armor?.[0] === false &&
+        equippedArmorItems.length === 0
+      ) {
+        if (domainCard.additional.if.armor[1].base) {
+          newArmor = newArmor + Number(domainCard.additional.if.armor[1].base);
+        }
+      }
     });
 
     setEvasion(newEvasion);
     setArmor(newArmor);
-    setItemsWithQuantity(
-      (
-        itemsWithQuantity.filter((item) => !!item.type) as (
-          | ItemOther
-          | ItemArmor
-        )[]
-      ).map((item) => {
-        const inventoryEntry = itemsInventoryData.find(
-          (entry) => entry.itemId === item.id
-        );
-
-        return {
-          ...item,
-          equipped: inventoryEntry?.equipped ?? false,
-        };
-      })
-    );
   };
 
   useEffect(() => {
     void fetchItemsInventory();
-  }, [character]);
+  }, [character, domainCards]);
 
-  const calculateDamageThresholds = () => {
+  const calculateDamageThresholds = async () => {
     const thresholds = {
       major: 0,
       severe: 0,
     };
     const tier = getCharacterTier(Number(character.level ?? 0));
 
-    const isWearingArmor: ItemArmor | undefined = itemsWithQuantity.find(
-      (item) => item.type === ItemType.ARMOR && item.equipped
-    ) as ItemArmor | undefined;
+    const equippedArmorItems = await allEquippedArmorItems;
 
-    console.log(domainCards);
-
-    if (isWearingArmor) {
+    if (equippedArmorItems.length > 0) {
+      const armor = equippedArmorItems[0];
       thresholds.major = Number(
-        isWearingArmor.features?.thresholds.major ?? thresholds.major
+        armor.features?.thresholds.major ?? thresholds.major
       );
       thresholds.severe = Number(
-        isWearingArmor.features?.thresholds.severe ?? thresholds.severe
+        armor.features?.thresholds.severe ?? thresholds.severe
       );
     } else if (domainCards.length > 0) {
       domainCards.forEach((card) => {
-        if (card.additional?.if?.armor === false) {
+        if (card.additional?.if?.armor?.[0] === false) {
           thresholds.major =
             card.additional.tiers?.[tier].thresholds?.major ?? thresholds.major;
           thresholds.severe =
@@ -254,10 +265,11 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     handleHopeMaxChange(Math.min(value, 6));
   };
 
-  const thresholds = useMemo(
-    () => calculateDamageThresholds(),
-    [character, itemsWithQuantity, domainCards]
-  );
+  useEffect(() => {
+    void calculateDamageThresholds().then((thresholds) => {
+      setThresholds(thresholds);
+    });
+  }, [character, domainCards]);
 
   return (
     <Card>
@@ -311,7 +323,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               >
                 Minor
               </Button>
-              <div>{thresholds.major + (character.level ?? 1)}</div>
+              <div>{(thresholds?.major ?? 0) + (character.level ?? 1)}</div>
               <Button
                 className=""
                 onClick={() => {
@@ -320,7 +332,9 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
               >
                 Major
               </Button>
-              <div>{thresholds.severe + (character.level ?? 1) * 2}</div>
+              <div>
+                {(thresholds?.severe ?? 0) + (character.level ?? 1) * 2}
+              </div>
               <Button
                 className=""
                 onClick={() => {
