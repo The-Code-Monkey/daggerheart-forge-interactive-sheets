@@ -1,3 +1,4 @@
+
 import { JSX, useState } from "react";
 import {
   Card,
@@ -21,12 +22,46 @@ const Auth = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
+  
+  // Honeypot field (should remain empty)
+  const [honeypot, setHoneypot] = useState("");
+  
+  // Simple math captcha
+  const [captchaAnswer, setCaptchaAnswer] = useState("");
+  const [captchaQuestion] = useState(() => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    return { question: `${num1} + ${num2}`, answer: num1 + num2 };
+  });
+
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    // Check honeypot - if filled, it's likely a bot
+    if (honeypot) {
+      toast({
+        title: "Error",
+        description: "Suspicious activity detected. Please try again.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
+
+    // Check captcha for registration only
+    if (!isLogin && parseInt(captchaAnswer) !== captchaQuestion.answer) {
+      toast({
+        title: "Error",
+        description: "Please solve the math problem correctly.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       if (isLogin) {
@@ -92,6 +127,19 @@ const Auth = (): JSX.Element => {
         </CardHeader>
         <CardContent className="space-y-6">
           <form onSubmit={(e) => void handleAuth(e)} className="space-y-4">
+            {/* Honeypot field - hidden from users but visible to bots */}
+            <div style={{ display: "none" }}>
+              <Label htmlFor="website">Website (leave blank)</Label>
+              <Input
+                id="website"
+                type="text"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
             {!isLogin && (
               <div className="space-y-2">
                 <Label htmlFor="username" className="text-white">
@@ -142,6 +190,27 @@ const Auth = (): JSX.Element => {
                 required
               />
             </div>
+
+            {/* Simple math captcha for registration only */}
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label htmlFor="captcha" className="text-white">
+                  Security Check: What is {captchaQuestion.question}?
+                </Label>
+                <Input
+                  id="captcha"
+                  type="number"
+                  value={captchaAnswer}
+                  onChange={(e) => {
+                    setCaptchaAnswer(e.target.value);
+                  }}
+                  className="bg-slate-800/50 border-brand-500/50 text-white"
+                  placeholder="Enter the answer"
+                  required={!isLogin}
+                />
+              </div>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
@@ -162,6 +231,7 @@ const Auth = (): JSX.Element => {
               className="w-full border-brand-400 text-brand-100"
               onClick={() => {
                 setIsLogin(!isLogin);
+                setCaptchaAnswer(""); // Reset captcha when switching modes
               }}
             >
               {isLogin ? "Create Account" : "Sign In"}
