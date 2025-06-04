@@ -10,7 +10,7 @@
   "rangeStrategy": "pin",
   "automergeStrategy": "squash",
   "automerge": true,
-  "prConcurrentLimit": 3,
+  "prConcurrentLimit": 1,
   "labels": [
     "dependencies"
   ],
