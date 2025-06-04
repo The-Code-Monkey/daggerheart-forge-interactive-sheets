@@ -26,6 +26,7 @@ interface ClassFormData {
 
 const HomebrewClassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
 
   const form = useForm<ClassFormData>({
     defaultValues: {
@@ -41,6 +42,7 @@ const HomebrewClassForm = (): JSX.Element => {
   ];
 
   const onSubmit = async (formData: ClassFormData) => {
+    setSubmitting(true);
     const data = await createNewHomebrewClass(formData);
 
     console.log(data);
@@ -149,6 +151,7 @@ const HomebrewClassForm = (): JSX.Element => {
                     <Button
                       type="submit"
                       className="bg-brand-500 hover:bg-brand-600 text-white"
+                      disabled={submitting}
                     >
                       <Save className="w-4 h-4 mr-2" />
                       Save Class
