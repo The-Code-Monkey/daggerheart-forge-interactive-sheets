@@ -1,4 +1,3 @@
-
 import { JSX, useState } from "react";
 import {
   Card,
@@ -23,16 +22,19 @@ const Auth = (): JSX.Element => {
   const [username, setUsername] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
-  
+
   // Honeypot field (should remain empty)
   const [honeypot, setHoneypot] = useState("");
-  
+
   // Simple math captcha
   const [captchaAnswer, setCaptchaAnswer] = useState("");
   const [captchaQuestion] = useState(() => {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
-    return { question: `${num1} + ${num2}`, answer: num1 + num2 };
+    return {
+      question: `${String(num1)} + ${String(num2)}`,
+      answer: num1 + num2,
+    };
   });
 
   // Cloudflare Turnstile
@@ -149,7 +151,9 @@ const Auth = (): JSX.Element => {
                 id="website"
                 type="text"
                 value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
+                onChange={(e) => {
+                  setHoneypot(e.target.value);
+                }}
                 tabIndex={-1}
                 autoComplete="off"
               />
@@ -233,9 +237,15 @@ const Auth = (): JSX.Element => {
                 <div className="flex justify-center">
                   <Turnstile
                     siteKey="0x4AAAAAABgBiF6BQetCUEj0" // You'll need to replace this with your actual site key
-                    onSuccess={(token) => setTurnstileToken(token)}
-                    onError={() => setTurnstileToken("")}
-                    onExpire={() => setTurnstileToken("")}
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                    }}
+                    onError={() => {
+                      setTurnstileToken("");
+                    }}
+                    onExpire={() => {
+                      setTurnstileToken("");
+                    }}
                     options={{
                       theme: "dark",
                       size: "normal",

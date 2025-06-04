@@ -7,6 +7,11 @@ jest.mock("react-router-dom", () => ({
   useNavigate: () => jest.fn(),
 }));
 
+// Mock turnstile
+jest.mock("@marsidev/react-turnstile", () => ({
+  Turnstile: jest.fn().mockImplementation(() => null),
+}));
+
 // Mock supabase
 jest.mock("@/integrations/supabase/client", () => ({
   supabase: {

@@ -52,7 +52,11 @@ const Footer = (): JSX.Element => {
         </p>
       </div>
 
-      <p>If Critical Role or Darrington Press want me to remove, then just send an email to the above email, I will comply fully with your request no need for any legal stuff.</p>
+      <p>
+        If Critical Role or Darrington Press want me to remove, then just send
+        an email to the above email, I will comply fully with your request no
+        need for any legal stuff.
+      </p>
     </footer>
   );
 };
