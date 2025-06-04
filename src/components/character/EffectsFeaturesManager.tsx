@@ -23,16 +23,17 @@ const EffectsFeaturesManager = ({
   character,
   onUpdate,
 }: EffectsFeaturesManagerProps): JSX.Element => {
-  const [editing, _] = useState(true);
+  const [editing, setEditing] = useState(false);
   const [domainEffects, setDomainEffects] = useState<CardType[]>([]);
 
-  // const toggleEditing = () => {
-  //   setEditing((prev) => !prev);
-  // };
+  const toggleEditing = () => {
+    setEditing((prev) => !prev);
+  };
 
   const fetchDomainEffects = async () => {
     const data = await getDomainEffects(
-      character.domains.map((domain) => domain.id)
+      character.domains.map((domain) => domain.id),
+      Number(character.level ?? 1)
     );
     setDomainEffects(data);
   };
@@ -78,8 +79,8 @@ const EffectsFeaturesManager = ({
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-4 text-white divide-x divide-white">
-          <div>
-            <div>Domain Effects</div>
+          <div className="pr-4">
+            <div onClick={toggleEditing}>Domain Effects (click to select)</div>
             {editing && (
               <div className="grid grid-cols-1 gap-4 mt-4 w-full">
                 {domainEffects.map((effect) => {

@@ -61,12 +61,12 @@ export const getDomainEffectsById = async (
 
 export const getDomainEffects = async (
   domainIds: number[],
-  tier = 1
+  level = 1
 ): Promise<Card[]> => {
   const { data, error } = await supabase
     .from("cards")
     .select("*")
-    .eq("tier", tier)
+    .eq("level", level)
     .in("domain_id", domainIds);
 
   console.log(data);
