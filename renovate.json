@@ -1,13 +1,21 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":ignoreModulesAndTests",
+    ":autodetectPinVersions",
+    "group:monorepos",
+    "group:recommended",
+    "workarounds:all"
   ],
+  "rangeStrategy": "pin",
+  "automergeStrategy": "squash",
   "automerge": true,
-  "packageRules": [
-    {
-      "matchPackageNames": ["*"],
-      "automerge": true
-    }
-  ]
+  "prConcurrentLimit": 3,
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "labels": ["security"],
+    "enabled": true
+  },
+  "updateInternalDeps": true
 }
