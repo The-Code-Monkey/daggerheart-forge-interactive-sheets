@@ -15,6 +15,7 @@ import { Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 const Auth = (): JSX.Element => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,9 @@ const Auth = (): JSX.Element => {
     const num2 = Math.floor(Math.random() * 10) + 1;
     return { question: `${num1} + ${num2}`, answer: num1 + num2 };
   });
+
+  // Cloudflare Turnstile
+  const [turnstileToken, setTurnstileToken] = useState("");
 
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -57,6 +61,17 @@ const Auth = (): JSX.Element => {
       toast({
         title: "Error",
         description: "Please solve the math problem correctly.",
+        variant: "destructive",
+      });
+      setLoading(false);
+      return;
+    }
+
+    // Check Turnstile token for registration
+    if (!isLogin && !turnstileToken) {
+      toast({
+        title: "Error",
+        description: "Please complete the security verification.",
         variant: "destructive",
       });
       setLoading(false);
@@ -211,6 +226,25 @@ const Auth = (): JSX.Element => {
               </div>
             )}
 
+            {/* Cloudflare Turnstile for registration only */}
+            {!isLogin && (
+              <div className="space-y-2">
+                <Label className="text-white">Security Verification</Label>
+                <div className="flex justify-center">
+                  <Turnstile
+                    siteKey="0x4AAAAAAABkMYinukE_rfEH" // You'll need to replace this with your actual site key
+                    onSuccess={(token) => setTurnstileToken(token)}
+                    onError={() => setTurnstileToken("")}
+                    onExpire={() => setTurnstileToken("")}
+                    options={{
+                      theme: "dark",
+                      size: "normal",
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+
             <Button
               type="submit"
               className="w-full bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
@@ -232,6 +266,7 @@ const Auth = (): JSX.Element => {
               onClick={() => {
                 setIsLogin(!isLogin);
                 setCaptchaAnswer(""); // Reset captcha when switching modes
+                setTurnstileToken(""); // Reset Turnstile when switching modes
               }}
             >
               {isLogin ? "Create Account" : "Sign In"}
