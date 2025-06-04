@@ -232,7 +232,7 @@ const Auth = (): JSX.Element => {
                 <Label className="text-white">Security Verification</Label>
                 <div className="flex justify-center">
                   <Turnstile
-                    siteKey="0x4AAAAAAABkMYinukE_rfEH" // You'll need to replace this with your actual site key
+                    siteKey="0x4AAAAAABgBiF6BQetCUEj0" // You'll need to replace this with your actual site key
                     onSuccess={(token) => setTurnstileToken(token)}
                     onError={() => setTurnstileToken("")}
                     onExpire={() => setTurnstileToken("")}
