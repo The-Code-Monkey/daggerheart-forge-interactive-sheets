@@ -10,9 +10,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { JSX, useEffect, useState } from "react";
-import { Class } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getSingleClassBySlugWithDomains } from "@/integrations/supabase/helpers";
+import { Class } from "@/lib/types";
 
 const ClassDetail = (): JSX.Element => {
   const { className } = useParams();
@@ -60,10 +60,10 @@ const ClassDetail = (): JSX.Element => {
     );
   }
 
-  const subclasses = Object.keys(classData.additional.subclasses ?? {});
+  const subclasses = classData.subclass;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-nebula py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -173,16 +173,14 @@ const ClassDetail = (): JSX.Element => {
           </CardContent>
         </Card>
 
-        <Tabs defaultValue={subclasses[0]} className="w-full mt-6">
-          <TabsList className="w-full justify-evenly bg-purple-800/50 mb-8">
-            {subclasses.map((key) => {
-              const subclass = classData.additional.subclasses![key];
-
+        <Tabs defaultValue={subclasses[0].name} className="w-full mt-6">
+          <TabsList className="w-full justify-evenly mb-8">
+            {subclasses.map((subclass) => {
               return (
                 <TabsTrigger
-                  key={key}
-                  value={key}
-                  className="text-white data-[state=active]:bg-purple-600 capitalize"
+                  key={subclass.name}
+                  value={String(subclass.name)}
+                  className="text-white data-[state=active]:bg-purple-600 flex-1 capitalize"
                 >
                   {subclass.name}
                 </TabsTrigger>
@@ -190,11 +188,13 @@ const ClassDetail = (): JSX.Element => {
             })}
           </TabsList>
 
-          {subclasses.map((key) => {
-            const subclass = classData.additional.subclasses![key];
-
+          {subclasses.map((subclass) => {
             return (
-              <TabsContent value={key} key={key} className="space-y-6">
+              <TabsContent
+                value={String(subclass.name)}
+                key={subclass.name}
+                className="space-y-6"
+              >
                 <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs flex flex-col">
                   <CardHeader>
                     <CardTitle className="text-white">

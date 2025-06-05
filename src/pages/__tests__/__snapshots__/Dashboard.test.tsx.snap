@@ -5,7 +5,7 @@ exports[`Dashboard renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 p-4"
+    class="min-h-screen bg-nebula p-4"
   >
     <div
       class="max-w-6xl mx-auto"

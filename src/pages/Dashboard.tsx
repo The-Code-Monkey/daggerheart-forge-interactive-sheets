@@ -104,7 +104,7 @@ const Dashboard = (): JSX.Element => {
   const canCreateMore = characterCount < maxCharacters;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-nebula p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">

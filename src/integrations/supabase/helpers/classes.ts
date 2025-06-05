@@ -34,7 +34,7 @@ export const getSingleClassBySlugWithDomains = async (
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
-    .select("*, classes_domains ( domains ( * ) )")
+    .select("*, subclass: subclasses ( * ), classes_domains ( domains ( * ) )")
     .eq("slug", slug)
     .single();
 

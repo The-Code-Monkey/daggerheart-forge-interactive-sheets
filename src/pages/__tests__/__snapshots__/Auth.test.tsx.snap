@@ -5,7 +5,7 @@ exports[`Auth Page renders correctly 1`] = `
   data-testid="auth-provider"
 >
   <div
-    class="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center px-4"
+    class="min-h-screen bg-nebula flex items-center justify-center px-4"
   >
     <div
       class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br w-full max-w-md bg-linear-to-br from-brand-800/40 to-slate-800/40 border-brand-500/30 backdrop-blur-xs"
@@ -79,7 +79,7 @@ exports[`Auth Page renders correctly 1`] = `
             </label>
             <input
               autocomplete="off"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm"
+              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm text-black"
               id="website"
               tabindex="-1"
               type="text"

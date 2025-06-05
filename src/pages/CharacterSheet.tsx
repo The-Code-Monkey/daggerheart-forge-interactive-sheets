@@ -16,6 +16,7 @@ import InventoryManager from "@/components/character/InventoryManager";
 // import CharacterInfo from "@/components/character/CharacterInfo";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EffectsFeaturesManager from "@/components/character/EffectsFeaturesManager";
+import QuestionsManager from "@/components/character/QuestionsManager";
 
 const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
@@ -103,7 +104,7 @@ const CharacterSheet = (): JSX.Element => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 p-4">
+    <div className="min-h-screen bg-nebula p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -156,11 +157,12 @@ const CharacterSheet = (): JSX.Element => {
 
           <div className="col-span-5 space-y-6">
             <Tabs defaultValue="inventory">
-              <TabsList className="grid w-full grid-cols-4 bg-purple-800/50 mb-8">
+              <TabsList className="grid w-full grid-cols-4 mb-8">
                 <TabsTrigger value="inventory">Inventory</TabsTrigger>
                 <TabsTrigger value="effects-features">
                   Effects &amp; Features
                 </TabsTrigger>
+                <TabsTrigger value="questions">Questions</TabsTrigger>
               </TabsList>
 
               <TabsContent value="inventory">
@@ -173,6 +175,14 @@ const CharacterSheet = (): JSX.Element => {
               </TabsContent>
               <TabsContent value="effects-features">
                 <EffectsFeaturesManager
+                  character={character}
+                  onUpdate={(updates) => {
+                    void updateCharacterData(updates);
+                  }}
+                />
+              </TabsContent>
+              <TabsContent value="questions">
+                <QuestionsManager
                   character={character}
                   onUpdate={(updates) => {
                     void updateCharacterData(updates);

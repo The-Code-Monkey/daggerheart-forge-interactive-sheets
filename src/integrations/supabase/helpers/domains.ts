@@ -69,8 +69,6 @@ export const getDomainEffects = async (
     .eq("level", level)
     .in("domain_id", domainIds);
 
-  console.log(data);
-
   if (error) {
     console.log(error);
     return [];

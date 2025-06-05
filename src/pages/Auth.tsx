@@ -124,7 +124,7 @@ const Auth = (): JSX.Element => {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-nebula flex items-center justify-center px-4">
       <Card className="w-full max-w-md bg-linear-to-br from-brand-800/40 to-slate-800/40 border-brand-500/30 backdrop-blur-xs">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-2 mb-4">

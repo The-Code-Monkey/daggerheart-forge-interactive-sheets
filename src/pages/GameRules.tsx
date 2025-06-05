@@ -160,7 +160,7 @@ const GameRules = (): JSX.Element => {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-nebula py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

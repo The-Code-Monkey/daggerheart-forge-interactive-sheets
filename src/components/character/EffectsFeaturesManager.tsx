@@ -25,6 +25,7 @@ const EffectsFeaturesManager = ({
 }: EffectsFeaturesManagerProps): JSX.Element => {
   const [editing, setEditing] = useState(false);
   const [domainEffects, setDomainEffects] = useState<CardType[]>([]);
+  const [myEffects, setMyEffects] = useState<CardType[]>([]);
 
   const toggleEditing = () => {
     setEditing((prev) => !prev);
@@ -36,6 +37,11 @@ const EffectsFeaturesManager = ({
       Number(character.level ?? 1)
     );
     setDomainEffects(data);
+    setMyEffects(
+      data.filter((effect) =>
+        character.additional?.domain_features?.includes(effect.id)
+      )
+    );
   };
 
   const handleSelectCard = (effectId: number) => {
@@ -67,10 +73,10 @@ const EffectsFeaturesManager = ({
   };
 
   useEffect(() => {
-    if (editing) {
-      void fetchDomainEffects();
-    }
-  }, [editing]);
+    void fetchDomainEffects();
+  }, []);
+
+  console.log(myEffects);
 
   return (
     <Card>
@@ -130,6 +136,50 @@ const EffectsFeaturesManager = ({
                     </Card>
                   );
                 })}
+              </div>
+            )}
+            {!editing && (
+              <div className="grid grid-cols-1 gap-4 mt-4 w-full">
+                {myEffects.map((effect) => (
+                  <Card key={effect.id}>
+                    <CardHeader className="flex flex-row space-y-0">
+                      <CardTitle className="text-white text-center mx-auto">
+                        {effect.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-white">
+                      <CardDescription className="text-white">
+                        {effect.description}
+                      </CardDescription>
+                      <ul className="mt-8">
+                        {Object.keys(effect.additional?.tiers ?? {}).map(
+                          (tier) => (
+                            <li key={tier}>
+                              <span className="font-bold">Tier {tier}: </span>
+                              {String(
+                                effect.additional?.tiers?.[tier].thresholds
+                                  ?.major
+                              )}{" "}
+                              /{" "}
+                              {String(
+                                effect.additional?.tiers?.[tier].thresholds
+                                  ?.severe
+                              )}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                      {/* <Button
+                      className="mt-4 w-full"
+                      onClick={() => {
+                        handleSelectCard(Number(effect.id));
+                      }}
+                    >
+                      {isSelected ? "Remove" : "Select"} Card
+                    </Button> */}
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             )}
           </div>
