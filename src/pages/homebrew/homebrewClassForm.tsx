@@ -9,7 +9,7 @@ import ClassStats from "@/components/homebrew/ClassStats";
 import ClassFeatures from "@/components/homebrew/ClassFeatures";
 import ClassDomains from "@/components/homebrew/ClassDomains";
 import { ArrowLeft, Save } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Feature } from "@/lib/types";
 import { createNewHomebrewClass } from "@/integrations/supabase/helpers/classes";
 import { useAuth } from "@/contexts/AuthContext";
@@ -29,6 +29,7 @@ const HomebrewClassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<ClassFormData>({
     defaultValues: {
@@ -50,7 +51,9 @@ const HomebrewClassForm = (): JSX.Element => {
       user_id: String(user?.id),
     });
 
-    console.log(data);
+    if (data) {
+      void navigate(`/rules/classes/${String(data.slug)}`);
+    }
   };
 
   const nextStep = (e: MouseEvent<HTMLButtonElement>) => {

@@ -77,8 +77,8 @@ export type Database = {
           description: string | null
           domain_id: number | null
           id: number
+          level: number | null
           name: string | null
-          tier: number | null
         }
         Insert: {
           additional?: Json | null
@@ -87,8 +87,8 @@ export type Database = {
           description?: string | null
           domain_id?: number | null
           id?: number
+          level?: number | null
           name?: string | null
-          tier?: number | null
         }
         Update: {
           additional?: Json | null
@@ -97,8 +97,8 @@ export type Database = {
           description?: string | null
           domain_id?: number | null
           id?: number
+          level?: number | null
           name?: string | null
-          tier?: number | null
         }
         Relationships: [
           {
@@ -228,8 +228,10 @@ export type Database = {
           features: Json | null
           id: number
           isHomebrew: boolean | null
+          isPublished: boolean | null
           name: string | null
           slug: string | null
+          user_id: string | null
         }
         Insert: {
           additional?: Json | null
@@ -241,8 +243,10 @@ export type Database = {
           features?: Json | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Update: {
           additional?: Json | null
@@ -254,8 +258,10 @@ export type Database = {
           features?: Json | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -456,6 +462,7 @@ export type Database = {
           id: number
           isHomebrew: boolean | null
           name: string | null
+          user_id: string | null
         }
         Insert: {
           class_id?: number | null
@@ -465,6 +472,7 @@ export type Database = {
           id?: number
           isHomebrew?: boolean | null
           name?: string | null
+          user_id?: string | null
         }
         Update: {
           class_id?: number | null
@@ -474,6 +482,7 @@ export type Database = {
           id?: number
           isHomebrew?: boolean | null
           name?: string | null
+          user_id?: string | null
         }
         Relationships: [
           {

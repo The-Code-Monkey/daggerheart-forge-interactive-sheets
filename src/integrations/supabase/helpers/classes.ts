@@ -1,6 +1,5 @@
 import { Class, Domain, Feature, Subclass } from "@/lib/types";
 import { supabase } from "../client";
-import { useAuth } from "@/contexts/AuthContext";
 
 export const getSingleClassBySlug = async (
   slug: string,
@@ -74,7 +73,11 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
 };
 
 export const getAllClassesWithDomains = async (
-  { limit, homebrew }: { limit?: number; homebrew: boolean } = {
+  {
+    limit,
+    homebrew,
+    user_id,
+  }: { limit?: number; homebrew: boolean; user_id?: string } = {
     homebrew: false,
   },
 ): Promise<Class[] | null> => {
@@ -84,6 +87,9 @@ export const getAllClassesWithDomains = async (
 
   if (homebrew) {
     query.eq("isHomebrew", homebrew);
+  }
+  if (user_id) {
+    query.eq("user_id", user_id);
   }
 
   const { data, error } = await query.limit(limit ?? 99);
@@ -127,6 +133,21 @@ interface ClassFormData {
   domains: number[];
   isHomebrew: true;
 }
+
+export const publishClass = async (id: string): Promise<Class | null> => {
+  const { data } = await supabase
+    .from("classes")
+    .update({ isPublished: true })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (!data) {
+    return null;
+  }
+
+  return data as Class;
+};
 
 export const createNewHomebrewClass = async (
   newClass: ClassFormData & { user_id: string },

@@ -23,9 +23,11 @@ import {
   Guitar,
   Sword,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { publishClass } from "@/integrations/supabase/helpers/classes";
 
 interface ClassCardsInterface {
-  classesData: Partial<Class>[];
+  classesData: Partial<Class>[] | null;
 }
 
 const icons = {
@@ -40,8 +42,20 @@ const icons = {
   sorcerer: <Zap className="w-6 h-6" />,
 };
 
-const ClassCards = ({ classesData }: ClassCardsInterface): JSX.Element[] => {
-  return classesData.length > 0
+const ClassCards = ({
+  classesData,
+}: ClassCardsInterface): JSX.Element[] | JSX.Element => {
+  const { user } = useAuth();
+
+  if (classesData && classesData.length === 0) {
+    return (
+      <h3 className="text-white text-center mb-2 col-span-12">
+        No classes found
+      </h3>
+    );
+  }
+
+  return classesData
     ? classesData.map((cls) => (
         <Card
           key={cls.id}
@@ -83,6 +97,17 @@ const ClassCards = ({ classesData }: ClassCardsInterface): JSX.Element[] => {
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </Link>
+
+                {user?.id === cls.user_id && !cls.isPublished && (
+                  <Button
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-2"
+                    onClick={() => {
+                      void publishClass(String(cls.id));
+                    }}
+                  >
+                    Publish
+                  </Button>
+                )}
               </div>
             </div>
           </CardContent>
