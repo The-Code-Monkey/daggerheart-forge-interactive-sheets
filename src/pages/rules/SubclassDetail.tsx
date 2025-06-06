@@ -13,7 +13,16 @@ const SubclassDetail = (): JSX.Element => {
   const navigate = useNavigate();
 
   const fetchClass = async () => {
-    const data = await getSingleSubclassById(Number(subclassId));
+ const fetchSubclass = async () => {
+   if (!subclassId || isNaN(Number(subclassId))) {
+     setSubclassData(null);
+     setLoading(false);
+     return;
+   }
+
+   const data = await getSingleSubclassById(Number(subclassId));
+   // …rest of the fetchSubclass logic…
+ }
 
     setSubclassData(data);
     setLoading(false);
