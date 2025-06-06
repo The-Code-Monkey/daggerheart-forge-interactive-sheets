@@ -64,7 +64,7 @@ const ClassCards = ({
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                {icons[String(cls.slug)]}
+                {icons[String(cls.slug)] || <Dice6 className="w-6 h-6" />}
               </div>
               <CardTitle className="text-white">{cls.name}</CardTitle>
             </div>
