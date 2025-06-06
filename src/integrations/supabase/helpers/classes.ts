@@ -17,6 +17,22 @@ export const getSingleClassBySlug = async (
   return data as Class;
 };
 
+export const getSingleSubclassById = async (
+  id: number
+): Promise<Subclass | null> => {
+  const { data, error } = await supabase
+    .from("subclasses")
+    .select("*, class: class_id ( name )")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Subclass;
+};
+
 interface ClassWithDomainsResponse {
   classes_domains: {
     domains: Domain;
@@ -70,6 +86,36 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
     return null;
   }
   return data as Class[];
+};
+
+export const getAllSubclasses = async (
+  {
+    limit,
+    homebrew,
+    user_id,
+  }: { limit?: number; homebrew: boolean; user_id?: string } = {
+    homebrew: false,
+  }
+): Promise<Subclass[] | null> => {
+  const query = supabase
+    .from("subclasses")
+    .select("*, class: class_id ( name )");
+
+  if (homebrew) {
+    query.eq("isHomebrew", homebrew);
+  }
+  if (user_id) {
+    query.eq("user_id", user_id);
+  }
+
+  const { data, error } = await query.limit(limit ?? 99);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data as Subclass[];
 };
 
 export const getAllClassesWithDomains = async (
@@ -132,7 +178,28 @@ interface ClassFormData {
   features: Partial<Feature>[];
   domains: number[];
   isHomebrew: true;
+  additional?: {
+    questions?: {
+      background?: string[];
+      connection?: string[];
+    };
+  };
 }
+
+export const publishSubclass = async (id: number): Promise<Subclass | null> => {
+  const { data } = await supabase
+    .from("subclasses")
+    .update({ isPublished: true })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (!data) {
+    return null;
+  }
+
+  return data as Subclass;
+};
 
 export const publishClass = async (id: number): Promise<Class | null> => {
   const { data } = await supabase
@@ -149,6 +216,44 @@ export const publishClass = async (id: number): Promise<Class | null> => {
   return data as Class;
 };
 
+export interface NewSubclassFormData {
+  name: string;
+  description: string;
+  class: { value: number; label: string };
+  features: {
+    foundation: Partial<Feature>[];
+    specializations: Partial<Feature>[];
+    mastery: Partial<Feature>[];
+  };
+}
+
+export const createNewHomebrewSubclass = async (
+  newSubclass: NewSubclassFormData & {
+    user_id: string;
+  }
+): Promise<Subclass | null> => {
+  const { data: subclassData, error } = await supabase
+    .from("subclasses")
+    .insert({
+      class_id: newSubclass.class.value,
+      name: newSubclass.name,
+      description: newSubclass.description,
+      features: newSubclass.features,
+      isHomebrew: true,
+      isPublished: false,
+      user_id: newSubclass.user_id,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return subclassData as Subclass;
+};
+
 export const createNewHomebrewClass = async (
   newClass: ClassFormData & { user_id: string }
 ): Promise<Class | null> => {
@@ -161,6 +266,7 @@ export const createNewHomebrewClass = async (
     class_items: newClass.class_items,
     features: newClass.features,
     isHomebrew: true,
+    additional: newClass.additional ?? {},
   };
 
   const { data: classData, error } = await supabase
@@ -169,7 +275,6 @@ export const createNewHomebrewClass = async (
     .select()
     .single();
 
-  console.log(classData);
   if (error) {
     console.log(error);
     return null;
@@ -185,4 +290,20 @@ export const createNewHomebrewClass = async (
   );
 
   return classData as Class;
+};
+
+export const classSearchHelper = async (
+  query: string
+): Promise<Class[] | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select()
+    .ilike("name", `%${query}%`);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data as Class[];
 };

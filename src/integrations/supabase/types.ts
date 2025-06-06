@@ -461,6 +461,7 @@ export type Database = {
           features: Json | null
           id: number
           isHomebrew: boolean | null
+          isPublished: boolean | null
           name: string | null
           user_id: string | null
         }
@@ -471,6 +472,7 @@ export type Database = {
           features?: Json | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
           user_id?: string | null
         }
@@ -481,6 +483,7 @@ export type Database = {
           features?: Json | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
           user_id?: string | null
         }

@@ -1,4 +1,4 @@
-import { Class } from "@/lib/types";
+import { Subclass } from "@/lib/types";
 import { JSX } from "react";
 import {
   Card,
@@ -7,44 +7,20 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { Badge } from "../ui/badge";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
-import {
-  Shield,
-  Zap,
-  Heart,
-  Book,
-  Sparkles,
-  Dice6,
-  ArrowRight,
-  BowArrow,
-  Guitar,
-  Sword,
-} from "lucide-react";
+import { Dice6, ArrowRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { publishClass } from "@/integrations/supabase/helpers/classes";
+import { publishSubclass } from "@/integrations/supabase/helpers/classes";
 
-interface ClassCardsInterface {
-  classesData: Partial<Class>[] | null;
+interface SubclassCardsInterface {
+  classesData: Partial<Subclass>[] | null;
 }
 
-const icons = {
-  bard: <Guitar className="w-6 h-6" />,
-  druid: <Heart className="w-6 h-6" />,
-  guardian: <Shield className="w-6 h-6" />,
-  ranger: <BowArrow className="w-6 h-6" />,
-  rogue: <Dice6 className="w-6 h-6" />,
-  wizard: <Book className="w-6 h-6" />,
-  warrior: <Sword className="w-6 h-6" />,
-  seraph: <Sparkles className="w-6 h-6" />,
-  sorcerer: <Zap className="w-6 h-6" />,
-};
-
-const ClassCards = ({
+const SubclassCards = ({
   classesData,
-}: ClassCardsInterface): JSX.Element[] | JSX.Element => {
+}: SubclassCardsInterface): JSX.Element[] | JSX.Element => {
   const { user } = useAuth();
 
   if (classesData && classesData.length === 0) {
@@ -64,34 +40,18 @@ const ClassCards = ({
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
               <div className="w-10 h-10 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
-                {icons[String(cls.slug)] ?? <Dice6 className="w-6 h-6" />}
+                <Dice6 className="w-6 h-6" />
               </div>
               <CardTitle className="text-white">{cls.name}</CardTitle>
             </div>
             <CardDescription className="text-purple-200 truncate-5-lines">
               {cls.description}
             </CardDescription>
-            <div>
-              <span className="text-sm font-medium text-purple-300">
-                Domains:
-              </span>
-              <div className="flex flex-wrap gap-1 mt-1">
-                {cls.domains?.map((domain) => (
-                  <Badge
-                    key={domain.id}
-                    variant="outline"
-                    className="border-yellow-500/50 text-yellow-300 text-xs"
-                  >
-                    {domain.name}
-                  </Badge>
-                ))}
-              </div>
-            </div>
           </CardHeader>
           <CardContent className="mt-auto">
             <div className="space-y-3">
               <div className="pt-2 mt-auto">
-                <Link to={`/rules/classes/${String(cls.slug)}`}>
+                <Link to={`/rules/subclass/${String(cls.id)}`}>
                   <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-2" />
@@ -102,7 +62,7 @@ const ClassCards = ({
                   <Button
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-2"
                     onClick={() => {
-                      void publishClass(Number(cls.id));
+                      void publishSubclass(Number(cls.id));
                     }}
                   >
                     Publish
@@ -135,4 +95,4 @@ const ClassCards = ({
         ));
 };
 
-export default ClassCards;
+export default SubclassCards;

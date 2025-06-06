@@ -224,6 +224,7 @@ exports[`ClassDetail Page renders correctly 1`] = `
             type="button"
           >
             Armor
+             
           </button>
         </div>
         <div

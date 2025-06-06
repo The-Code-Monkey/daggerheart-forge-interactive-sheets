@@ -265,7 +265,11 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
         ? character.subclass.features.specialization
         : [];
 
-      const features = [...foundation, ...mastery, ...specialization];
+      const features = [
+        ...(foundation ?? []),
+        ...(mastery ?? []),
+        ...(specialization ?? []),
+      ];
 
       features.forEach((feature) => {
         if (!feature.modifiers) return;

@@ -3,10 +3,21 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+}
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, label, ...props }, ref) => {
+    if (label) {
+      return (
+        <div className="flex flex-col gap-2">
+          <label className="mr-2 text-sm font-medium text-white">{label}</label>
+          <Textarea className={className} ref={ref} {...props} />
+        </div>
+      );
+    }
+
     return (
       <textarea
         className={cn(

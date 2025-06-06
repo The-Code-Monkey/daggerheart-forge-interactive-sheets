@@ -11,7 +11,7 @@ const Input = React.forwardRef<
   if (label) {
     return (
       <div className="flex flex-col gap-2">
-        <label className="mr-2 text-sm font-medium">{label}</label>
+        <label className="mr-2 text-sm font-medium text-white">{label}</label>
         <Input className={className} type={type} ref={ref} {...props} />
       </div>
     );
