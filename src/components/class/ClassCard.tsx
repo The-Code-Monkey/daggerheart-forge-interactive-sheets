@@ -102,7 +102,7 @@ const ClassCards = ({
                   <Button
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white mt-2"
                     onClick={() => {
-                      void publishClass(String(cls.id));
+                      void publishClass(Number(cls.id));
                     }}
                   >
                     Publish

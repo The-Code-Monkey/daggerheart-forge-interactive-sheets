@@ -65,7 +65,7 @@ exports[`Dashboard renders correctly 1`] = `
             Homebrew
           </a>
           <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
+            class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 border-brand-400 text-brand-100"
           >
             <svg
               aria-hidden="true"
@@ -286,7 +286,7 @@ exports[`Dashboard renders correctly 1`] = `
             href="/character-builder"
           >
             <button
-              class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+              class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
             >
               <svg
                 aria-hidden="true"
@@ -327,7 +327,7 @@ exports[`Dashboard renders correctly 1`] = `
               href="/character-builder"
             >
               <button
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+                class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-10 px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               >
                 <svg
                   aria-hidden="true"

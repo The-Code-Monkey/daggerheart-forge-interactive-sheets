@@ -232,12 +232,12 @@ const ClassDetail = (): JSX.Element => {
                                           >
                                             {listItem}
                                           </li>
-                                        ),
+                                        )
                                       )}
                                     </ul>
                                   )}
                                 </div>
-                              ),
+                              )
                             )}
                           </div>
                           <hr />
@@ -255,7 +255,7 @@ const ClassDetail = (): JSX.Element => {
                                     {feature.description}
                                   </p>
                                 </div>
-                              ),
+                              )
                             )}
                           </div>
                           <hr />
@@ -273,7 +273,7 @@ const ClassDetail = (): JSX.Element => {
                                     {feature.description}
                                   </p>
                                 </div>
-                              ),
+                              )
                             )}
                           </div>
                         </div>

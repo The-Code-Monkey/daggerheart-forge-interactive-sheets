@@ -7,7 +7,7 @@ import { JSX, useEffect, useState } from "react";
 const HomebrewViewClasses = (): JSX.Element => {
   const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
   const [myClassesData, setMyClassesData] = useState<Partial<Class>[] | null>(
-    null,
+    null
   );
   const { user } = useAuth();
 

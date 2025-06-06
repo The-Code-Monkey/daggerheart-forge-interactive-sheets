@@ -2,7 +2,7 @@ import { Class, Domain, Feature, Subclass } from "@/lib/types";
 import { supabase } from "../client";
 
 export const getSingleClassBySlug = async (
-  slug: string,
+  slug: string
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
@@ -30,7 +30,7 @@ const transformClassWithDomains = (data: ClassWithDomainsResponse): Class =>
   }) as unknown as Class;
 
 export const getSingleClassBySlugWithDomains = async (
-  slug: string,
+  slug: string
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
@@ -79,7 +79,7 @@ export const getAllClassesWithDomains = async (
     user_id,
   }: { limit?: number; homebrew: boolean; user_id?: string } = {
     homebrew: false,
-  },
+  }
 ): Promise<Class[] | null> => {
   const query = supabase
     .from("classes")
@@ -103,14 +103,14 @@ export const getAllClassesWithDomains = async (
       ({
         ...classData,
         domains: classData.classes_domains.map(
-          (classDomain) => classDomain.domains,
+          (classDomain) => classDomain.domains
         ) as unknown as Domain[],
-      }) as unknown as Class,
+      }) as unknown as Class
   );
 };
 
 export const getSubclassesByClassId = async (
-  classId: number,
+  classId: number
 ): Promise<Subclass[] | null> => {
   const { data, error } = await supabase
     .from("subclasses")
@@ -134,7 +134,7 @@ interface ClassFormData {
   isHomebrew: true;
 }
 
-export const publishClass = async (id: string): Promise<Class | null> => {
+export const publishClass = async (id: number): Promise<Class | null> => {
   const { data } = await supabase
     .from("classes")
     .update({ isPublished: true })
@@ -150,7 +150,7 @@ export const publishClass = async (id: string): Promise<Class | null> => {
 };
 
 export const createNewHomebrewClass = async (
-  newClass: ClassFormData & { user_id: string },
+  newClass: ClassFormData & { user_id: string }
 ): Promise<Class | null> => {
   const formattedData = {
     user_id: newClass.user_id,
@@ -181,7 +181,7 @@ export const createNewHomebrewClass = async (
     newClass.domains.map((domainId) => ({
       class_id: id,
       domain_id: domainId,
-    })),
+    }))
   );
 
   return classData as Class;
