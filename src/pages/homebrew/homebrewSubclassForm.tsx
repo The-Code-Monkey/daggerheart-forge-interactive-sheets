@@ -31,32 +31,32 @@ const HomebrewSubclassForm = (): JSX.Element => {
     { title: "Foundation Features", component: FoundationFeatures },
   ];
 
-const onSubmit = async (formData: NewSubclassFormData) => {
-  setSubmitting(true);
-  
-  // Validate that the user is authenticated before sending the form
-  if (!user?.id) {
-    console.error('User not authenticated');
-    setSubmitting(false);
-    return;
-  }
+  const onSubmit = async (formData: NewSubclassFormData) => {
+    setSubmitting(true);
 
-  try {
-    const data = await createNewHomebrewSubclass({
-      ...formData,
-      user_id: String(user.id),
-    });
-
-    if (data) {
-      void navigate(`/rules/subclass/${String(data.id)}`);
+    // Validate that the user is authenticated before sending the form
+    if (!user?.id) {
+      console.error("User not authenticated");
+      setSubmitting(false);
+      return;
     }
-  } catch (error) {
-    console.error('Failed to create subclass:', error);
-    // Handle error appropriately (e.g., show a toast)
-  } finally {
-    setSubmitting(false);
-  }
-};
+
+    try {
+      const data = await createNewHomebrewSubclass({
+        ...formData,
+        user_id: String(user.id),
+      });
+
+      if (data) {
+        void navigate(`/rules/subclass/${String(data.id)}`);
+      }
+    } catch (error) {
+      console.error("Failed to create subclass:", error);
+      // Handle error appropriately (e.g., show a toast)
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const nextStep = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();

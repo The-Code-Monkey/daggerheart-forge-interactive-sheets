@@ -18,39 +18,39 @@ const ClassQuestions = ({ form }: ClassQuestionsProps): JSX.Element => {
 
   const addquestion = () => {
     const newquestions = [...backgroundQuestions, ""];
-    setbackgroundQuestions(newquestions);
+    setBackgroundQuestions(newquestions);
     form.setValue("additional.questions.background", newquestions);
   };
 
   const removequestion = (index: number) => {
     const newquestions = backgroundQuestions.filter((_, i) => i !== index);
-    setbackgroundQuestions(newquestions);
+    setBackgroundQuestions(newquestions);
     form.setValue("additional.questions.background", newquestions);
   };
 
   const updatequestion = (index: number, value: string) => {
     const newquestions = [...backgroundQuestions];
     newquestions[index] = value;
-    setbackgroundQuestions(newquestions);
+    setBackgroundQuestions(newquestions);
     form.setValue("additional.questions.background", newquestions);
   };
 
   const addconnectionquestion = () => {
     const newquestions = [...connectionQuestions, ""];
-    setconnectionQuestions(newquestions);
+    setConnectionQuestions(newquestions);
     form.setValue("additional.questions.connection", newquestions);
   };
 
   const removeconnectionquestion = (index: number) => {
     const newquestions = connectionQuestions.filter((_, i) => i !== index);
-    setconnectionQuestions(newquestions);
+    setConnectionQuestions(newquestions);
     form.setValue("additional.questions.connection", newquestions);
   };
 
   const updateconnectionquestion = (index: number, value: string) => {
     const newquestions = [...connectionQuestions];
     newquestions[index] = value;
-    setconnectionQuestions(newquestions);
+    setConnectionQuestions(newquestions);
     form.setValue("additional.questions.connection", newquestions);
   };
 
