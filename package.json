@@ -16,10 +16,10 @@
     "test:ci": "jest --coverage --watchAll=false"
   },
   "dependencies": {
-    "@babel/core": "^7.27.4",
-    "@babel/preset-env": "^7.27.2",
-    "@babel/preset-react": "^7.27.1",
-    "@babel/preset-typescript": "^7.27.1",
+    "@babel/core": "7.27.4",
+    "@babel/preset-env": "7.27.2",
+    "@babel/preset-react": "7.27.1",
+    "@babel/preset-typescript": "7.27.1",
     "@hookform/resolvers": "5.0.1",
     "@marsidev/react-turnstile": "1.1.0",
     "@radix-ui/react-accordion": "1.2.11",
@@ -53,7 +53,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@types/jest": "29.5.14",
     "@vitejs/plugin-react-swc": "3.10.1",
-    "babel-jest": "^30.0.0-beta.3",
+    "babel-jest": "30.0.0-beta.8",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
@@ -74,7 +74,7 @@
     "tailwind-merge": "3.3.0",
     "tailwindcss-animate": "1.0.7",
     "vaul": "1.1.2",
-    "zod": "3.25.51"
+    "zod": "3.25.55"
   },
   "devDependencies": {
     "@eslint/js": "9.28.0",
@@ -84,7 +84,7 @@
     "@testing-library/react": "16.3.0",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.17",
-    "@types/node": "22.15.29",
+    "@types/node": "22.15.30",
     "@types/react": "19.1.6",
     "@types/react-dom": "19.1.6",
     "@vitejs/plugin-react": "4.5.1",

@@ -9,6 +9,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "isolatedModules": true,
     "noImplicitAny": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
@@ -18,5 +19,6 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "types": ["@testing-library/jest-dom", "node", "jest"]
-  }
+  },
+  "include": ["babel.config.js", "src"]
 }
