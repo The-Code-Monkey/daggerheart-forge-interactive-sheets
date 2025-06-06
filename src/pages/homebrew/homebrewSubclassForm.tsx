@@ -22,10 +22,8 @@ const HomebrewSubclassForm = (): JSX.Element => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const form = useForm({
-    defaultValues: {
-      isHomebrew: true,
-    },
+  const form = useForm<NewSubclassFormData>({
+    defaultValues: {},
   });
 
   const steps = [
