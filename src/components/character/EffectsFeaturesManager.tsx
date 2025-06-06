@@ -86,7 +86,12 @@ const EffectsFeaturesManager = ({
       <CardContent>
         <div className="grid grid-cols-2 gap-4 text-white divide-x divide-white">
           <div className="pr-4">
-            <div onClick={toggleEditing}>Domain Effects (click to select)</div>
+            <button
+              onClick={toggleEditing}
+              className="text-left w-full p-0 bg-transparent border-none text-white hover:text-purple-200 cursor-pointer"
+            >
+              Domain Effects (click to select)
+            </button>
             {editing && (
               <div className="grid grid-cols-1 gap-4 mt-4 w-full">
                 {domainEffects.map((effect) => {
