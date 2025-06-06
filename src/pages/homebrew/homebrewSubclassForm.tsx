@@ -35,7 +35,17 @@ const HomebrewSubclassForm = (): JSX.Element => {
     setSubmitting(true);
     const data = await createNewHomebrewSubclass({
       ...formData,
-      user_id: String(user?.id),
+// Validate that the user is authenticated before sending the form
+if (!user?.id) {
+  console.error('User not authenticated');
+  setSubmitting(false);
+  return;
+}
+
+const data = await createNewHomebrewSubclass({
+  ...formData,
+  user_id: String(user.id),
+});
     });
 
     if (data) {
