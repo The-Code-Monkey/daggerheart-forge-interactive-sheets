@@ -41,31 +41,56 @@ const Navigation = (): JSX.Element => {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex h-full items-center space-x-8">
             {publicNavItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 target={item.target}
-                className={`text-white hover:text-yellow-400 transition-colors ${
+                className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
                   isActive(item.path) ? "text-yellow-400" : ""
                 }`}
               >
                 {item.name}
               </Link>
             ))}
-            {user &&
-              protectedNavItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`text-white hover:text-yellow-400 transition-colors ${
-                    isActive(item.path) ? "text-yellow-400" : ""
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+            {user && (
+              <>
+                <div className="group relative text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center">
+                  Homebrew
+                  <div className="hidden divide-y-2 group-hover:flex flex-col gap-1 absolute top-full left-0 min-w-[250%] w-fit px-2 py-3 z-20 bg-brand-700 rounded-b-md backdrop-blur-lg">
+                    <Link
+                      to="/homebrew"
+                      className={`text-white hover:text-yellow-400 transition-colors pb-2 hover:bg-brand-900/10 ${
+                        isActive("/homebrew") ? "text-yellow-400" : ""
+                      }`}
+                    >
+                      Create Homebrew
+                    </Link>
+                    <Link
+                      to="/homebrewed/class"
+                      className={`text-white hover:text-yellow-400 transition-colors ${
+                        isActive("/homebrewed/class") ? "text-yellow-400" : ""
+                      }`}
+                    >
+                      Homebrewed Classes
+                    </Link>
+                  </div>
+                </div>
+
+                {protectedNavItems.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
+                      isActive(item.path) ? "text-yellow-400" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </>
+            )}
             {!user ? (
               <Link to="/auth">
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">

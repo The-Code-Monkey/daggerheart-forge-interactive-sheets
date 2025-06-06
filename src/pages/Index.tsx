@@ -54,7 +54,7 @@ const Index = (): JSX.Element => {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900">
+    <div className="min-h-screen bg-nebula">
       <HeroSection />
 
       {/* Features Section */}

@@ -34,7 +34,7 @@ export const getSingleClassBySlugWithDomains = async (
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
-    .select("*, classes_domains ( domains ( * ) )")
+    .select("*, subclass: subclasses ( * ), classes_domains ( domains ( * ) )")
     .eq("slug", slug)
     .single();
 
@@ -73,13 +73,26 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
 };
 
 export const getAllClassesWithDomains = async (
-  { limit, homebrew } = { limit: 99, homebrew: false }
+  {
+    limit,
+    homebrew,
+    user_id,
+  }: { limit?: number; homebrew: boolean; user_id?: string } = {
+    homebrew: false,
+  }
 ): Promise<Class[] | null> => {
-  const { data, error } = await supabase
+  const query = supabase
     .from("classes")
-    .select("*, classes_domains ( domains ( * ) )")
-    .eq("isHomebrew", homebrew)
-    .limit(limit);
+    .select("*, classes_domains ( domains ( * ) )");
+
+  if (homebrew) {
+    query.eq("isHomebrew", homebrew);
+  }
+  if (user_id) {
+    query.eq("user_id", user_id);
+  }
+
+  const { data, error } = await query.limit(limit ?? 99);
 
   if (error) {
     console.log(error);
@@ -121,10 +134,26 @@ interface ClassFormData {
   isHomebrew: true;
 }
 
+export const publishClass = async (id: number): Promise<Class | null> => {
+  const { data } = await supabase
+    .from("classes")
+    .update({ isPublished: true })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (!data) {
+    return null;
+  }
+
+  return data as Class;
+};
+
 export const createNewHomebrewClass = async (
-  newClass: ClassFormData
+  newClass: ClassFormData & { user_id: string }
 ): Promise<Class | null> => {
   const formattedData = {
+    user_id: newClass.user_id,
     name: newClass.name,
     description: newClass.description,
     base_hp: newClass.base_hp,

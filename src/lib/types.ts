@@ -12,6 +12,7 @@ export enum Traits {
 
 export enum ItemType {
   ARMOR = "Armor",
+  WEAPON = "Weapon",
   PHYSICAL = "Physical",
   MAGICAL = "Magical",
   CONSUMABLE = "Consumable",
@@ -38,7 +39,11 @@ export interface ClassSubclass {
 }
 
 export interface ClassAdditional {
-  subclasses: Record<string, Partial<ClassSubclass>>;
+  hasCompanion?: boolean;
+  questions?: {
+    background?: string[];
+    connections?: string[];
+  };
 }
 
 export interface CharacterStats {
@@ -61,6 +66,10 @@ export interface CharacterAdditional {
     }
   >;
   domain_features?: number[];
+  questions?: {
+    background?: Record<string, string>;
+    connections?: Record<string, string>;
+  };
 }
 
 export type Domain = Database["public"]["Tables"]["domains"]["Row"];
@@ -73,7 +82,7 @@ export type CharacterWithRelations = Omit<
   Character,
   "ancestry" | "additional"
 > & {
-  class: { name: string; base_hp: number; base_evasion: number } | null;
+  class: Partial<Class> | null;
   ancestry?: { name?: string } | null;
   subclass: Partial<ClassSubclass> | null;
   community: { name: string } | null;
@@ -84,6 +93,7 @@ export type CharacterWithRelations = Omit<
 export type Community = Database["public"]["Tables"]["communities"]["Row"];
 
 export type Class = Database["public"]["Tables"]["classes"]["Row"] & {
+  subclass: Partial<ClassSubclass>[];
   domains: Partial<Domain>[];
   features: Partial<Feature>[];
   additional: Partial<ClassAdditional>;
@@ -123,13 +133,17 @@ export type ItemOther = Omit<
 export type ItemCustom = Omit<
   Database["public"]["Tables"]["items"]["Row"],
   "features"
->;
+> & {
+  features: [];
+  type: ItemType;
+};
 
 export type Item = ItemOther | ItemArmor | ItemCustom;
 
 export interface CardAdditional {
   if?: {
     armor?: [boolean, Record<string, number>];
+    domainCardCount?: [number, Record<string, number>];
   };
   tiers?: Record<
     string,

@@ -44,7 +44,7 @@ const Campaigns = (): JSX.Element => {
   ]);
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-nebula py-8 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">

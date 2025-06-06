@@ -32,33 +32,31 @@ jest.mock("@/integrations/supabase/helpers", () => ({
         name: "Protection",
       },
     ],
-    additional: {
-      subclasses: {
-        armor: {
-          name: "Armor",
-          features: {
-            foundation: [
-              {
-                name: "Foundation Feature",
-                description: "Foundation description",
-              },
-            ],
-            specialization: [
-              {
-                name: "Specialization Feature",
-                description: "Specialization description",
-              },
-            ],
-            mastery: [
-              {
-                name: "Mastery Feature",
-                description: "Mastery description",
-              },
-            ],
-          },
+    subclass: [
+      {
+        name: "Armor",
+        features: {
+          foundation: [
+            {
+              name: "Foundation Feature",
+              description: "Foundation description",
+            },
+          ],
+          specialization: [
+            {
+              name: "Specialization Feature",
+              description: "Specialization description",
+            },
+          ],
+          mastery: [
+            {
+              name: "Mastery Feature",
+              description: "Mastery description",
+            },
+          ],
         },
       },
-    },
+    ],
   }),
 }));
 

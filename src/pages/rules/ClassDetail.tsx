@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -10,14 +10,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { JSX, useEffect, useState } from "react";
-import { Class } from "@/lib/types";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getSingleClassBySlugWithDomains } from "@/integrations/supabase/helpers";
+import { Class } from "@/lib/types";
 
 const ClassDetail = (): JSX.Element => {
   const { className } = useParams();
   const [classData, setClassData] = useState<Class | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const fetchClass = async () => {
     const data = await getSingleClassBySlugWithDomains(String(className));
@@ -60,20 +61,23 @@ const ClassDetail = (): JSX.Element => {
     );
   }
 
-  const subclasses = Object.keys(classData.additional.subclasses ?? {});
+  const subclasses = classData.subclass;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-nebula py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link to="/game-rules">
-            <Button
-              variant="ghost"
-              className="text-purple-200 hover:text-white mb-4"
-            >
+          <Link
+            to="/"
+            onClick={(e) => {
+              e.preventDefault();
+              void navigate(-1);
+            }}
+          >
+            <Button className="text-purple-200 hover:text-white mb-4">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Game Rules
+              Go Back
             </Button>
           </Link>
 
@@ -173,110 +177,114 @@ const ClassDetail = (): JSX.Element => {
           </CardContent>
         </Card>
 
-        <Tabs defaultValue={subclasses[0]} className="w-full mt-6">
-          <TabsList className="w-full justify-evenly bg-purple-800/50 mb-8">
-            {subclasses.map((key) => {
-              const subclass = classData.additional.subclasses![key];
-
-              return (
-                <TabsTrigger
-                  key={key}
-                  value={key}
-                  className="text-white data-[state=active]:bg-purple-600 capitalize"
-                >
-                  {subclass.name}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-
-          {subclasses.map((key) => {
-            const subclass = classData.additional.subclasses![key];
-
-            return (
-              <TabsContent value={key} key={key} className="space-y-6">
-                <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs flex flex-col">
-                  <CardHeader>
-                    <CardTitle className="text-white">
+        {subclasses.length > 0 && (
+          <>
+            <Tabs defaultValue={subclasses[0].name} className="w-full mt-6">
+              <TabsList className="w-full justify-evenly mb-8">
+                {subclasses.map((subclass) => {
+                  return (
+                    <TabsTrigger
+                      key={subclass.name}
+                      value={String(subclass.name)}
+                      className="text-white data-[state=active]:bg-purple-600 flex-1 capitalize"
+                    >
                       {subclass.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="text-xl font-bold text-white mb-2 capitalize">
-                          Foundation Features
-                        </h3>
-                        {subclass.features?.foundation.map(
-                          (feature, featureIndex) => (
-                            <div key={featureIndex} className="text-white">
-                              <p className="inline-block">
-                                <span className="font-bold">
-                                  {feature.name}:
-                                </span>{" "}
-                                {feature.description}
-                              </p>
-                              {feature.list && (
-                                <ul className="list-disc pl-4 my-2">
-                                  {feature.list.map(
-                                    (listItem, listItemIndex) => (
-                                      <li
-                                        key={listItemIndex}
-                                        className="text-white"
-                                      >
-                                        {listItem}
-                                      </li>
-                                    )
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+
+              {subclasses.map((subclass) => {
+                return (
+                  <TabsContent
+                    value={String(subclass.name)}
+                    key={subclass.name}
+                    className="space-y-6"
+                  >
+                    <Card className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs flex flex-col">
+                      <CardHeader>
+                        <CardTitle className="text-white">
+                          {subclass.name}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-4">
+                          <div>
+                            <h3 className="text-xl font-bold text-white mb-2 capitalize">
+                              Foundation Features
+                            </h3>
+                            {subclass.features?.foundation.map(
+                              (feature, featureIndex) => (
+                                <div key={featureIndex} className="text-white">
+                                  <p className="inline-block">
+                                    <span className="font-bold">
+                                      {feature.name}:
+                                    </span>{" "}
+                                    {feature.description}
+                                  </p>
+                                  {feature.list && (
+                                    <ul className="list-disc pl-4 my-2">
+                                      {feature.list.map(
+                                        (listItem, listItemIndex) => (
+                                          <li
+                                            key={listItemIndex}
+                                            className="text-white"
+                                          >
+                                            {listItem}
+                                          </li>
+                                        )
+                                      )}
+                                    </ul>
                                   )}
-                                </ul>
-                              )}
-                            </div>
-                          )
-                        )}
-                      </div>
-                      <hr />
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2 capitalize">
-                          Specialization Features
-                        </h3>
-                        {subclass.features?.specialization.map(
-                          (feature, featureIndex) => (
-                            <div key={featureIndex} className="text-white">
-                              <p className="inline-block">
-                                <span className="font-bold">
-                                  {feature.name}:
-                                </span>{" "}
-                                {feature.description}
-                              </p>
-                            </div>
-                          )
-                        )}
-                      </div>
-                      <hr />
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2 capitalize">
-                          Mastery Features
-                        </h3>
-                        {subclass.features?.mastery.map(
-                          (feature, featureIndex) => (
-                            <div key={featureIndex} className="text-white">
-                              <p className="inline-block">
-                                <span className="font-bold">
-                                  {feature.name}:
-                                </span>{" "}
-                                {feature.description}
-                              </p>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-            );
-          })}
-        </Tabs>
+                                </div>
+                              )
+                            )}
+                          </div>
+                          <hr />
+                          <div>
+                            <h3 className="text-lg font-semibold text-white mb-2 capitalize">
+                              Specialization Features
+                            </h3>
+                            {subclass.features?.specialization.map(
+                              (feature, featureIndex) => (
+                                <div key={featureIndex} className="text-white">
+                                  <p className="inline-block">
+                                    <span className="font-bold">
+                                      {feature.name}:
+                                    </span>{" "}
+                                    {feature.description}
+                                  </p>
+                                </div>
+                              )
+                            )}
+                          </div>
+                          <hr />
+                          <div>
+                            <h3 className="text-lg font-semibold text-white mb-2 capitalize">
+                              Mastery Features
+                            </h3>
+                            {subclass.features?.mastery.map(
+                              (feature, featureIndex) => (
+                                <div key={featureIndex} className="text-white">
+                                  <p className="inline-block">
+                                    <span className="font-bold">
+                                      {feature.name}:
+                                    </span>{" "}
+                                    {feature.description}
+                                  </p>
+                                </div>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                );
+              })}
+            </Tabs>
+          </>
+        )}
       </div>
     </div>
   );

@@ -157,6 +157,13 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     })[];
   }, [getAllInventoryItems]);
 
+  const domainCardCounts = useMemo((): Record<string, number> => {
+    return domainCards.reduce<Record<string, number>>((acc, curr) => {
+      acc[String(curr.domain_id)] = (acc[String(curr.domain_id)] || 0) + 1;
+      return acc;
+    }, {});
+  }, [domainCards]);
+
   const fetchItemsInventory = async () => {
     let newEvasion = Number(character.class?.base_evasion ?? 0);
     let newArmor = 0;
@@ -190,6 +197,24 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       ) {
         if (domainCard.additional.if.armor[1].base) {
           newArmor = newArmor + Number(domainCard.additional.if.armor[1].base);
+        }
+      } else if (
+        domainCard.additional?.if?.armor?.[0] === true &&
+        equippedArmorItems.length > 0
+      ) {
+        if (domainCard.additional.if.armor[1].base) {
+          newArmor = newArmor + Number(domainCard.additional.if.armor[1].base);
+        }
+      } else if (
+        domainCard.additional?.if?.domainCardCount &&
+        domainCardCounts[String(domainCard.domain_id)] &&
+        domainCardCounts[String(domainCard.domain_id)] >=
+          domainCard.additional.if.domainCardCount[0]
+      ) {
+        if (domainCard.additional.if.domainCardCount[1].armor) {
+          newArmor =
+            newArmor +
+            Number(domainCard.additional.if.domainCardCount[1].armor);
         }
       }
     });

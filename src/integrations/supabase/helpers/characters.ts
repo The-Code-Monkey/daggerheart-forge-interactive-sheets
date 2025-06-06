@@ -8,19 +8,19 @@ export const getCharacterTier = (level: number): 1 | 2 | 3 | 4 => {
   return 4;
 };
 
+const characterString = `*, class(name, base_evasion, base_hp, features, additional, classes_domains(
+    domains(
+      id,
+      name
+    )
+  )), ancestry(id, name), subclass(id, name, features), community(id, name)`;
+
 export const getCharacters = async (): Promise<
   CharacterWithRelations[] | null
 > => {
   const { data, error } = await supabase
     .from("characters")
-    .select(
-      `*, class(name, classes_domains(
-          domains(
-            id,
-            name
-          )
-        )), ancestry(id, name), subclass(id, name), community(id, name)`
-    )
+    .select(characterString)
     .limit(5);
 
   if (error) {
@@ -35,14 +35,7 @@ export const getCharacterById = async (
 ): Promise<CharacterWithRelations | null> => {
   const { data, error } = await supabase
     .from("characters")
-    .select(
-      `*, class(name, base_evasion, base_hp, features, classes_domains(
-          domains(
-            id,
-            name
-          )
-        )), ancestry(id, name), subclass(id, name, features), community(id, name)`
-    )
+    .select(characterString)
     .eq("id", cId)
     .single();
 
@@ -73,14 +66,7 @@ export const updateCharacter = async (
     .from("characters")
     .update(updates)
     .eq("id", characterId)
-    .select(
-      `*, class(name, base_evasion, base_hp, features, classes_domains(
-          domains(
-            id,
-            name
-          )
-        )), ancestry(id, name), subclass(id, name, features), community(id, name)`
-    )
+    .select(characterString)
     .single();
 
   if (error) {

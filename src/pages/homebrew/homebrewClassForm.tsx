@@ -9,9 +9,10 @@ import ClassStats from "@/components/homebrew/ClassStats";
 import ClassFeatures from "@/components/homebrew/ClassFeatures";
 import ClassDomains from "@/components/homebrew/ClassDomains";
 import { ArrowLeft, Save } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Feature } from "@/lib/types";
 import { createNewHomebrewClass } from "@/integrations/supabase/helpers/classes";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ClassFormData {
   name: string;
@@ -27,6 +28,8 @@ interface ClassFormData {
 const HomebrewClassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const form = useForm<ClassFormData>({
     defaultValues: {
@@ -43,9 +46,14 @@ const HomebrewClassForm = (): JSX.Element => {
 
   const onSubmit = async (formData: ClassFormData) => {
     setSubmitting(true);
-    const data = await createNewHomebrewClass(formData);
+    const data = await createNewHomebrewClass({
+      ...formData,
+      user_id: String(user?.id),
+    });
 
-    console.log(data);
+    if (data) {
+      void navigate(`/rules/classes/${String(data.slug)}`);
+    }
   };
 
   const nextStep = (e: MouseEvent<HTMLButtonElement>) => {
@@ -64,7 +72,7 @@ const HomebrewClassForm = (): JSX.Element => {
   const CurrentStepComponent = steps[currentStep].component;
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-purple-900 via-purple-800 to-slate-900 py-8 px-4">
+    <div className="min-h-screen bg-nebula py-8 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">

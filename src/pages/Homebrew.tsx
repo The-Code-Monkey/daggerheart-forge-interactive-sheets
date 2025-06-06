@@ -18,7 +18,7 @@ const features: {
 
 const Homebrew = (): JSX.Element => {
   return (
-    <div className="min-h-screen bg-linear-to-b from-brand-900 via-brand-800 to-slate-900">
+    <div className="min-h-screen bg-nebula">
       <section className="relative py-32 px-4 overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">

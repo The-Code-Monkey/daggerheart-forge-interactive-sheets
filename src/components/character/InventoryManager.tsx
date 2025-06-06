@@ -24,7 +24,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { getItemsByIds } from "@/integrations/supabase/helpers";
 import ItemSearch from "@/components/ItemSearch";
 import { InventoryItem, ItemInventoryEntry, ItemWithQuantity } from "./types";
-import { Character } from "@/lib/types";
+import { Character, ItemArmor, ItemType } from "@/lib/types";
 import { Textarea } from "../ui/textarea";
 
 interface InventoryManagerProps {
@@ -55,17 +55,19 @@ const InventoryManager = ({
     const itemIds = itemsInventoryData.map((entry) => entry.itemId);
     const items = await getItemsByIds(itemIds);
 
-    const itemsWithQuantity = items.map((item) => {
+    const itemsWithQuantity = items.map((item): ItemWithQuantity => {
       const inventoryEntry = itemsInventoryData.find(
         (entry) => entry.itemId === item.id
       );
       return {
         id: item.id,
         name: item.name ?? "Unknown Item",
-        type: item.type ?? "Unknown",
+        type: item.type,
         tier: item.tier ?? 1,
         quantity: inventoryEntry?.quantity ?? 1,
-        description: undefined, // Remove description since it doesn't exist on the item type
+        features: (item.type === ItemType.ARMOR
+          ? (item.features ?? {})
+          : []) as ItemWithQuantity["features"],
         equipped: inventoryEntry?.equipped ?? false,
       };
     });
@@ -285,6 +287,31 @@ const InventoryManager = ({
                           >
                             Tier {item.tier}
                           </Badge>
+                        )}
+                      </div>
+                      <div className="mt-2">
+                        {item.type === ItemType.ARMOR && (
+                          <>
+                            {item.features && (
+                              <div>
+                                <h3 className="font-bold mb-1 mt-2">
+                                  Features:
+                                </h3>
+                                <ul>
+                                  {(
+                                    item.features as unknown as ItemArmor["features"]
+                                  )?.features?.map((feature, featIndex) => (
+                                    <li key={featIndex}>
+                                      <span className="font-bold">
+                                        {feature.name}:{" "}
+                                      </span>
+                                      {feature.description}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @plugin 'tailwindcss-animate';
 
@@ -52,6 +52,8 @@
   --color-brand-800: hsl(var(--brand-800));
   --color-brand-900: hsl(var(--brand-900));
   --color-brand: hsl(var(--brand));
+
+  --color-nebula: hsl(var(--nebula));
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -160,6 +162,8 @@
     --brand-700: 281 55% 25%;
     --brand-800: 281 55% 15%;
     --brand-900: 281 55% 10%;
+
+    --nebula: 275, 81%, 38%;
   }
 
   .dark {

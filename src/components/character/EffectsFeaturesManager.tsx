@@ -23,18 +23,25 @@ const EffectsFeaturesManager = ({
   character,
   onUpdate,
 }: EffectsFeaturesManagerProps): JSX.Element => {
-  const [editing, _] = useState(true);
+  const [editing, setEditing] = useState(false);
   const [domainEffects, setDomainEffects] = useState<CardType[]>([]);
+  const [myEffects, setMyEffects] = useState<CardType[]>([]);
 
-  // const toggleEditing = () => {
-  //   setEditing((prev) => !prev);
-  // };
+  const toggleEditing = () => {
+    setEditing((prev) => !prev);
+  };
 
   const fetchDomainEffects = async () => {
     const data = await getDomainEffects(
-      character.domains.map((domain) => domain.id)
+      character.domains.map((domain) => domain.id),
+      Number(character.level ?? 1)
     );
     setDomainEffects(data);
+    setMyEffects(
+      data.filter((effect) =>
+        character.additional?.domain_features?.includes(effect.id)
+      )
+    );
   };
 
   const handleSelectCard = (effectId: number) => {
@@ -66,10 +73,10 @@ const EffectsFeaturesManager = ({
   };
 
   useEffect(() => {
-    if (editing) {
-      void fetchDomainEffects();
-    }
-  }, [editing]);
+    void fetchDomainEffects();
+  }, []);
+
+  console.log(myEffects);
 
   return (
     <Card>
@@ -78,8 +85,13 @@ const EffectsFeaturesManager = ({
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-4 text-white divide-x divide-white">
-          <div>
-            <div>Domain Effects</div>
+          <div className="pr-4">
+            <button
+              onClick={toggleEditing}
+              className="text-left w-full p-0 bg-transparent border-none text-white hover:text-purple-200 cursor-pointer"
+            >
+              Domain Effects (click to select)
+            </button>
             {editing && (
               <div className="grid grid-cols-1 gap-4 mt-4 w-full">
                 {domainEffects.map((effect) => {
@@ -129,6 +141,50 @@ const EffectsFeaturesManager = ({
                     </Card>
                   );
                 })}
+              </div>
+            )}
+            {!editing && (
+              <div className="grid grid-cols-1 gap-4 mt-4 w-full">
+                {myEffects.map((effect) => (
+                  <Card key={effect.id}>
+                    <CardHeader className="flex flex-row space-y-0">
+                      <CardTitle className="text-white text-center mx-auto">
+                        {effect.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-white">
+                      <CardDescription className="text-white">
+                        {effect.description}
+                      </CardDescription>
+                      <ul className="mt-8">
+                        {Object.keys(effect.additional?.tiers ?? {}).map(
+                          (tier) => (
+                            <li key={tier}>
+                              <span className="font-bold">Tier {tier}: </span>
+                              {String(
+                                effect.additional?.tiers?.[tier].thresholds
+                                  ?.major
+                              )}{" "}
+                              /{" "}
+                              {String(
+                                effect.additional?.tiers?.[tier].thresholds
+                                  ?.severe
+                              )}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                      {/* <Button
+                      className="mt-4 w-full"
+                      onClick={() => {
+                        handleSelectCard(Number(effect.id));
+                      }}
+                    >
+                      {isSelected ? "Remove" : "Select"} Card
+                    </Button> */}
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             )}
           </div>
