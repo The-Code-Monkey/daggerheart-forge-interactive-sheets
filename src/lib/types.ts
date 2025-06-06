@@ -100,7 +100,10 @@ export type Ancestry = Omit<
   features: Partial<Feature>[];
 };
 
-export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"] & {
+export type Subclass = Omit<
+  Database["public"]["Tables"]["subclasses"]["Row"],
+  "features"
+> & {
   class: Partial<Class>;
   features?: {
     foundation?: Partial<Feature>[];

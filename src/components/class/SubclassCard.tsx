@@ -35,7 +35,7 @@ const SubclassCards = ({
     ? classesData.map((cls) => (
         <Card
           key={cls.id}
-          className="bg-linear-to-br aspect-square from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="bg-linear-to-br  from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
         >
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
@@ -78,7 +78,7 @@ const SubclassCards = ({
         .map((_, index) => (
           <Card
             key={index}
-            className="bg-linear-to-br from-slate-800/80 aspect-square to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col"
+            className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col"
           >
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">

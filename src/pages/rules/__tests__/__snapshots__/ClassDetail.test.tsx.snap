@@ -205,7 +205,7 @@ exports[`ClassDetail Page renders correctly 1`] = `
       >
         <div
           aria-orientation="horizontal"
-          class="inline-flex h-10 items-center rounded-md p-1 text-muted-foreground bg-[rebeccapurple] gap-2 w-full justify-evenly mb-8"
+          class="inline-flex items-center rounded-md p-1 text-muted-foreground bg-[rebeccapurple] gap-2 w-full justify-evenly mb-8"
           data-orientation="horizontal"
           role="tablist"
           style="outline: none;"

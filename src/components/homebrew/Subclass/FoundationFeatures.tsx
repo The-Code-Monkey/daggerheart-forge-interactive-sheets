@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { NewSubclassFormData } from "@/integrations/supabase/helpers/classes";
-import { Feature, Subclass } from "@/lib/types";
+import { Feature } from "@/lib/types";
 import { Plus, Trash2 } from "lucide-react";
 import { JSX, useState } from "react";
 import { UseFormReturn } from "react-hook-form";
@@ -12,24 +12,24 @@ interface FoundationFeaturesProps {
 }
 
 const FoundationFeatures = ({ form }: FoundationFeaturesProps): JSX.Element => {
-  const [features, setFeatures] = useState<Subclass["features"]["foundation"]>([
+  const [features, setFeatures] = useState<Partial<Feature>[]>([
     { list: [""] },
   ]);
 
   const addFeature = () => {
-    const newFeatures = [...(features ?? []), { list: [""] }];
+    const newFeatures = [...features, { list: [""] }];
     setFeatures(newFeatures);
     form.setValue("features.foundation", newFeatures);
   };
 
   const removeFeature = (index: number) => {
-    const newFeatures = features?.filter((_, i) => i !== index);
+    const newFeatures = features.filter((_, i) => i !== index);
     setFeatures(newFeatures);
-    form.setValue("features.foundation", newFeatures ?? []);
+    form.setValue("features.foundation", newFeatures);
   };
 
   const updateFeature = (index: number, value: Partial<Feature>) => {
-    const newFeatures = [...(features ?? [])];
+    const newFeatures = [...features];
     newFeatures[index] = {
       ...newFeatures[index],
       ...value,
@@ -40,14 +40,14 @@ const FoundationFeatures = ({ form }: FoundationFeaturesProps): JSX.Element => {
 
   // New handlers for list inside each feature
   const addListItem = (featureIndex: number) => {
-    const feature = features?.[featureIndex];
-    const newList = feature?.list ? [...feature.list, ""] : [""];
+    const feature = features[featureIndex];
+    const newList = feature.list ? [...feature.list, ""] : [""];
     updateFeature(featureIndex, { list: newList });
   };
 
   const removeListItem = (featureIndex: number, listIndex: number) => {
-    const feature = features?.[featureIndex];
-    if (!feature?.list) return;
+    const feature = features[featureIndex];
+    if (!feature.list) return;
     const newList = feature.list.filter((_, i) => i !== listIndex);
     updateFeature(featureIndex, { list: newList });
   };
@@ -57,8 +57,8 @@ const FoundationFeatures = ({ form }: FoundationFeaturesProps): JSX.Element => {
     listIndex: number,
     value: string
   ) => {
-    const feature = features?.[featureIndex];
-    if (!feature?.list) return;
+    const feature = features[featureIndex];
+    if (!feature.list) return;
     const newList = [...feature.list];
     newList[listIndex] = value;
     updateFeature(featureIndex, { list: newList });
@@ -79,7 +79,7 @@ const FoundationFeatures = ({ form }: FoundationFeaturesProps): JSX.Element => {
         </Button>
       </div>
 
-      {features?.map((feature, index) => (
+      {features.map((feature, index) => (
         <div
           key={index}
           className="bg-slate-800/30 p-4 rounded-lg border border-brand-500/20"

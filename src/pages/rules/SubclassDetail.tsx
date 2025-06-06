@@ -92,7 +92,7 @@ const SubclassDetail = (): JSX.Element => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap text-white divide-y">
-                {subclassData.features.foundation?.map((feature, index) => {
+                {subclassData.features?.foundation?.map((feature, index) => {
                   return (
                     <div key={index} className="py-4 w-full">
                       <span className="font-bold">{feature.name}</span>
@@ -119,21 +119,23 @@ const SubclassDetail = (): JSX.Element => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap text-white divide-y">
-                {subclassData.features.specialization?.map((feature, index) => {
-                  return (
-                    <div key={index} className="py-4 w-full">
-                      <span className="font-bold">{feature.name}</span>
-                      <p className="mt-4">{feature.description}</p>
-                      {feature.list && (
-                        <ul className="list-disc ml-4 mt-4">
-                          {feature.list.map((item, i) => (
-                            <li key={i}>{item}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  );
-                })}
+                {subclassData.features?.specialization?.map(
+                  (feature, index) => {
+                    return (
+                      <div key={index} className="py-4 w-full">
+                        <span className="font-bold">{feature.name}</span>
+                        <p className="mt-4">{feature.description}</p>
+                        {feature.list && (
+                          <ul className="list-disc ml-4 mt-4">
+                            {feature.list.map((item, i) => (
+                              <li key={i}>{item}</li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    );
+                  }
+                )}
               </div>
             </CardContent>
           </Card>
@@ -144,7 +146,7 @@ const SubclassDetail = (): JSX.Element => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap text-white divide-y">
-                {subclassData.features.mastery?.map((feature, index) => {
+                {subclassData.features?.mastery?.map((feature, index) => {
                   return (
                     <div key={index} className="py-4 w-full">
                       <span className="font-bold">{feature.name}</span>

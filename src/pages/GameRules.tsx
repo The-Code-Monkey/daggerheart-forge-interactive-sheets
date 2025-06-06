@@ -10,15 +10,20 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { JSX, useEffect, useState } from "react";
-import { Ancestry, Class } from "@/lib/types";
+import { Ancestry, Class, Subclass } from "@/lib/types";
 import {
   getAllAncestries,
   getAllClassesWithDomains,
 } from "@/integrations/supabase/helpers";
 import ClassCards from "@/components/class/ClassCard";
+import SubclassCards from "@/components/class/SubclassCard";
+import { getAllSubclasses } from "@/integrations/supabase/helpers/classes";
 
 const GameRules = (): JSX.Element => {
   const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
+  const [subclassesData, setSubclassesData] = useState<
+    Partial<Subclass>[] | null
+  >(null);
   const [ancestriesData, setAncestriesData] = useState<
     Partial<Ancestry>[] | null
   >(null);
@@ -27,6 +32,13 @@ const GameRules = (): JSX.Element => {
     const data = await getAllClassesWithDomains();
     if (data) {
       setClassesData(data);
+    }
+  };
+
+  const fetchSubclasses = async () => {
+    const data = await getAllSubclasses();
+    if (data) {
+      setSubclassesData(data);
     }
   };
 
@@ -39,6 +51,7 @@ const GameRules = (): JSX.Element => {
 
   useEffect(() => {
     void fetchClasses();
+    void fetchSubclasses();
     void fetchAncestries();
   }, []);
 
@@ -157,6 +170,12 @@ const GameRules = (): JSX.Element => {
               Classes
             </TabsTrigger>
             <TabsTrigger
+              value="subclasses"
+              className="text-white data-[state=active]:bg-purple-600"
+            >
+              Subclasses
+            </TabsTrigger>
+            <TabsTrigger
               value="ancestries"
               className="text-white data-[state=active]:bg-purple-600"
             >
@@ -179,6 +198,12 @@ const GameRules = (): JSX.Element => {
           <TabsContent value="classes" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <ClassCards classesData={classesData ?? []} />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="subclasses" className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <SubclassCards classesData={subclassesData ?? []} />
             </div>
           </TabsContent>
 
