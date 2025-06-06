@@ -5,12 +5,8 @@ import { Subclass } from "@/lib/types";
 import { JSX, useEffect, useState } from "react";
 
 const HomebrewViewSubclasses = (): JSX.Element => {
-  const [subclassesData, setSubclassesData] = useState<
-    Partial<Subclass>[] | null
-  >(null);
-  const [mySubclassesData, setMySubclassesData] = useState<
-    Partial<Subclass>[] | null
-  >(null);
+  const [subclassesData, setSubclassesData] = useState<Subclass[] | null>(null);
+  const [mySubclassesData, setMySubclassesData] = useState<Subclass[] | null>(null);
   const { user } = useAuth();
 
   const fetchClasses = async () => {
