@@ -16,10 +16,13 @@ import Campaigns from "./pages/Campaigns";
 import NotFound from "./pages/NotFound";
 import ClassDetail from "./pages/rules/ClassDetail";
 import AncestryDetail from "./pages/rules/AncestryDetail";
+import SubclassDetail from "./pages/rules/SubclassDetail";
 import Homebrew from "./pages/Homebrew";
 import HomebrewClassForm from "./pages/homebrew/homebrewClassForm";
 import HomebrewViewClasses from "./pages/homebrew/view/class/HomebrewViewClasses";
+import HomebrewViewSubclasses from "./pages/homebrew/view/subclass/HomebrewViewSubclasses";
 import { JSX } from "react";
+import HomebrewSubclassForm from "./pages/homebrew/homebrewSubclassForm";
 
 const App = (): JSX.Element => (
   <AuthProvider>
@@ -35,6 +38,10 @@ const App = (): JSX.Element => (
             <Route path="/game-rules" element={<GameRules />} />
             {/* <Route path="/rules/domains/:domainName" element={<DomainDetail />} /> */}
             <Route path="/rules/classes/:className" element={<ClassDetail />} />
+            <Route
+              path="/rules/subclass/:subclassId"
+              element={<SubclassDetail />}
+            />
             <Route
               path="/rules/ancestries/:ancestryName"
               element={<AncestryDetail />}
@@ -88,10 +95,26 @@ const App = (): JSX.Element => (
               }
             />
             <Route
+              path="/homebrew/subclass"
+              element={
+                <ProtectedRoute>
+                  <HomebrewSubclassForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/homebrewed/class"
               element={
                 <ProtectedRoute>
                   <HomebrewViewClasses />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homebrewed/subclass"
+              element={
+                <ProtectedRoute>
+                  <HomebrewViewSubclasses />
                 </ProtectedRoute>
               }
             />

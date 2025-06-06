@@ -4,63 +4,57 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import ClassBasicInfo from "@/components/homebrew/ClassBasicInfo";
-import ClassStats from "@/components/homebrew/ClassStats";
-import ClassFeatures from "@/components/homebrew/ClassFeatures";
-import ClassDomains from "@/components/homebrew/ClassDomains";
-import ClassQuestions from "@/components/homebrew/ClassQuestions";
 import { ArrowLeft, Save } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { Feature } from "@/lib/types";
-import { createNewHomebrewClass } from "@/integrations/supabase/helpers/classes";
 import { useAuth } from "@/contexts/AuthContext";
+import BasicInfo from "@/components/homebrew/Subclass/BasicInfo";
+import FoundationFeatures from "@/components/homebrew/Subclass/FoundationFeatures";
+import {
+  createNewHomebrewSubclass,
+  NewSubclassFormData,
+} from "@/integrations/supabase/helpers/classes";
 
-interface ClassFormData {
-  name: string;
-  description: string;
-  base_hp: number;
-  base_evasion: number;
-  class_items: string;
-  features: Partial<Feature>[];
-  domains: number[];
-  isHomebrew: true;
-  additional?: {
-    questions?: {
-      background?: string[];
-      connection?: string[];
-    };
-  };
-}
-
-const HomebrewClassForm = (): JSX.Element => {
+const HomebrewSubclassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const form = useForm<ClassFormData>({
+  const form = useForm({
     defaultValues: {
       isHomebrew: true,
     },
   });
 
   const steps = [
-    { title: "Basic Info", component: ClassBasicInfo },
-    { title: "Stats & Items", component: ClassStats },
-    { title: "Features", component: ClassFeatures },
-    { title: "Questions", component: ClassQuestions },
-    { title: "Domains", component: ClassDomains },
+    { title: "Basic Info", component: BasicInfo },
+    { title: "Foundation Features", component: FoundationFeatures },
   ];
 
-  const onSubmit = async (formData: ClassFormData) => {
+  const onSubmit = async (formData: NewSubclassFormData) => {
     setSubmitting(true);
-    const data = await createNewHomebrewClass({
-      ...formData,
-      user_id: String(user?.id),
-    });
 
-    if (data) {
-      void navigate(`/rules/classes/${String(data.slug)}`);
+    // Validate that the user is authenticated before sending the form
+    if (!user?.id) {
+      console.error("User not authenticated");
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const data = await createNewHomebrewSubclass({
+        ...formData,
+        user_id: String(user.id),
+      });
+
+      if (data) {
+        void navigate(`/rules/subclass/${String(data.id)}`);
+      }
+    } catch (error) {
+      console.error("Failed to create subclass:", error);
+      // Handle error appropriately (e.g., show a toast)
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -92,10 +86,10 @@ const HomebrewClassForm = (): JSX.Element => {
             Back to Homebrew
           </Link>
           <h1 className="text-4xl font-bold text-white mb-4">
-            Homebrew Class Builder
+            Homebrew Subclass Builder
           </h1>
           <p className="text-xl text-purple-200">
-            Create your custom Daggerheart class
+            Create your custom Daggerheart subclass
           </p>
         </div>
 
@@ -170,7 +164,7 @@ const HomebrewClassForm = (): JSX.Element => {
                       disabled={submitting}
                     >
                       <Save className="w-4 h-4 mr-2" />
-                      Save Class
+                      Save Subclass
                     </Button>
                   )}
                   {currentStep < steps.length - 1 && (
@@ -192,4 +186,4 @@ const HomebrewClassForm = (): JSX.Element => {
   );
 };
 
-export default HomebrewClassForm;
+export default HomebrewSubclassForm;

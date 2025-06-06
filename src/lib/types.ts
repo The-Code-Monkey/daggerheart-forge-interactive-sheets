@@ -32,12 +32,6 @@ export interface Threshold {
   severe: number;
 }
 
-export interface ClassSubclass {
-  name: string;
-  features: Record<string, Partial<Feature>[]>;
-  spellcast_trait?: string;
-}
-
 export interface ClassAdditional {
   hasCompanion?: boolean;
   questions?: {
@@ -84,7 +78,7 @@ export type CharacterWithRelations = Omit<
 > & {
   class: Partial<Class> | null;
   ancestry?: { name?: string } | null;
-  subclass: Partial<ClassSubclass> | null;
+  subclass: Partial<Subclass> | null;
   community: { name: string } | null;
   domains: Domain[];
   additional?: Partial<CharacterAdditional>;
@@ -93,7 +87,7 @@ export type CharacterWithRelations = Omit<
 export type Community = Database["public"]["Tables"]["communities"]["Row"];
 
 export type Class = Database["public"]["Tables"]["classes"]["Row"] & {
-  subclass: Partial<ClassSubclass>[];
+  subclass: Partial<Subclass>[];
   domains: Partial<Domain>[];
   features: Partial<Feature>[];
   additional: Partial<ClassAdditional>;
@@ -106,7 +100,17 @@ export type Ancestry = Omit<
   features: Partial<Feature>[];
 };
 
-export type Subclass = Database["public"]["Tables"]["subclasses"]["Row"];
+export type Subclass = Omit<
+  Database["public"]["Tables"]["subclasses"]["Row"],
+  "features"
+> & {
+  class: Partial<Class>;
+  features?: {
+    foundation?: Partial<Feature>[];
+    specialization?: Partial<Feature>[];
+    mastery?: Partial<Feature>[];
+  };
+};
 
 export type ItemArmor = Omit<
   Database["public"]["Tables"]["items"]["Row"],

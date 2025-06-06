@@ -58,10 +58,10 @@ const Navigation = (): JSX.Element => {
               <>
                 <div className="group relative text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center">
                   Homebrew
-                  <div className="hidden divide-y-2 group-hover:flex flex-col gap-1 absolute top-full left-0 min-w-[250%] w-fit px-2 py-3 z-20 bg-brand-700 rounded-b-md backdrop-blur-lg">
+                  <div className="hidden divide-y-2 group-hover:flex flex-col absolute top-full left-0 min-w-[250%] w-fit px-2 py-3 z-20 bg-brand-700 rounded-b-md backdrop-blur-lg">
                     <Link
                       to="/homebrew"
-                      className={`text-white hover:text-yellow-400 transition-colors pb-2 hover:bg-brand-900/10 ${
+                      className={`text-white hover:text-yellow-400 transition-colors py-2 hover:bg-brand-900/10 ${
                         isActive("/homebrew") ? "text-yellow-400" : ""
                       }`}
                     >
@@ -69,11 +69,21 @@ const Navigation = (): JSX.Element => {
                     </Link>
                     <Link
                       to="/homebrewed/class"
-                      className={`text-white hover:text-yellow-400 transition-colors ${
+                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
                         isActive("/homebrewed/class") ? "text-yellow-400" : ""
                       }`}
                     >
                       Homebrewed Classes
+                    </Link>
+                    <Link
+                      to="/homebrewed/subclass"
+                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                        isActive("/homebrewed/subclass")
+                          ? "text-yellow-400"
+                          : ""
+                      }`}
+                    >
+                      Homebrewed Subclasses
                     </Link>
                   </div>
                 </div>

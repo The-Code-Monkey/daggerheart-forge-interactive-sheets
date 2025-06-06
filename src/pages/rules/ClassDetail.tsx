@@ -179,7 +179,10 @@ const ClassDetail = (): JSX.Element => {
 
         {subclasses.length > 0 && (
           <>
-            <Tabs defaultValue={subclasses[0].name} className="w-full mt-6">
+            <Tabs
+              defaultValue={String(subclasses[0].name)}
+              className="w-full mt-6"
+            >
               <TabsList className="w-full justify-evenly mb-8">
                 {subclasses.map((subclass) => {
                   return (
@@ -188,7 +191,7 @@ const ClassDetail = (): JSX.Element => {
                       value={String(subclass.name)}
                       className="text-white data-[state=active]:bg-purple-600 flex-1 capitalize"
                     >
-                      {subclass.name}
+                      {subclass.name} {subclass.isHomebrew ? "(Homebrew)" : ""}
                     </TabsTrigger>
                   );
                 })}
@@ -213,7 +216,7 @@ const ClassDetail = (): JSX.Element => {
                             <h3 className="text-xl font-bold text-white mb-2 capitalize">
                               Foundation Features
                             </h3>
-                            {subclass.features?.foundation.map(
+                            {subclass.features?.foundation?.map(
                               (feature, featureIndex) => (
                                 <div key={featureIndex} className="text-white">
                                   <p className="inline-block">
@@ -245,7 +248,7 @@ const ClassDetail = (): JSX.Element => {
                             <h3 className="text-lg font-semibold text-white mb-2 capitalize">
                               Specialization Features
                             </h3>
-                            {subclass.features?.specialization.map(
+                            {subclass.features?.specialization?.map(
                               (feature, featureIndex) => (
                                 <div key={featureIndex} className="text-white">
                                   <p className="inline-block">
@@ -263,7 +266,7 @@ const ClassDetail = (): JSX.Element => {
                             <h3 className="text-lg font-semibold text-white mb-2 capitalize">
                               Mastery Features
                             </h3>
-                            {subclass.features?.mastery.map(
+                            {subclass.features?.mastery?.map(
                               (feature, featureIndex) => (
                                 <div key={featureIndex} className="text-white">
                                   <p className="inline-block">
