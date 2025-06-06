@@ -12,9 +12,21 @@ interface FoundationFeaturesProps {
 }
 
 const FoundationFeatures = ({ form }: FoundationFeaturesProps): JSX.Element => {
+// src/components/homebrew/Subclass/FoundationFeatures.tsx
+
   const [features, setFeatures] = useState<Partial<Feature>[]>([
-    { list: [""] },
+-    { list: [""] },
++    { name: "", description: "", list: [""] },
   ]);
+
+// …
+
+  const addFeature = () => {
+-    const newFeatures = [...features, { list: [""] }];
++    const newFeatures = [...features, { name: "", description: "", list: [""] }];
+    setFeatures(newFeatures);
+    form.setValue("features.foundation", newFeatures);
+  };
 
   const addFeature = () => {
     const newFeatures = [...features, { list: [""] }];

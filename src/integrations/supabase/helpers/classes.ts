@@ -298,7 +298,8 @@ export const classSearchHelper = async (
   const { data, error } = await supabase
     .from("classes")
     .select()
-    .ilike("name", `%${query}%`);
+    .ilike("name", `%${query}%`)
+    .limit(20);
 
   if (error) {
     console.log(error);

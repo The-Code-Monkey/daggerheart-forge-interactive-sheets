@@ -26,7 +26,7 @@ const SubclassCards = ({
   if (classesData && classesData.length === 0) {
     return (
       <h3 className="text-white text-center mb-2 col-span-12">
-        No classes found
+        No subclasses found
       </h3>
     );
   }
