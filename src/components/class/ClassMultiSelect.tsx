@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef, JSX, useMemo, FocusEvent } from "react";
 import { debounce } from "lodash";
 import { useFormContext, Controller } from "react-hook-form";
-import { classSearchHelper } from "@/integrations/supabase/helpers/classes";
+import {
+  classSearchHelper,
+  getAllBaseClasses,
+} from "@/integrations/supabase/helpers/classes";
 import { Check } from "lucide-react";
 
 interface Option {
@@ -29,6 +32,7 @@ export const ClassMultiSelect = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  // Fetch options based on search query
   const fetchOptions = async (query: string) => {
     if (!query) return;
     setLoading(true);
@@ -44,6 +48,28 @@ export const ClassMultiSelect = ({
       }
     } catch (err) {
       console.error("classSearchHelper failed:", err);
+      setOptions([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Fetch all base classes for default display
+  const fetchBaseClasses = async () => {
+    setLoading(true);
+    try {
+      const data = await getAllBaseClasses();
+      if (data) {
+        setOptions(
+          data.map((item) => ({
+            value: Number(item.id),
+            label: String(item.name),
+          }))
+        );
+      }
+    } catch (err) {
+      console.error("getAllBaseClasses failed:", err);
+      setOptions([]);
     } finally {
       setLoading(false);
     }
@@ -54,12 +80,19 @@ export const ClassMultiSelect = ({
   useEffect(() => {
     if (input.trim().length > 0) {
       void debouncedFetch(input);
+    } else if (isFocused) {
+      void fetchBaseClasses();
+    } else {
+      setOptions([]);
     }
-  }, [input, debouncedFetch]);
+  }, [input, debouncedFetch, isFocused]);
 
   const handleBlur = (e: FocusEvent) => {
+    // Only close dropdown if focus leaves the whole wrapper
     if (!wrapperRef.current?.contains(e.relatedTarget)) {
       setIsFocused(false);
+      setInput("");
+      setOptions([]);
     }
   };
 
@@ -76,7 +109,7 @@ export const ClassMultiSelect = ({
         render={({ field }) => {
           const value = field.value;
           const selectedOptions: Option[] = isMulti
-            ? value
+            ? (value ?? [])
             : value
               ? [value]
               : [];
@@ -95,6 +128,7 @@ export const ClassMultiSelect = ({
               field.onChange(option);
               setInput("");
               setIsFocused(false);
+              setOptions([]);
             }
           };
 
@@ -145,7 +179,7 @@ export const ClassMultiSelect = ({
                 />
               </div>
 
-              {input && isFocused && (
+              {isFocused && (
                 <div className="absolute z-10 w-full border mt-1 rounded bg-white text-black shadow max-h-60 overflow-y-auto">
                   {loading ? (
                     <div className="p-2 text-gray-500 text-sm">Loading...</div>

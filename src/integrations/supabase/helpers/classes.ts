@@ -88,6 +88,19 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
   return data as Class[];
 };
 
+export const getAllBaseClasses = async (): Promise<Class[] | null> => {
+  const { data, error } = await supabase
+    .from("classes")
+    .select("id, name")
+    .eq("isHomebrew", false);
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data as Class[];
+};
+
 export const getAllSubclasses = async (
   {
     limit,
