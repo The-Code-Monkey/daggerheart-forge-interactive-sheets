@@ -12,6 +12,7 @@ import { ArrowLeft, Save } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Feature } from "@/lib/types";
 import { createNewHomebrewClass } from "@/integrations/supabase/helpers/classes";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ClassFormData {
   name: string;
@@ -27,6 +28,7 @@ interface ClassFormData {
 const HomebrewClassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const { user } = useAuth();
 
   const form = useForm<ClassFormData>({
     defaultValues: {
@@ -43,7 +45,10 @@ const HomebrewClassForm = (): JSX.Element => {
 
   const onSubmit = async (formData: ClassFormData) => {
     setSubmitting(true);
-    const data = await createNewHomebrewClass(formData);
+    const data = await createNewHomebrewClass({
+      ...formData,
+      user_id: String(user?.id),
+    });
 
     console.log(data);
   };

@@ -18,6 +18,7 @@ import ClassDetail from "./pages/rules/ClassDetail";
 import AncestryDetail from "./pages/rules/AncestryDetail";
 import Homebrew from "./pages/Homebrew";
 import HomebrewClassForm from "./pages/homebrew/homebrewClassForm";
+import HomebrewViewClasses from "./pages/homebrew/view/class/HomebrewViewClasses";
 import { JSX } from "react";
 
 const App = (): JSX.Element => (
@@ -83,6 +84,14 @@ const App = (): JSX.Element => (
               element={
                 <ProtectedRoute>
                   <HomebrewClassForm />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homebrewed/class"
+              element={
+                <ProtectedRoute>
+                  <HomebrewViewClasses />
                 </ProtectedRoute>
               }
             />

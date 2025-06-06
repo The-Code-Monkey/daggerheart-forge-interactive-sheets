@@ -1,8 +1,9 @@
 import { Class, Domain, Feature, Subclass } from "@/lib/types";
 import { supabase } from "../client";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const getSingleClassBySlug = async (
-  slug: string
+  slug: string,
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
@@ -30,7 +31,7 @@ const transformClassWithDomains = (data: ClassWithDomainsResponse): Class =>
   }) as unknown as Class;
 
 export const getSingleClassBySlugWithDomains = async (
-  slug: string
+  slug: string,
 ): Promise<Class | null> => {
   const { data, error } = await supabase
     .from("classes")
@@ -73,13 +74,19 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
 };
 
 export const getAllClassesWithDomains = async (
-  { limit, homebrew } = { limit: 99, homebrew: false }
+  { limit, homebrew }: { limit?: number; homebrew: boolean } = {
+    homebrew: false,
+  },
 ): Promise<Class[] | null> => {
-  const { data, error } = await supabase
+  const query = supabase
     .from("classes")
-    .select("*, classes_domains ( domains ( * ) )")
-    .eq("isHomebrew", homebrew)
-    .limit(limit);
+    .select("*, classes_domains ( domains ( * ) )");
+
+  if (homebrew) {
+    query.eq("isHomebrew", homebrew);
+  }
+
+  const { data, error } = await query.limit(limit ?? 99);
 
   if (error) {
     console.log(error);
@@ -90,14 +97,14 @@ export const getAllClassesWithDomains = async (
       ({
         ...classData,
         domains: classData.classes_domains.map(
-          (classDomain) => classDomain.domains
+          (classDomain) => classDomain.domains,
         ) as unknown as Domain[],
-      }) as unknown as Class
+      }) as unknown as Class,
   );
 };
 
 export const getSubclassesByClassId = async (
-  classId: number
+  classId: number,
 ): Promise<Subclass[] | null> => {
   const { data, error } = await supabase
     .from("subclasses")
@@ -122,9 +129,10 @@ interface ClassFormData {
 }
 
 export const createNewHomebrewClass = async (
-  newClass: ClassFormData
+  newClass: ClassFormData & { user_id: string },
 ): Promise<Class | null> => {
   const formattedData = {
+    user_id: newClass.user_id,
     name: newClass.name,
     description: newClass.description,
     base_hp: newClass.base_hp,
@@ -152,7 +160,7 @@ export const createNewHomebrewClass = async (
     newClass.domains.map((domainId) => ({
       class_id: id,
       domain_id: domainId,
-    }))
+    })),
   );
 
   return classData as Class;
