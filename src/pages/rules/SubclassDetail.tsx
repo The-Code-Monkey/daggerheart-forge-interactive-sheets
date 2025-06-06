@@ -12,24 +12,21 @@ const SubclassDetail = (): JSX.Element => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const fetchClass = async () => {
- const fetchSubclass = async () => {
-   if (!subclassId || isNaN(Number(subclassId))) {
-     setSubclassData(null);
-     setLoading(false);
-     return;
-   }
+  // Replace the malformed fetch functions with a single, properly scoped one
+  const fetchSubclass = async () => {
+    if (!subclassId || isNaN(Number(subclassId))) {
+      setSubclassData(null);
+      setLoading(false);
+      return;
+    }
 
-   const data = await getSingleSubclassById(Number(subclassId));
-   // …rest of the fetchSubclass logic…
- }
-
+    const data = await getSingleSubclassById(Number(subclassId));
     setSubclassData(data);
     setLoading(false);
   };
 
   useEffect(() => {
-    void fetchClass();
+    void fetchSubclass();
   }, [subclassId]);
 
   if (loading) {
