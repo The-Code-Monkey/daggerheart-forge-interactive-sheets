@@ -69,24 +69,6 @@ exports[`Auth Page renders correctly 1`] = `
           class="space-y-4"
         >
           <div
-            style="display: none;"
-          >
-            <label
-              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              for="website"
-            >
-              Website (leave blank)
-            </label>
-            <input
-              autocomplete="off"
-              class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-2 focus-visible:border-white md:text-sm text-black"
-              id="website"
-              tabindex="-1"
-              type="text"
-              value=""
-            />
-          </div>
-          <div
             class="space-y-2"
           >
             <label
@@ -128,26 +110,27 @@ exports[`Auth Page renders correctly 1`] = `
           >
             Sign In
           </button>
+          <div
+            class="text-center"
+          >
+            <p
+              class="text-brand-200 text-sm mb-2"
+            >
+              Don't have an account?
+            </p>
+            <button
+              class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 w-full border-brand-400 text-brand-100"
+              type="button"
+            >
+              Create Account
+            </button>
+          </div>
         </form>
         <div
           class="shrink-0 h-px w-full bg-brand-500/30"
           data-orientation="horizontal"
           role="none"
         />
-        <div
-          class="text-center space-y-4"
-        >
-          <p
-            class="text-brand-200 text-sm"
-          >
-            Don't have an account?
-          </p>
-          <button
-            class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border bg-brand-700/80 hover:bg-brand-700 hover:text-accent-foreground h-10 px-4 py-2 w-full border-brand-400 text-brand-100"
-          >
-            Create Account
-          </button>
-        </div>
       </div>
     </div>
   </div>

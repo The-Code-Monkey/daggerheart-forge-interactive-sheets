@@ -1,4 +1,3 @@
-
 import { JSX } from "react";
 
 const LoadingSpinner = (): JSX.Element => {

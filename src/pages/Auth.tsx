@@ -1,4 +1,3 @@
-
 import { JSX, useState } from "react";
 import {
   Card,
@@ -36,9 +35,17 @@ const Auth = (): JSX.Element => {
         </CardHeader>
         <CardContent className="space-y-6">
           {isLogin ? (
-            <LoginForm onToggleMode={() => setIsLogin(false)} />
+            <LoginForm
+              onToggleMode={() => {
+                setIsLogin(false);
+              }}
+            />
           ) : (
-            <RegisterForm onToggleMode={() => setIsLogin(true)} />
+            <RegisterForm
+              onToggleMode={() => {
+                setIsLogin(true);
+              }}
+            />
           )}
           <Separator className="bg-brand-500/30" />
         </CardContent>

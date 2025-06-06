@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,10 +22,18 @@ const ClassDetail = lazy(() => import("./pages/rules/ClassDetail"));
 const AncestryDetail = lazy(() => import("./pages/rules/AncestryDetail"));
 const SubclassDetail = lazy(() => import("./pages/rules/SubclassDetail"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
-const HomebrewClassForm = lazy(() => import("./pages/homebrew/homebrewClassForm"));
-const HomebrewSubclassForm = lazy(() => import("./pages/homebrew/homebrewSubclassForm"));
-const HomebrewViewClasses = lazy(() => import("./pages/homebrew/view/class/HomebrewViewClasses"));
-const HomebrewViewSubclasses = lazy(() => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses"));
+const HomebrewClassForm = lazy(
+  () => import("./pages/homebrew/homebrewClassForm")
+);
+const HomebrewSubclassForm = lazy(
+  () => import("./pages/homebrew/homebrewSubclassForm")
+);
+const HomebrewViewClasses = lazy(
+  () => import("./pages/homebrew/view/class/HomebrewViewClasses")
+);
+const HomebrewViewSubclasses = lazy(
+  () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses")
+);
 
 const App = (): JSX.Element => (
   <AuthProvider>
@@ -41,9 +48,18 @@ const App = (): JSX.Element => (
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/game-rules" element={<GameRules />} />
-              <Route path="/rules/classes/:className" element={<ClassDetail />} />
-              <Route path="/rules/subclass/:subclassId" element={<SubclassDetail />} />
-              <Route path="/rules/ancestries/:ancestryName" element={<AncestryDetail />} />
+              <Route
+                path="/rules/classes/:className"
+                element={<ClassDetail />}
+              />
+              <Route
+                path="/rules/subclass/:subclassId"
+                element={<SubclassDetail />}
+              />
+              <Route
+                path="/rules/ancestries/:ancestryName"
+                element={<AncestryDetail />}
+              />
               <Route
                 path="/dashboard"
                 element={

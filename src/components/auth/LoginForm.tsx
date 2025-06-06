@@ -1,4 +1,3 @@
-
 import { JSX, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -56,7 +55,9 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
           id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Enter your email"
           required
@@ -70,7 +71,9 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
           id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Enter your password"
           required

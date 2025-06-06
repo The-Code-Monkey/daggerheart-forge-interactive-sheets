@@ -1,4 +1,3 @@
-
 import { JSX, useState, Suspense, lazy } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +20,7 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
   const [honeypot, setHoneypot] = useState("");
   const [captchaAnswer, setCaptchaAnswer] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
-  
+
   const [captchaQuestion] = useState(() => {
     const num1 = Math.floor(Math.random() * 10) + 1;
     const num2 = Math.floor(Math.random() * 10) + 1;
@@ -107,7 +106,9 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           id="website"
           type="text"
           value={honeypot}
-          onChange={(e) => setHoneypot(e.target.value)}
+          onChange={(e) => {
+            setHoneypot(e.target.value);
+          }}
           tabIndex={-1}
           autoComplete="off"
         />
@@ -121,7 +122,9 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           id="username"
           type="text"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Choose a username"
           required
@@ -135,7 +138,9 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Enter your email"
           required
@@ -149,7 +154,9 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Enter your password"
           required
@@ -164,14 +171,20 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           id="captcha"
           type="number"
           value={captchaAnswer}
-          onChange={(e) => setCaptchaAnswer(e.target.value)}
+          onChange={(e) => {
+            setCaptchaAnswer(e.target.value);
+          }}
           className="bg-slate-800/50 border-brand-500/50 text-white"
           placeholder="Enter the answer"
           required
         />
       </div>
 
-      <Suspense fallback={<div className="h-16 bg-gray-200 animate-pulse rounded"></div>}>
+      <Suspense
+        fallback={
+          <div className="h-16 bg-gray-200 animate-pulse rounded"></div>
+        }
+      >
         <TurnstileCaptcha onTokenChange={setTurnstileToken} />
       </Suspense>
 
@@ -182,7 +195,7 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
       >
         {loading ? "Loading..." : "Sign Up"}
       </Button>
-      
+
       <div className="text-center">
         <p className="text-brand-200 text-sm mb-2">Already have an account?</p>
         <Button
