@@ -9,10 +9,10 @@ interface ClassQuestionsProps {
 }
 
 const ClassQuestions = ({ form }: ClassQuestionsProps): JSX.Element => {
-  const [backgroundQuestions, setbackgroundQuestions] = useState<string[]>([
+  const [backgroundQuestions, setBackgroundQuestions] = useState<string[]>([
     "",
   ]);
-  const [connectionQuestions, setconnectionQuestions] = useState<string[]>([
+  const [connectionQuestions, setConnectionQuestions] = useState<string[]>([
     "",
   ]);
 
