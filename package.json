@@ -16,6 +16,10 @@
     "test:ci": "jest --coverage --watchAll=false"
   },
   "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
+    "@babel/preset-typescript": "^7.27.1",
     "@hookform/resolvers": "5.0.1",
     "@marsidev/react-turnstile": "1.1.0",
     "@radix-ui/react-accordion": "1.2.11",
@@ -49,6 +53,7 @@
     "@testing-library/jest-dom": "6.6.3",
     "@types/jest": "29.5.14",
     "@vitejs/plugin-react-swc": "3.10.1",
+    "babel-jest": "^30.0.0-beta.3",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",

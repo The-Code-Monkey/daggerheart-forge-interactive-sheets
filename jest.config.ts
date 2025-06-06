@@ -7,8 +7,15 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { tsconfig: './tsconfig.json' }],
+    '^.+\\.tsx?$': ['ts-jest', { 
+      tsconfig: './tsconfig.json',
+      isolatedModules: true
+    }],
+    '^.+\\.jsx?$': 'babel-jest',
   },
+  transformIgnorePatterns: [
+    'node_modules/(?!(@supabase|@marsidev/react-turnstile)/)',
+  ],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.{ts,tsx,js}',
@@ -26,4 +33,11 @@ module.exports = {
   snapshotSerializers: [],
   // Update snapshots automatically in CI
   updateSnapshot: process.env.CI ? false : true,
+  // Handle ES modules
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
 };
