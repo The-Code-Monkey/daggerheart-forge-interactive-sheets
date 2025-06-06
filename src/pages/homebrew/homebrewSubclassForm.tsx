@@ -13,6 +13,8 @@ import {
   createNewHomebrewSubclass,
   NewSubclassFormData,
 } from "@/integrations/supabase/helpers/classes";
+import SpecializationFeatures from "@/components/homebrew/Subclass/SpecializationFeatures";
+import MasteryFeatures from "@/components/homebrew/Subclass/MasteryFeatures";
 
 const HomebrewSubclassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
@@ -29,6 +31,8 @@ const HomebrewSubclassForm = (): JSX.Element => {
   const steps = [
     { title: "Basic Info", component: BasicInfo },
     { title: "Foundation Features", component: FoundationFeatures },
+    { title: "Specialization Features", component: SpecializationFeatures },
+    { title: "Mastery Features", component: MasteryFeatures },
   ];
 
   const onSubmit = async (formData: NewSubclassFormData) => {

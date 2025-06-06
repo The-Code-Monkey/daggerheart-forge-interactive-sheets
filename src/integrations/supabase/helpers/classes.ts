@@ -222,7 +222,7 @@ export interface NewSubclassFormData {
   class: { value: number; label: string };
   features: {
     foundation: Partial<Feature>[];
-    specializations: Partial<Feature>[];
+    specialization: Partial<Feature>[];
     mastery: Partial<Feature>[];
   };
 }
