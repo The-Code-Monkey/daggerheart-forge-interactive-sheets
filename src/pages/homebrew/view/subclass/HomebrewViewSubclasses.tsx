@@ -30,7 +30,7 @@ const HomebrewViewSubclasses = (): JSX.Element => {
 
   useEffect(() => {
     void fetchClasses();
-  }, []);
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-nebula py-8 px-4">
