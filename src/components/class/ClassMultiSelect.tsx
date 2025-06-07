@@ -76,6 +76,8 @@ export const ClassMultiSelect = ({
         ? await getAllClasses()
         : await getAllBaseClasses();
       if (data) {
+        // FIXME: Currently, Class.name is not a required field. The assertion here is just to make sorting work for now.
+        data.sort((a, b) => (a.name! > b.name! ? 1 : -1));
         setOptions(
           data.map((item) => ({
             value: Number(item.id),
