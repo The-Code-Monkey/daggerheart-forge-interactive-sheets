@@ -64,7 +64,7 @@ export interface CharacterAdditional {
   questions?: {
     background?: Record<string, string>;
     connections?: Record<string, string>;
-    experiences?: any[][string];
+    experiences?: [string, string];
   };
 }
 
