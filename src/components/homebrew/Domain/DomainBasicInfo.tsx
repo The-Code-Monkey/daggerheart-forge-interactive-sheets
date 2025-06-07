@@ -10,8 +10,13 @@ import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
 import { UseFormReturn } from "react-hook-form";
 
+interface DomainFormData {
+  name: string;
+  description: string;
+}
+
 interface DomainBasicInfoProps {
-  form: UseFormReturn<any>;
+  form: UseFormReturn<DomainFormData>;
 }
 
 const DomainBasicInfo = ({ form }: DomainBasicInfoProps): JSX.Element => {
