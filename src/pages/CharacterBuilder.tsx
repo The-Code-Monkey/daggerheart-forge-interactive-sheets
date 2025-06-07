@@ -204,7 +204,7 @@ const CharacterBuilder = (): JSX.Element => {
     if (urlCharacterId) {
       void fetchCharacter();
     }
-  }, [urlCharacterId, fetchCharacter]); // Added fetchCharacter to dependency array
+  }, [urlCharacterId]);
 
   const saveCharacterData = async (data: FormData) => {
     if (!user) return;
