@@ -10,29 +10,37 @@ const HomebrewViewDomains = (): JSX.Element => {
   const { user } = useAuth();
 
   const fetchDomains = async () => {
-    const data = await getAllDomains({
-      homebrew: true,
-    });
-
-    if (data) {
-      setDomainsData(data);
-    }
-
-    if (user) {
-      const myData = await getAllDomains({
+    try {
+      const data = await getAllDomains({
         homebrew: true,
-        user_id: user.id,
       });
 
-      if (myData) {
-        setMyDomainsData(myData);
+      if (data) {
+        setDomainsData(data);
       }
+
+      if (user) {
+        const myData = await getAllDomains({
+          homebrew: true,
+          user_id: user.id,
+        });
+
+        if (myData) {
+          setMyDomainsData(myData);
+          // Filter out user's domains from all domains to avoid duplication
+          const otherDomains = data?.filter(domain => domain.user_id !== user.id) ?? [];
+          setDomainsData(otherDomains);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch domains:', error);
+      // Consider showing a user-friendly error message here
     }
   };
 
   useEffect(() => {
     void fetchDomains();
-  }, [user]);
+  }, [user?.id]);
 
   return (
     <div className="min-h-screen bg-nebula py-8 px-4">

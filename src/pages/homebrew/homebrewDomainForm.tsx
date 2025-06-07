@@ -21,7 +21,11 @@ const HomebrewDomainForm = (): JSX.Element => {
 
   const form = useForm<DomainFormData>({
     defaultValues: {
-      user_id: String(user?.id),
+  const form = useForm<DomainFormData>({
+    defaultValues: {
+      user_id: user?.id ? String(user.id) : "",
+    },
+  });
     },
   });
 
@@ -69,10 +73,10 @@ const HomebrewDomainForm = (): JSX.Element => {
             Back to Homebrew
           </Link>
           <h1 className="text-4xl font-bold text-white mb-4">
-            Homebrew Class Builder
+            Homebrew Domain Builder
           </h1>
           <p className="text-xl text-purple-200">
-            Create your custom Daggerheart class
+            Create your custom Daggerheart domain
           </p>
         </div>
 
