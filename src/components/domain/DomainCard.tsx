@@ -34,11 +34,11 @@ const DomainCards = ({
     ? domainsData.map((cls) => (
         <Card
           key={cls.id}
-          className="bg-linear-to-br  from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
+          className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col hover:scale-105 transition-transform duration-300 ease-in-out"
         >
           <CardHeader>
             <div className="flex items-center gap-3 mb-2">
-              <div className="w-10 h-10 bg-linear-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-lg flex items-center justify-center">
                 <Dice6 className="w-6 h-6" />
               </div>
               <CardTitle className="text-white">{cls.name}</CardTitle>
@@ -70,7 +70,7 @@ const DomainCards = ({
         .map((_, index) => (
           <Card
             key={index}
-            className="bg-linear-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col"
+            className="bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-purple-500/30 backdrop-blur-xs justify-between flex flex-col"
           >
             <CardHeader>
               <div className="flex items-center gap-3 mb-2">
