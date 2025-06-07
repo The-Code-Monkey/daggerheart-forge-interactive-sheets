@@ -15,6 +15,7 @@ export type Database = {
           description: string | null
           features: Json | null
           id: number
+          image: string | null
           isHomebrew: boolean | null
           name: string | null
           slug: string | null
@@ -24,6 +25,7 @@ export type Database = {
           description?: string | null
           features?: Json | null
           id?: number
+          image?: string | null
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
@@ -33,6 +35,7 @@ export type Database = {
           description?: string | null
           features?: Json | null
           id?: number
+          image?: string | null
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
@@ -331,21 +334,27 @@ export type Database = {
           description: string | null
           id: number
           isHomebrew: boolean | null
+          isPublished: boolean | null
           name: string | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
           description?: string | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
           description?: string | null
           id?: number
           isHomebrew?: boolean | null
+          isPublished?: boolean | null
           name?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

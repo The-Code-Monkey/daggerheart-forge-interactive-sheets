@@ -74,9 +74,7 @@ const EffectsFeaturesManager = ({
 
   useEffect(() => {
     void fetchDomainEffects();
-  }, []);
-
-  console.log(myEffects);
+  }, [character]);
 
   return (
     <Card>

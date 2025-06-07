@@ -22,17 +22,26 @@ const ClassDetail = lazy(() => import("./pages/rules/ClassDetail"));
 const AncestryDetail = lazy(() => import("./pages/rules/AncestryDetail"));
 const SubclassDetail = lazy(() => import("./pages/rules/SubclassDetail"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
+// Homebrew Create Forms
 const HomebrewClassForm = lazy(
   () => import("./pages/homebrew/homebrewClassForm")
 );
 const HomebrewSubclassForm = lazy(
   () => import("./pages/homebrew/homebrewSubclassForm")
 );
+const HomebrewDomainForm = lazy(
+  () => import("./pages/homebrew/homebrewDomainForm")
+);
+
+// Homebrew View Pages
 const HomebrewViewClasses = lazy(
   () => import("./pages/homebrew/view/class/HomebrewViewClasses")
 );
 const HomebrewViewSubclasses = lazy(
   () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses")
+);
+const HomebrewViewDomains = lazy(
+  () => import("./pages/homebrew/view/domain/HomebrewViewDomains")
 );
 
 const App = (): JSX.Element => (
@@ -117,6 +126,14 @@ const App = (): JSX.Element => (
                 }
               />
               <Route
+                path="/homebrew/domain"
+                element={
+                  <ProtectedRoute>
+                    <HomebrewDomainForm />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/homebrewed/class"
                 element={
                   <ProtectedRoute>
@@ -129,6 +146,14 @@ const App = (): JSX.Element => (
                 element={
                   <ProtectedRoute>
                     <HomebrewViewSubclasses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/homebrewed/domain"
+                element={
+                  <ProtectedRoute>
+                    <HomebrewViewDomains />
                   </ProtectedRoute>
                 }
               />

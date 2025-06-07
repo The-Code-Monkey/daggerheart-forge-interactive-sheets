@@ -52,6 +52,7 @@ export interface CharacterStats {
 export interface CharacterAdditional {
   hope?: number;
   stress?: number;
+  armor?: number;
   subclass?: Record<
     string,
     {
@@ -63,6 +64,7 @@ export interface CharacterAdditional {
   questions?: {
     background?: Record<string, string>;
     connections?: Record<string, string>;
+    experiences?: any[][string];
   };
 }
 

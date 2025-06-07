@@ -1,4 +1,4 @@
-import { ClassMultiSelect } from "@/components/class/ClassMultiSelect";
+import GenericMultiSelect from "@/components/molecules/GenericMultiSelect";
 import {
   FormControl,
   FormField,
@@ -8,7 +8,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { NewSubclassFormData } from "@/integrations/supabase/helpers/classes";
+import {
+  classSearchHelper,
+  getAllBaseClasses,
+  NewSubclassFormData,
+} from "@/integrations/supabase/helpers/classes";
 import { JSX } from "react";
 import { UseFormReturn } from "react-hook-form";
 
@@ -55,7 +59,13 @@ const BasicInfo = ({ form }: BasicInfoProps): JSX.Element => {
         )}
       />
 
-      <ClassMultiSelect name="class" label="Select Class" />
+      <GenericMultiSelect
+        name="classes"
+        label="Choose a Class"
+        isMulti
+        searchFn={classSearchHelper}
+        defaultFn={getAllBaseClasses}
+      />
     </div>
   );
 };
