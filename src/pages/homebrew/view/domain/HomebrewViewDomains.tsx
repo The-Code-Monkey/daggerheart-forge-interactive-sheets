@@ -28,12 +28,13 @@ const HomebrewViewDomains = (): JSX.Element => {
         if (myData) {
           setMyDomainsData(myData);
           // Filter out user's domains from all domains to avoid duplication
-          const otherDomains = data?.filter(domain => domain.user_id !== user.id) ?? [];
+          const otherDomains =
+            data?.filter((domain) => domain.user_id !== user.id) ?? [];
           setDomainsData(otherDomains);
         }
       }
     } catch (error) {
-      console.error('Failed to fetch domains:', error);
+      console.error("Failed to fetch domains:", error);
       // Consider showing a user-friendly error message here
     }
   };

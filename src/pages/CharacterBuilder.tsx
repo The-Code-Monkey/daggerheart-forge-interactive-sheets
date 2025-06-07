@@ -279,8 +279,7 @@ const CharacterBuilder = (): JSX.Element => {
           "background",
         ]);
         break;
-      case 3:
-        {
+      case 3: {
         // Validate all stat fields
         isValid = await trigger([
           "stats.agility",
@@ -294,7 +293,7 @@ const CharacterBuilder = (): JSX.Element => {
         const allStatsSelected = statKeys.every((key) => formData.stats[key]);
         isValid = isValid && allStatsSelected;
         break;
-        }
+      }
       case 4:
         isValid = true; // Review step, no additional validation needed
         break;
