@@ -34,13 +34,13 @@ const EffectsFeaturesManager = ({
   const fetchDomainEffects = async () => {
     const data = await getDomainEffects(
       character.domains.map((domain) => domain.id),
-      Number(character.level ?? 1)
+      Number(character.level ?? 1),
     );
     setDomainEffects(data);
     setMyEffects(
       data.filter((effect) =>
-        character.additional?.domain_features?.includes(effect.id)
-      )
+        character.additional?.domain_features?.includes(effect.id),
+      ),
     );
   };
 
@@ -54,7 +54,7 @@ const EffectsFeaturesManager = ({
           ...(character.additional ?? {}),
           domain_features: [
             ...(character.additional?.domain_features ?? []).filter(
-              (id) => id !== effectId
+              (id) => id !== effectId,
             ),
           ],
         },
@@ -74,7 +74,11 @@ const EffectsFeaturesManager = ({
 
   useEffect(() => {
     void fetchDomainEffects();
-  }, [character]);
+  }, [
+    character.domains,
+    character.level,
+    character.additional?.domain_features,
+  ]);
 
   return (
     <Card>
@@ -95,7 +99,7 @@ const EffectsFeaturesManager = ({
                 {domainEffects.map((effect) => {
                   const isSelected =
                     character.additional?.domain_features?.includes(
-                      Number(effect.id)
+                      Number(effect.id),
                     );
 
                   return (
@@ -116,15 +120,15 @@ const EffectsFeaturesManager = ({
                                 <span className="font-bold">Tier {tier}: </span>
                                 {String(
                                   effect.additional?.tiers?.[tier].thresholds
-                                    ?.major
+                                    ?.major,
                                 )}{" "}
                                 /{" "}
                                 {String(
                                   effect.additional?.tiers?.[tier].thresholds
-                                    ?.severe
+                                    ?.severe,
                                 )}
                               </li>
-                            )
+                            ),
                           )}
                         </ul>
                         <Button
@@ -161,15 +165,15 @@ const EffectsFeaturesManager = ({
                               <span className="font-bold">Tier {tier}: </span>
                               {String(
                                 effect.additional?.tiers?.[tier].thresholds
-                                  ?.major
+                                  ?.major,
                               )}{" "}
                               /{" "}
                               {String(
                                 effect.additional?.tiers?.[tier].thresholds
-                                  ?.severe
+                                  ?.severe,
                               )}
                             </li>
-                          )
+                          ),
                         )}
                       </ul>
                       {/* <Button
