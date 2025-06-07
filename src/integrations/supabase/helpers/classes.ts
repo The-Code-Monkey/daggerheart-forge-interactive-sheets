@@ -306,13 +306,20 @@ export const createNewHomebrewClass = async (
 };
 
 export const classSearchHelper = async (
-  query: string
+  query: string,
+  homebrew = false
 ): Promise<Class[] | null> => {
-  const { data, error } = await supabase
+  const baseQuery = supabase
     .from("classes")
     .select()
     .ilike("name", `%${query}%`)
     .limit(20);
+
+  if (!homebrew) {
+    baseQuery.eq("isHomebrew", false);
+  }
+
+  const { data, error } = await baseQuery;
 
   if (error) {
     console.log(error);

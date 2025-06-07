@@ -46,11 +46,11 @@ export const ClassMultiSelect = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   // Fetch options based on search query
-  const fetchOptions = async (query: string) => {
+  const fetchOptions = async (query: string, homebrew: boolean) => {
     if (!query) return;
     setLoading(true);
     try {
-      const data = await classSearchHelper(query);
+      const data = await classSearchHelper(query, homebrew);
       if (data) {
         setOptions(
           data.map((item) => ({
@@ -101,7 +101,7 @@ export const ClassMultiSelect = ({
 
   useEffect(() => {
     if (input.trim().length > 0) {
-      void debouncedFetch(input);
+      void debouncedFetch(input, includedHomebrew);
     } else if (isFocused) {
       void fetchClasses();
     } else {
