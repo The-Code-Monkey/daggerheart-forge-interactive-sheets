@@ -76,8 +76,13 @@ export const ClassMultiSelect = ({
         ? await getAllClasses()
         : await getAllBaseClasses();
       if (data) {
-        // FIXME: Currently, Class.name is not a required field. The assertion here is just to make sorting work for now.
-        data.sort((a, b) => (a.name! > b.name! ? 1 : -1));
+        // Sort classes by name, placing items with null/undefined names at the end
+        data.sort((a, b) => {
+          if (!a.name && !b.name) return 0;
+          if (!a.name) return 1;
+          if (!b.name) return -1;
+          return a.name.localeCompare(b.name);
+        });
         setOptions(
           data.map((item) => ({
             value: Number(item.id),
@@ -86,7 +91,7 @@ export const ClassMultiSelect = ({
         );
       }
     } catch (err) {
-      console.error("getAllBaseClasses failed:", err);
+      console.error("Failed to fetch character classes:", err);
       setOptions([]);
     } finally {
       setLoading(false);
@@ -109,7 +114,7 @@ export const ClassMultiSelect = ({
     } else {
       setOptions([]);
     }
-  }, [input, debouncedFetch, isFocused]);
+  }, [input, debouncedFetch, isFocused, includedHomebrew]);
 
   const handleBlur = (e: FocusEvent) => {
     // Only close dropdown if focus leaves the whole wrapper
@@ -205,14 +210,16 @@ export const ClassMultiSelect = ({
                 <label
                   className="flex items-center gap-1"
                   htmlFor={`${name}-includeHomebrew`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
                 >
                   Include Homebrew?
                   <Checkbox
                     id={`${name}-includeHomebrew`}
                     className="ml-2"
                     checked={includedHomebrew}
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onCheckedChange={() => {
                       handleToggleIncludeHomebrew();
                     }}
                   />
