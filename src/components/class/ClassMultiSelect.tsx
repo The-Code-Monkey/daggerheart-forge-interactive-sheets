@@ -4,8 +4,10 @@ import { useFormContext, Controller } from "react-hook-form";
 import {
   classSearchHelper,
   getAllBaseClasses,
+  getAllClasses,
 } from "@/integrations/supabase/helpers/classes";
 import { Check } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface Option {
   value: number;
@@ -13,21 +15,32 @@ interface Option {
 }
 
 interface ClassMultiSelectProps {
+  /**
+   * Represents the unique HTML name of the ClassMultiSelect field.
+   * This variable is expected to contain a string value.
+   */
   name: string;
+  /**
+   * An optional property representing a label, typically used as a descriptive name or title.
+   * Can be assigned a string value or left undefined.
+   */
   label?: string;
   isMulti?: boolean;
+  inclHomebrew?: boolean;
 }
 
 export const ClassMultiSelect = ({
   name,
   label,
   isMulti = false,
+  inclHomebrew = false,
 }: ClassMultiSelectProps): JSX.Element => {
   const { control } = useFormContext();
   const [input, setInput] = useState("");
   const [options, setOptions] = useState<Option[]>([]);
   const [loading, setLoading] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const [includedHomebrew, setIncludedHomebrew] = useState(inclHomebrew);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -54,11 +67,14 @@ export const ClassMultiSelect = ({
     }
   };
 
-  // Fetch all base classes for default display
-  const fetchBaseClasses = async () => {
+  // Fetch classes for display
+  const fetchClasses = async () => {
     setLoading(true);
     try {
-      const data = await getAllBaseClasses();
+      // Homebrew is only included by default if passed in as a prop.
+      const data = includedHomebrew
+        ? await getAllClasses()
+        : await getAllBaseClasses();
       if (data) {
         setOptions(
           data.map((item) => ({
@@ -75,13 +91,19 @@ export const ClassMultiSelect = ({
     }
   };
 
+  const handleToggleIncludeHomebrew = () => {
+    setIncludedHomebrew((prevState) => !prevState);
+    setOptions([]);
+    setIsFocused(false);
+  };
+
   const debouncedFetch = useMemo(() => debounce(fetchOptions, 300), []);
 
   useEffect(() => {
     if (input.trim().length > 0) {
       void debouncedFetch(input);
     } else if (isFocused) {
-      void fetchBaseClasses();
+      void fetchClasses();
     } else {
       setOptions([]);
     }
@@ -177,6 +199,22 @@ export const ClassMultiSelect = ({
                   className="flex-grow bg-transparent border-none text-white focus:outline-none placeholder:text-gray-400 min-w-[60px]"
                   placeholder={selectedOptions.length === 0 ? "Search..." : ""}
                 />
+
+                <label
+                  className="flex items-center gap-1"
+                  htmlFor={`${name}-includeHomebrew`}
+                >
+                  Include Homebrew?
+                  <Checkbox
+                    id={`${name}-includeHomebrew`}
+                    className="ml-2"
+                    checked={includedHomebrew}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleToggleIncludeHomebrew();
+                    }}
+                  />
+                </label>
               </div>
 
               {isFocused && (
