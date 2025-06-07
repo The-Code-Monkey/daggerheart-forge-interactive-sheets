@@ -19,6 +19,11 @@ const features: {
     description: "Create your own subclass with custom features.",
     icon: Sparkles,
   },
+  {
+    title: "Domain",
+    description: "Create your own domain with custom features.",
+    icon: Sparkles,
+  },
 ];
 
 const Homebrew = (): JSX.Element => {

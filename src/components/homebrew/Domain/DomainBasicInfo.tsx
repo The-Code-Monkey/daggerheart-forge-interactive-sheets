@@ -1,37 +1,40 @@
-import GenericMultiSelect from "@/components/molecules/GenericMultiSelect";
+import { JSX } from "react";
 import {
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
+  FormControl,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  classSearchHelper,
-  getAllBaseClasses,
-  NewSubclassFormData,
-} from "@/integrations/supabase/helpers/classes";
-import { JSX } from "react";
+} from "../../ui/form";
+import { Input } from "../../ui/input";
+import { Textarea } from "../../ui/textarea";
 import { UseFormReturn } from "react-hook-form";
 
-interface BasicInfoProps {
-  form: UseFormReturn<NewSubclassFormData>;
+interface DomainFormData {
+  name: string;
+  description: string;
 }
 
-const BasicInfo = ({ form }: BasicInfoProps): JSX.Element => {
+interface DomainBasicInfoProps {
+  form: UseFormReturn<DomainFormData>;
+}
+
+const DomainBasicInfo = ({ form }: DomainBasicInfoProps): JSX.Element => {
   return (
     <div className="space-y-6">
+      <h3 className="text-2xl font-semibold text-white mb-4">
+        Basic Information
+      </h3>
+
       <FormField
         control={form.control}
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel className="text-white">Name</FormLabel>
+            <FormLabel className="text-white">Domain Name</FormLabel>
             <FormControl>
               <Input
-                placeholder="Enter subclass name"
+                placeholder="Enter domain name"
                 className="bg-slate-800/50 border-brand-500/30 text-white"
                 {...field}
               />
@@ -49,8 +52,8 @@ const BasicInfo = ({ form }: BasicInfoProps): JSX.Element => {
             <FormLabel className="text-white">Description</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="Enter subclass description"
-                className="bg-slate-800/50 border-brand-500/30 text-white"
+                placeholder="Describe your domain"
+                className="bg-slate-800/50 border-brand-500/30 text-white min-h-[100px]"
                 {...field}
               />
             </FormControl>
@@ -58,15 +61,8 @@ const BasicInfo = ({ form }: BasicInfoProps): JSX.Element => {
           </FormItem>
         )}
       />
-
-      <GenericMultiSelect
-        name="class"
-        label="Choose a Class"
-        searchFn={classSearchHelper}
-        defaultFn={getAllBaseClasses}
-      />
     </div>
   );
 };
 
-export default BasicInfo;
+export default DomainBasicInfo;

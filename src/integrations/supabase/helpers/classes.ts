@@ -1,5 +1,6 @@
 import { Class, Domain, Feature, Subclass } from "@/lib/types";
 import { supabase } from "../client";
+import { Option } from "@/components/molecules/GenericMultiSelect";
 
 export const getSingleClassBySlug = async (
   slug: string
@@ -88,7 +89,7 @@ export const getAllClasses = async (limit = 99): Promise<Class[] | null> => {
   return data as Class[];
 };
 
-export const getAllBaseClasses = async (): Promise<Class[] | null> => {
+export const getAllBaseClasses = async (): Promise<Option[] | null> => {
   const { data, error } = await supabase
     .from("classes")
     .select("id, name")
@@ -98,7 +99,10 @@ export const getAllBaseClasses = async (): Promise<Class[] | null> => {
     console.log(error);
     return null;
   }
-  return data as Class[];
+  return data.map((classData) => ({
+    value: classData.id,
+    label: String(classData.name),
+  }));
 };
 
 export const getAllSubclasses = async (
@@ -307,7 +311,7 @@ export const createNewHomebrewClass = async (
 
 export const classSearchHelper = async (
   query: string
-): Promise<Class[] | null> => {
+): Promise<Option[] | null> => {
   const { data, error } = await supabase
     .from("classes")
     .select()
@@ -319,5 +323,8 @@ export const classSearchHelper = async (
     return null;
   }
 
-  return data as Class[];
+  return data.map((cls) => ({
+    label: String(cls.name),
+    value: cls.id,
+  }));
 };

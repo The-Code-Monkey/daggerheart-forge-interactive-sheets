@@ -40,6 +40,9 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const [evasion, setEvasion] = useState<number | undefined>(undefined);
   const [armor, setArmor] = useState<number | undefined>(undefined);
   const [hope, setHope] = useState<number>(character.additional?.hope ?? 0);
+  const [armorSlots, setArmorSlots] = useState<number>(
+    character.additional?.armor ?? 0
+  );
   const [stress, setStress] = useState<number>(
     character.additional?.stress ?? 0
   );
@@ -61,6 +64,15 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       500
     )
   ).current;
+
+  const handleArmorChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const newArmor = target.checked ? armorSlots + 1 : armorSlots - 1;
+    setArmorSlots(newArmor);
+    debouncedUpdate({
+      additional: { ...(character.additional ?? {}), armor: newArmor },
+    });
+  };
 
   const handleHopeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
@@ -97,10 +109,6 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   const handleHopeMaxChange = (value: number) => {
     debouncedUpdate({ hope: value });
   };
-
-  // const handleStressMaxChange = (value: number) => {
-  //   debouncedUpdate({ stress: value });
-  // };
 
   const handleHpChange = (type: "current" | "max", value: number) => {
     if (type === "current") {
@@ -383,6 +391,20 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
           <div className="text-center">
             <div className="text-sm text-purple-300">Armor</div>
             <div className="text-2xl font-bold text-white">{armor}</div>
+            <div className="flex flex-row gap-2 items-center justify-center">
+              {Array(armor)
+                .fill(null)
+                .map((_, index) => (
+                  <Input
+                    type="checkbox"
+                    className="w-5 hover:cursor-pointer rounded-md"
+                    onChange={handleArmorChange}
+                    key={index}
+                    checked={armorSlots >= index + 1}
+                    disabled={index >= (armor ?? 0)}
+                  />
+                ))}
+            </div>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">

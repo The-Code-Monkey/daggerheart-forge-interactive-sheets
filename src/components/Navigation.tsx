@@ -85,6 +85,14 @@ const Navigation = (): JSX.Element => {
                     >
                       Homebrewed Subclasses
                     </Link>
+                    <Link
+                      to="/homebrewed/domain"
+                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                        isActive("/homebrewed/domain") ? "text-yellow-400" : ""
+                      }`}
+                    >
+                      Homebrewed Domains
+                    </Link>
                   </div>
                 </div>
 
