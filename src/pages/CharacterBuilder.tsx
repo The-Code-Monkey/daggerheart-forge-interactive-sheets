@@ -188,7 +188,10 @@ const CharacterBuilder = (): JSX.Element => {
       setValue("gender", data.gender ?? null);
       setValue("background", data.background ?? null);
       setValue("ancestry", data.ancestry ? String(data.ancestry) : null);
-      setValue("class", data.class ? String(data.class) : null);
+      setValue(
+        "class",
+        data.class ? { value: data.class, label: "" } : undefined
+      );
       setValue("community", data.community ? String(data.community) : null);
       setValue("subclass", data.subclass ? String(data.subclass) : null);
       setValue("stats", data.stats as FormData["stats"]); // Type assertion
