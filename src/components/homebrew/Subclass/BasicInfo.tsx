@@ -60,9 +60,8 @@ const BasicInfo = ({ form }: BasicInfoProps): JSX.Element => {
       />
 
       <GenericMultiSelect
-        name="classes"
+        name="class"
         label="Choose a Class"
-        isMulti
         searchFn={classSearchHelper}
         defaultFn={getAllBaseClasses}
       />
