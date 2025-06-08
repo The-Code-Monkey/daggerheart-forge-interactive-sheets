@@ -1,5 +1,6 @@
 import { Domain, Card } from "@/lib/types";
 import { supabase } from "../client";
+import { fetchProfilesByIds } from "./profiles";
 
 export const getSingleDomainBySlug = async (
   slug: string
@@ -55,7 +56,23 @@ export const getAllDomains = async (
     console.log(error);
     return null;
   }
-  return data as Domain[];
+
+  const userIds = [
+    ...new Set(
+      data.filter((d) => d.user_id !== null).map((d) => String(d.user_id))
+    ),
+  ]; // Remove duplicates
+
+  const profiles = (await fetchProfilesByIds(userIds)) ?? [];
+
+  const profileMap = new Map(profiles.map((p) => [p.id, p.username]));
+
+  const enrichedDomains = data.map((domain) => ({
+    ...domain,
+    username: profileMap.get(String(domain.user_id)) ?? null,
+  }));
+
+  return enrichedDomains as Domain[];
 };
 
 export const getDomainEffectsById = async (

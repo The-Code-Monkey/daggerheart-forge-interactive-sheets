@@ -4,6 +4,7 @@ import { Checkbox } from "../ui/checkbox";
 import { UseFormReturn } from "react-hook-form";
 import { getAllDomains } from "@/integrations/supabase/helpers";
 import { Domain } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 interface ClassDomainsProps {
   form: UseFormReturn<any>;
@@ -46,7 +47,12 @@ const ClassDomains = ({ form }: ClassDomainsProps): JSX.Element => {
         {domains.map((domain) => (
           <div
             key={domain.id}
-            className="bg-slate-800/30 p-4 rounded-lg border border-brand-500/20"
+            className={cn(
+              "bg-slate-800/30 p-4 rounded-lg border border-brand-500/20",
+              {
+                "border-2 border-yellow-300": domain.isHomebrew,
+              },
+            )}
           >
             <div className="flex items-start space-x-3">
               <Checkbox
@@ -60,9 +66,15 @@ const ClassDomains = ({ form }: ClassDomainsProps): JSX.Element => {
               <div className="flex-1">
                 <label
                   htmlFor={`domain-${String(domain.id)}`}
-                  className="text-white font-medium cursor-pointer"
+                  className="text-white font-medium cursor-pointer w-full flex items-baseline justify-between"
                 >
-                  {domain.name}
+                  {domain.name}{" "}
+                  {domain.isHomebrew && (
+                    <span className="text-xs ml-auto inline-block">
+                      Homebrew by{" "}
+                      <span className="text-yellow-200">{domain.username}</span>
+                    </span>
+                  )}
                 </label>
                 {domain.description && (
                   <p className="text-purple-200 text-sm mt-1">
