@@ -65,7 +65,7 @@ interface FormData {
   background?: string | null;
   ancestry?: string | null;
   class?: {
-    label: string;
+    label?: string;
     value: number;
   };
   community?: string | null;
@@ -170,41 +170,46 @@ const CharacterBuilder = (): JSX.Element => {
     void fetchSubclasses();
   }, [formData.class, setValue, toast]); // Add setValue and toast to dependencies
 
-  const fetchCharacter = async () => {
-    if (!characterId) return;
-
-    const { data } = await supabase
-      .from("characters")
-      .select("*")
-      .eq("id", characterId)
-      .single();
-
-    if (data) {
-      // Set form data using setValue from react-hook-form
-      setValue("name", data.name);
-      setValue("level", data.level ?? 1);
-      setValue("age", data.age ?? null);
-      setValue("pronouns", data.pronouns ?? null);
-      setValue("gender", data.gender ?? null);
-      setValue("background", data.background ?? null);
-      setValue("ancestry", data.ancestry ? String(data.ancestry) : null);
-      setValue(
-        "class",
-        data.class ? { value: data.class, label: "" } : undefined
-      );
-      setValue("community", data.community ? String(data.community) : null);
-      setValue("subclass", data.subclass ? String(data.subclass) : null);
-      setValue("stats", data.stats as FormData["stats"]); // Type assertion
-      setValue("stress", data.stress ?? 6);
-      setValue("hope", data.hope ?? 2);
-    }
-  };
-
   useEffect(() => {
+    const fetchCharacter = async () => {
+      if (!characterId) return;
+
+      const { data } = await supabase
+        .from("characters")
+        .select("*")
+        .eq("id", characterId)
+        .single();
+
+      if (data) {
+        const classData = data.class
+          ? classes.find((cls) => cls.id === data.class)
+          : undefined;
+        // Set form data using setValue from react-hook-form
+        setValue("name", data.name);
+        setValue("level", data.level ?? 1);
+        setValue("age", data.age ?? null);
+        setValue("pronouns", data.pronouns ?? null);
+        setValue("gender", data.gender ?? null);
+        setValue("background", data.background ?? null);
+        setValue("ancestry", data.ancestry ? String(data.ancestry) : null);
+        setValue(
+          "class",
+          classData
+            ? { value: classData.id, label: String(classData.name) }
+            : undefined
+        );
+        setValue("community", data.community ? String(data.community) : null);
+        setValue("subclass", data.subclass ? String(data.subclass) : null);
+        setValue("stats", data.stats as FormData["stats"]); // Type assertion
+        setValue("stress", data.stress ?? 6);
+        setValue("hope", data.hope ?? 2);
+      }
+    };
+
     if (urlCharacterId) {
       void fetchCharacter();
     }
-  }, [urlCharacterId]);
+  }, [urlCharacterId, characterId, setValue, classes]);
 
   const saveCharacterData = async (data: FormData) => {
     if (!user) return;
@@ -332,11 +337,13 @@ const CharacterBuilder = (): JSX.Element => {
     return acc;
   }, {});
 
+  console.log(formData);
+
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step1">
             <h3 className="text-xl font-semibold text-white mb-4">
               Basic Information
             </h3>
@@ -463,7 +470,7 @@ const CharacterBuilder = (): JSX.Element => {
 
       case 2:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step2">
             <h3 className="text-xl font-semibold text-white mb-4">
               Character Origin
             </h3>
@@ -478,7 +485,7 @@ const CharacterBuilder = (): JSX.Element => {
                   </FormLabel>
                   <Select
                     onValueChange={field.onChange}
-                    value={field.value ?? ""}
+                    value={String(field.value)}
                   >
                     <FormControl>
                       <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
@@ -518,10 +525,7 @@ const CharacterBuilder = (): JSX.Element => {
                     <FormLabel className="text-white">
                       Subclass <span className="text-red-500">*</span>
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value ?? ""}
-                    >
+                    <Select onValueChange={field.onChange} {...field}>
                       <FormControl>
                         <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                           <SelectValue placeholder="Select subclass" />
@@ -553,10 +557,7 @@ const CharacterBuilder = (): JSX.Element => {
                   <FormLabel className="text-white">
                     Community <span className="text-red-500">*</span>
                   </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={field.value ?? ""}
-                  >
+                  <Select onValueChange={field.onChange} {...field}>
                     <FormControl>
                       <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
                         <SelectValue placeholder="Select community" />
@@ -601,7 +602,7 @@ const CharacterBuilder = (): JSX.Element => {
 
       case 3:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step3">
             <h3 className="text-xl font-semibold text-white mb-4">
               Attributes
             </h3>
@@ -632,9 +633,9 @@ const CharacterBuilder = (): JSX.Element => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="none">
+                            {/* <SelectItem value="none" disabled>
                               Select modifier
-                            </SelectItem>
+                            </SelectItem> */}
                             {Object.entries(allowedMods).map(([mod, max]) => {
                               const currentSelection = field.value;
                               const count = selectedCounts[mod] ?? 0;
@@ -664,7 +665,8 @@ const CharacterBuilder = (): JSX.Element => {
         );
 
       case 4:
-        const cls = classes.find((cls) => String(cls.id) === formData.class);
+        console.log(formData.class);
+        const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
           (subclass) => String(subclass.id) === formData.subclass
         );
@@ -675,7 +677,7 @@ const CharacterBuilder = (): JSX.Element => {
           (community) => String(community.id) === formData.community
         );
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step4">
             <h3 className="text-xl font-semibold text-white mb-4">
               Review Your Character
             </h3>

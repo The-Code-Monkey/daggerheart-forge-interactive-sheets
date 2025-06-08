@@ -23,6 +23,13 @@ const Navigation = (): JSX.Element => {
     { name: "Campaigns", path: "/campaigns" },
   ];
 
+  const homebrewNavItems = [
+    { name: "Create Homebrew", path: "/homebrew" },
+    { name: "Homebrewed Classes", path: "/homebrewed/class" },
+    { name: "Homebrewed Subclasses", path: "/homebrewed/subclass" },
+    { name: "Homebrewed Domains", path: "/homebrewed/domain" },
+  ];
+
   const isActive = (path: string) => location.pathname === path;
 
   return (
@@ -59,40 +66,17 @@ const Navigation = (): JSX.Element => {
                 <div className="group relative text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center">
                   Homebrew
                   <div className="hidden divide-y-2 group-hover:flex flex-col absolute top-full left-0 min-w-[250%] w-fit px-2 py-3 z-20 bg-brand-700 rounded-b-md backdrop-blur-lg">
-                    <Link
-                      to="/homebrew"
-                      className={`text-white hover:text-yellow-400 transition-colors py-2 hover:bg-brand-900/10 ${
-                        isActive("/homebrew") ? "text-yellow-400" : ""
-                      }`}
-                    >
-                      Create Homebrew
-                    </Link>
-                    <Link
-                      to="/homebrewed/class"
-                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
-                        isActive("/homebrewed/class") ? "text-yellow-400" : ""
-                      }`}
-                    >
-                      Homebrewed Classes
-                    </Link>
-                    <Link
-                      to="/homebrewed/subclass"
-                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
-                        isActive("/homebrewed/subclass")
-                          ? "text-yellow-400"
-                          : ""
-                      }`}
-                    >
-                      Homebrewed Subclasses
-                    </Link>
-                    <Link
-                      to="/homebrewed/domain"
-                      className={`text-white hover:text-yellow-400 transition-colors py-2 ${
-                        isActive("/homebrewed/domain") ? "text-yellow-400" : ""
-                      }`}
-                    >
-                      Homebrewed Domains
-                    </Link>
+                    {homebrewNavItems.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.path}
+                        className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                          isActive(item.path) ? "text-yellow-400" : ""
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
