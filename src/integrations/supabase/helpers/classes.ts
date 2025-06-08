@@ -110,7 +110,7 @@ export const getAllSubclasses = async (
     limit,
     homebrew,
     user_id,
-  }: { limit?: number; homebrew: boolean; user_id?: string } = {
+  }: { limit?: number; homebrew?: boolean; user_id?: string } = {
     homebrew: false,
   }
 ): Promise<Subclass[] | null> => {
@@ -118,7 +118,7 @@ export const getAllSubclasses = async (
     .from("subclasses")
     .select("*, class: class_id ( name )");
 
-  if (homebrew) {
+  if (homebrew !== undefined) {
     query.eq("isHomebrew", homebrew);
   }
   if (user_id) {
@@ -140,7 +140,7 @@ export const getAllClassesWithDomains = async (
     limit,
     homebrew,
     user_id,
-  }: { limit?: number; homebrew: boolean; user_id?: string } = {
+  }: { limit?: number; homebrew?: boolean; user_id?: string } = {
     homebrew: false,
   }
 ): Promise<Class[] | null> => {
@@ -148,7 +148,7 @@ export const getAllClassesWithDomains = async (
     .from("classes")
     .select("*, classes_domains ( domains ( * ) )");
 
-  if (homebrew) {
+  if (homebrew !== undefined) {
     query.eq("isHomebrew", homebrew);
   }
   if (user_id) {

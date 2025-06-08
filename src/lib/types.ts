@@ -68,7 +68,9 @@ export interface CharacterAdditional {
   };
 }
 
-export type Domain = Database["public"]["Tables"]["domains"]["Row"];
+export type Domain = Database["public"]["Tables"]["domains"]["Row"] & {
+  username: string | null;
+};
 
 export type Character = Database["public"]["Tables"]["characters"]["Row"] & {
   stats: CharacterStats;
@@ -168,5 +170,7 @@ export type Card = Omit<
 > & {
   additional?: Partial<CardAdditional>;
 };
+
+export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
 export type Json = Record<string, SupabaseJson | undefined>;
