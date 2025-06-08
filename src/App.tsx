@@ -34,6 +34,8 @@ const HomebrewViewClasses = lazy(
 const HomebrewViewSubclasses = lazy(
   () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses")
 );
+// Tools
+const DiceRoller = lazy(() => import("./pages/tools/Dice"));
 
 const App = (): JSX.Element => (
   <AuthProvider>
@@ -129,6 +131,14 @@ const App = (): JSX.Element => (
                 element={
                   <ProtectedRoute>
                     <HomebrewViewSubclasses />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tools/dice"
+                element={
+                  <ProtectedRoute>
+                    <DiceRoller />
                   </ProtectedRoute>
                 }
               />
