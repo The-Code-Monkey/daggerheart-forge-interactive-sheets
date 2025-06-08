@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -23,6 +22,21 @@ import {
   getAllAncestries,
   getAllCommunities,
 } from "@/integrations/supabase/helpers";
+import GenericMultiSelect from "@/components/molecules/GenericMultiSelect";
+import {
+  classSearchHelper,
+  getAllBaseClasses,
+} from "@/integrations/supabase/helpers/classes";
+
+import { useForm } from "react-hook-form"; // No longer directly importing Controller
+import {
+  Form, // Import Form, FormControl, FormField, FormItem, FormLabel, FormMessage
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"; // Adjust this import path as per your shadcn/ui setup
 
 const allowedMods = {
   "+2": 1,
@@ -41,27 +55,24 @@ const statKeys = [
 
 type StatKey = (typeof statKeys)[number];
 
+// Define FormData type directly, without Zod infer
 interface FormData {
-  name: string | undefined;
+  name: string;
   level: number;
-  age: number | undefined;
-  pronouns: string | undefined;
-  gender: string | undefined;
-  background: string | undefined;
-  ancestry: string | undefined;
-  class: string | undefined;
-  community: string | undefined;
-  subclass: string | undefined;
-  stats: {
-    agility: string | undefined;
-    strength: string | undefined;
-    finesse: string | undefined;
-    instinct: string | undefined;
-    presence: string | undefined;
-    knowledge: string | undefined;
+  age?: number | null;
+  pronouns?: string | null;
+  gender?: string | null;
+  background?: string | null;
+  ancestry?: string | null;
+  class?: {
+    label?: string;
+    value: number;
   };
-  stress: number | undefined;
-  hope: number | undefined;
+  community?: string | null;
+  subclass?: string | null;
+  stats: Record<StatKey, string>;
+  stress?: number | null;
+  hope?: number | null;
 }
 
 const CharacterBuilder = (): JSX.Element => {
@@ -80,29 +91,29 @@ const CharacterBuilder = (): JSX.Element => {
   const [ancestries, setAncestries] = useState<Ancestry[]>([]);
   const [communities, setCommunities] = useState<Community[]>([]);
 
-  // Form data
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    level: 1,
-    age: undefined,
-    pronouns: undefined,
-    gender: undefined,
-    background: undefined,
-    ancestry: undefined,
-    class: undefined,
-    community: undefined,
-    subclass: undefined,
-    stats: {
-      agility: undefined,
-      strength: undefined,
-      finesse: undefined,
-      instinct: undefined,
-      presence: undefined,
-      knowledge: undefined,
+  // Initialize useForm
+  const form = useForm<FormData>({
+    // Renamed to 'form' for consistency with shadcn/ui
+    defaultValues: {
+      name: "",
+      level: 1,
+      age: null,
+      pronouns: null,
+      gender: null,
+      background: null,
+      ancestry: null,
+      class: undefined,
+      community: null,
+      subclass: null,
+      stats: {},
+      stress: 6,
+      hope: 2,
     },
-    stress: 6,
-    hope: 2,
   });
+
+  const formData = form.watch(); // Watch all form data to react to changes
+  // Destructure from form object as well
+  const { setValue, trigger } = form;
 
   useEffect(() => {
     const fetchCommunities = async () => {
@@ -133,10 +144,12 @@ const CharacterBuilder = (): JSX.Element => {
 
   useEffect(() => {
     const fetchSubclasses = async () => {
-      // Validate class ID before fetching
-      const classIdNum = parseInt(formData.class ?? "0", 10);
-      if (!formData.class || isNaN(classIdNum) || classIdNum === 0) {
+      console.log(formData.class);
+      const classIdNum = formData.class?.value;
+      if (!classIdNum || isNaN(classIdNum) || classIdNum === 0) {
         setSubclasses([]);
+        // Also clear the subclass field if the class is removed or invalid
+        setValue("subclass", null);
         return;
       }
 
@@ -155,74 +168,73 @@ const CharacterBuilder = (): JSX.Element => {
     };
 
     void fetchSubclasses();
-  }, [formData.class]);
-
-  const fetchCharacter = async () => {
-    if (!characterId) return;
-
-    const { data } = await supabase
-      .from("characters")
-      .select("*")
-      .eq("id", characterId)
-      .single();
-
-    if (data) {
-      setFormData({
-        name: data.name,
-        level: data.level ?? 1,
-        age: data.age ?? undefined,
-        pronouns: data.pronouns ?? undefined,
-        gender: data.gender ?? undefined,
-        background: data.background ?? undefined,
-        ancestry: data.ancestry ? String(data.ancestry) : undefined,
-        class: data.class ? String(data.class) : undefined,
-        community: data.community ? String(data.community) : undefined,
-        subclass: data.subclass ? String(data.subclass) : undefined,
-        stats: data.stats as unknown as FormData["stats"],
-        stress: data.stress ?? 6,
-        hope: data.hope ?? 2,
-      } satisfies FormData);
-    }
-  };
+  }, [formData.class, setValue, toast]); // Add setValue and toast to dependencies
 
   useEffect(() => {
+    const fetchCharacter = async () => {
+      if (!characterId) return;
+
+      const { data } = await supabase
+        .from("characters")
+        .select("*")
+        .eq("id", characterId)
+        .single();
+
+      if (data) {
+        const classData = data.class
+          ? classes.find((cls) => cls.id === data.class)
+          : undefined;
+        // Set form data using setValue from react-hook-form
+        setValue("name", data.name);
+        setValue("level", data.level ?? 1);
+        setValue("age", data.age ?? null);
+        setValue("pronouns", data.pronouns ?? null);
+        setValue("gender", data.gender ?? null);
+        setValue("background", data.background ?? null);
+        setValue("ancestry", data.ancestry ? String(data.ancestry) : null);
+        setValue(
+          "class",
+          classData
+            ? { value: classData.id, label: String(classData.name) }
+            : undefined
+        );
+        setValue("community", data.community ? String(data.community) : null);
+        setValue("subclass", data.subclass ? String(data.subclass) : null);
+        setValue("stats", data.stats as FormData["stats"]); // Type assertion
+        setValue("stress", data.stress ?? 6);
+        setValue("hope", data.hope ?? 2);
+      }
+    };
+
     if (urlCharacterId) {
       void fetchCharacter();
     }
-  }, [urlCharacterId]);
+  }, [urlCharacterId, characterId, setValue, classes]);
 
-  const updateFormData = (field: string, value: unknown) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
-  const saveCharacterData = async () => {
+  const saveCharacterData = async (data: FormData) => {
     if (!user) return;
 
     setIsLoading(true);
     try {
       const characterData = {
         user_id: user.id,
-        name: formData.name ?? "Unnamed Character",
-        ancestry: formData.ancestry ? parseInt(formData.ancestry, 10) : null,
-        class: formData.class ? parseInt(formData.class, 10) : null,
-        subclass: formData.subclass ? parseInt(formData.subclass, 10) : null,
-        community: formData.community ? parseInt(formData.community, 10) : null,
-        level: formData.level,
-        background: formData.background ?? null,
-        stats: formData.stats,
-        stress: formData.stress ?? 6,
-        hope: formData.hope ?? 2,
+        name: data.name,
+        ancestry: data.ancestry ? parseInt(data.ancestry, 10) : null,
+        class: data.class ? data.class.value : null,
+        subclass: data.subclass ? parseInt(data.subclass, 10) : null,
+        community: data.community ? parseInt(data.community, 10) : null,
+        level: data.level,
+        background: data.background ?? null,
+        stats: data.stats,
+        stress: data.stress ?? 6,
+        hope: data.hope ?? 2,
         complete: currentStep === 4,
-        age: formData.age ?? null,
-        pronouns: formData.pronouns ?? null,
-        gender: formData.gender ?? null,
+        age: data.age ?? null,
+        pronouns: data.pronouns ?? null,
+        gender: data.gender ?? null,
       };
 
       if (characterId) {
-        // Update existing character
         const { error } = await supabase
           .from("characters")
           .update(characterData)
@@ -230,15 +242,14 @@ const CharacterBuilder = (): JSX.Element => {
 
         if (error) throw error;
       } else {
-        // Create new character
-        const { data, error } = await supabase
+        const { data: newCharacter, error } = await supabase
           .from("characters")
           .insert([characterData])
           .select()
           .single();
 
         if (error) throw error;
-        setCharacterId(data.id);
+        setCharacterId(newCharacter.id);
       }
 
       toast({
@@ -257,12 +268,58 @@ const CharacterBuilder = (): JSX.Element => {
     }
   };
 
-  const handleNext = async () => {
-    await saveCharacterData();
+  const handleNextStep = async (data: FormData) => {
+    // Manually trigger validation for fields in the current step
+    let isValid = false;
+    switch (currentStep) {
+      case 1:
+        isValid = await trigger(["name", "level", "age", "pronouns", "gender"]); // Include optional fields in trigger for visual feedback if needed, but not necessarily 'required'
+        break;
+      case 2:
+        isValid = await trigger([
+          "ancestry",
+          "class",
+          "subclass",
+          "community",
+          "background",
+        ]);
+        break;
+      case 3: {
+        // Validate all stat fields
+        isValid = await trigger([
+          "stats.agility",
+          "stats.strength",
+          "stats.finesse",
+          "stats.instinct",
+          "stats.presence",
+          "stats.knowledge",
+        ]);
+        // Additionally, ensure all stats have a value other than "none"
+        const allStatsSelected = statKeys.every((key) => formData.stats[key]);
+        isValid = isValid && allStatsSelected;
+        break;
+      }
+      case 4:
+        isValid = true; // Review step, no additional validation needed
+        break;
+      default:
+        isValid = true;
+    }
+
+    if (!isValid) {
+      // If validation fails, don't proceed to next step or save
+      toast({
+        title: "Validation Error",
+        description: "Please fill in all required fields for this step.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    await saveCharacterData(data); // Save data after validation
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Character complete, redirect to dashboard
       void navigate("/dashboard");
     }
   };
@@ -280,279 +337,327 @@ const CharacterBuilder = (): JSX.Element => {
     return acc;
   }, {});
 
-  const handleChangeStats = (key: StatKey, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      stats: {
-        ...prev.stats,
-        [key]: value,
-      },
-    }));
-  };
+  console.log(formData);
 
   const renderStep = () => {
     switch (currentStep) {
       case 1:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step1">
             <h3 className="text-xl font-semibold text-white mb-4">
               Basic Information
             </h3>
-            <div>
-              <Label htmlFor="name" className="text-white">
-                Character Name <span className="text-red-500">*</span>
-              </Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => {
-                  updateFormData("name", e.target.value);
-                }}
-                className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                placeholder="Enter character name"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="level" className="text-white">
-                Level <span className="text-red-500">*</span>
-              </Label>
-              <Select
-                value={formData.level.toString()}
-                onValueChange={(value) => {
-                  updateFormData("level", parseInt(value));
-                }}
-                required
-              >
-                <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
-                    <SelectItem key={level} value={level.toString()}>
-                      {level}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="age" className="text-white">
-                Age
-              </Label>
-              <Input
-                id="age"
-                type="number"
-                value={formData.age}
-                onChange={(e) => {
-                  updateFormData("age", parseInt(e.target.value));
-                }}
-                className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                placeholder="Enter character age"
-              />
-            </div>
-            <div>
-              <Label htmlFor="pronouns" className="text-white">
-                Pronouns
-              </Label>
-              <Input
-                id="pronouns"
-                type="text"
-                value={formData.pronouns}
-                onChange={(e) => {
-                  updateFormData("pronouns", e.target.value);
-                }}
-                className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                placeholder="Enter character pronouns"
-              />
-            </div>
-            <div>
-              <Label htmlFor="gender" className="text-white">
-                Gender
-              </Label>
-              <Input
-                id="gender"
-                type="text"
-                value={formData.gender}
-                onChange={(e) => {
-                  updateFormData("gender", e.target.value);
-                }}
-                className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                placeholder="Enter character gender"
-              />
-            </div>
+            <FormField
+              control={form.control} // Use form.control
+              name="name"
+              rules={{ required: "Character name is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">
+                    Character Name <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Enter character name"
+                      className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="level"
+              rules={{
+                required: "Level is required",
+                min: { value: 1, message: "Level must be at least 1" },
+              }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">
+                    Level <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Select
+                    onValueChange={(value) => {
+                      field.onChange(parseInt(value, 10));
+                    }}
+                    value={field.value.toString()}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
+                        <SelectValue placeholder="Select level" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((level) => (
+                        <SelectItem key={level} value={level.toString()}>
+                          {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Age</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="Enter character age"
+                      className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                      value={field.value ?? ""}
+                      onChange={(e) => {
+                        field.onChange(
+                          e.target.value ? parseInt(e.target.value, 10) : null
+                        );
+                      }}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="pronouns"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Pronouns</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter character pronouns"
+                      className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Gender</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Enter character gender"
+                      className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         );
 
       case 2:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step2">
             <h3 className="text-xl font-semibold text-white mb-4">
               Character Origin
             </h3>
-            <div>
-              <Label htmlFor="ancestry" className="text-white">
-                Ancestry <span className="text-red-500">*</span>
-              </Label>
-              <Select
-                value={formData.ancestry}
-                onValueChange={(value) => {
-                  updateFormData("ancestry", value);
-                }}
-                required
-              >
-                <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                  <SelectValue placeholder="Select ancestry" />
-                </SelectTrigger>
-                <SelectContent>
-                  {ancestries.map((ancestry) => (
-                    <SelectItem
-                      key={String(ancestry.id)}
-                      value={String(ancestry.id)}
-                    >
-                      {String(ancestry.name)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="class" className="text-white">
-                Class <span className="text-red-500">*</span>
-              </Label>
-              <Select
-                value={formData.class}
-                onValueChange={(value) => {
-                  updateFormData("class", value);
-                }}
-                required
-              >
-                <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                  <SelectValue placeholder="Select class" />
-                </SelectTrigger>
-                <SelectContent>
-                  {classes.map((cls) => (
-                    <SelectItem key={cls.id} value={String(cls.id)}>
-                      {cls.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <FormField
+              control={form.control}
+              name="ancestry"
+              rules={{ required: "Ancestry is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">
+                    Ancestry <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value)}
+                  >
+                    <FormControl>
+                      <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
+                        <SelectValue placeholder="Select ancestry" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {ancestries.map((ancestry) => (
+                        <SelectItem
+                          key={String(ancestry.id)}
+                          value={String(ancestry.id)}
+                        >
+                          {String(ancestry.name)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <GenericMultiSelect
+              name="class"
+              label="Choose a Class"
+              searchFn={classSearchHelper}
+              defaultFn={getAllBaseClasses}
+            />
+
             {formData.class && (
-              <div>
-                <Label htmlFor="subclass" className="text-white">
-                  Subclass <span className="text-red-500">*</span>
-                </Label>
-                <Select
-                  value={formData.subclass}
-                  onValueChange={(value) => {
-                    updateFormData("subclass", value);
-                  }}
-                  required
-                >
-                  <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                    <SelectValue placeholder="Select subclass" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {subclasses.map((subclass) => (
-                      <SelectItem key={subclass.id} value={String(subclass.id)}>
-                        {subclass.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
-            <div>
-              <Label htmlFor="community" className="text-white">
-                Community <span className="text-red-500">*</span>
-              </Label>
-              <Select
-                value={formData.community}
-                onValueChange={(value) => {
-                  updateFormData("community", value);
-                }}
-                required
-              >
-                <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                  <SelectValue placeholder="Select community" />
-                </SelectTrigger>
-                <SelectContent>
-                  {communities.map((community) => (
-                    <SelectItem
-                      key={String(community.id)}
-                      value={String(community.id)}
-                    >
-                      {String(community.name)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="background" className="text-white">
-                Background
-              </Label>
-              <Textarea
-                id="background"
-                value={formData.background}
-                onChange={(e) => {
-                  updateFormData("background", e.target.value);
-                }}
-                className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
-                placeholder="Describe your character's background..."
-                rows={4}
+              <FormField
+                control={form.control}
+                name="subclass"
+                rules={{ required: "Subclass is required" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-white">
+                      Subclass <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} {...field}>
+                      <FormControl>
+                        <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
+                          <SelectValue placeholder="Select subclass" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {subclasses.map((subclass) => (
+                          <SelectItem
+                            key={subclass.id}
+                            value={String(subclass.id)}
+                          >
+                            {subclass.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
+            )}
+
+            <FormField
+              control={form.control}
+              name="community"
+              rules={{ required: "Community is required" }}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">
+                    Community <span className="text-red-500">*</span>
+                  </FormLabel>
+                  <Select onValueChange={field.onChange} {...field}>
+                    <FormControl>
+                      <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
+                        <SelectValue placeholder="Select community" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {communities.map((community) => (
+                        <SelectItem
+                          key={String(community.id)}
+                          value={String(community.id)}
+                        >
+                          {String(community.name)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="background"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-white">Background</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Describe your character's background..."
+                      className="bg-slate-800/50 border-purple-500/50 text-white mt-1"
+                      rows={4}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
         );
 
       case 3:
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step3">
             <h3 className="text-xl font-semibold text-white mb-4">
               Attributes
             </h3>
             <div className="grid grid-cols-2 gap-4">
               {statKeys.map((key) => {
                 return (
-                  <div key={key}>
-                    <Label htmlFor={key} className="text-white capitalize">
-                      {key} <span className="text-red-500">*</span>
-                    </Label>
-                    <Select
-                      value={formData.stats[key]}
-                      onValueChange={(value) => {
-                        handleChangeStats(key, value);
-                      }}
-                      required
-                    >
-                      <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                        <SelectValue placeholder="Select modifier" />
-                      </SelectTrigger>
-                      {/* Unique key here to force re-render based on availability */}
-                      <SelectContent>
-                        <SelectItem value="none">Select modifier</SelectItem>
-                        {Object.entries(allowedMods).map(([mod, max]) => {
-                          const currentSelection = formData.stats[key];
-                          const count = selectedCounts[mod] ?? 0;
-                          const isSelected = currentSelection === mod;
-                          const isDisabled = !isSelected && count >= max;
+                  <FormField
+                    key={key} // Key needs to be on the FormField
+                    control={form.control}
+                    name={`stats.${key}`}
+                    rules={{
+                      required: `${key} modifier is required`,
+                      validate: (value) =>
+                        value !== "none" || `${key} modifier is required`,
+                    }}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-white capitalize">
+                          {key} <span className="text-red-500">*</span>
+                        </FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          value={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
+                              <SelectValue placeholder="Select modifier" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {/* <SelectItem value="none" disabled>
+                              Select modifier
+                            </SelectItem> */}
+                            {Object.entries(allowedMods).map(([mod, max]) => {
+                              const currentSelection = field.value;
+                              const count = selectedCounts[mod] ?? 0;
+                              const isSelected = currentSelection === mod;
+                              const isDisabled = !isSelected && count >= max;
 
-                          return (
-                            <SelectItem
-                              key={`${mod}-${key}`}
-                              value={mod}
-                              disabled={isDisabled}
-                            >
-                              {mod}
-                            </SelectItem>
-                          );
-                        })}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                              return (
+                                <SelectItem
+                                  key={`${mod}-${key}`}
+                                  value={mod}
+                                  disabled={isDisabled}
+                                >
+                                  {mod}
+                                </SelectItem>
+                              );
+                            })}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 );
               })}
             </div>
@@ -560,7 +665,8 @@ const CharacterBuilder = (): JSX.Element => {
         );
 
       case 4:
-        const cls = classes.find((cls) => String(cls.id) === formData.class);
+        console.log(formData.class);
+        const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
           (subclass) => String(subclass.id) === formData.subclass
         );
@@ -571,13 +677,13 @@ const CharacterBuilder = (): JSX.Element => {
           (community) => String(community.id) === formData.community
         );
         return (
-          <div className="space-y-6">
+          <div className="space-y-6" key="step4">
             <h3 className="text-xl font-semibold text-white mb-4">
               Review Your Character
             </h3>
             <Card className="p-4 rounded-lg space-y-2">
               <h4 className="text-lg font-medium text-white">
-                {formData.name ?? "Unnamed Character"}
+                {formData.name}
               </h4>
               <p className="text-purple-200">
                 Level {formData.level} | {cls?.name} ({subclass?.name})
@@ -606,27 +712,6 @@ const CharacterBuilder = (): JSX.Element => {
 
       default:
         return null;
-    }
-  };
-
-  const nextIsDisabled = () => {
-    switch (currentStep) {
-      case 1:
-        return !formData.name || !formData.level;
-      case 2:
-        return (
-          !formData.ancestry ||
-          !formData.class ||
-          !formData.community ||
-          !formData.subclass
-        );
-      case 3:
-        return !Object.keys(formData.stats).every(
-          (key) =>
-            formData.stats[key] !== undefined && formData.stats[key] !== "none"
-        );
-      default:
-        return false;
     }
   };
 
@@ -664,39 +749,47 @@ const CharacterBuilder = (): JSX.Element => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            {renderStep()}
-
-            {/* Navigation */}
-            <div className="flex justify-between mt-8">
-              <Button
-                onClick={handlePrevious}
-                disabled={currentStep === 1}
-                variant="outline"
-                className="border-purple-400 text-purple-100 "
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Previous
-              </Button>
-
-              <Button
-                onClick={() => {
-                  void handleNext();
+            {/* Wrap the form content with shadcn/ui's Form component */}
+            <Form {...form}>
+              <form
+                onSubmit={(...args) => {
+                  void form.handleSubmit(handleNextStep)(...args);
                 }}
-                disabled={isLoading || nextIsDisabled()}
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               >
-                {isLoading ? (
-                  "Saving..."
-                ) : currentStep === 4 ? (
-                  "Complete Character"
-                ) : (
-                  <>
-                    Next
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-            </div>
+                {renderStep()}
+
+                {/* Navigation */}
+                <div className="flex justify-between mt-8">
+                  <Button
+                    onClick={handlePrevious}
+                    disabled={currentStep === 1}
+                    variant="outline"
+                    className="border-purple-400 text-purple-100 "
+                    type="button" // Important: Prevent this button from submitting the form
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Previous
+                  </Button>
+
+                  <Button
+                    type="submit" // This button will now trigger form submission and handleNextStep
+                    disabled={isLoading}
+                    className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
+                  >
+                    {isLoading ? (
+                      "Saving..."
+                    ) : currentStep === 4 ? (
+                      "Complete Character"
+                    ) : (
+                      <>
+                        Next
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            </Form>
           </CardContent>
         </Card>
 

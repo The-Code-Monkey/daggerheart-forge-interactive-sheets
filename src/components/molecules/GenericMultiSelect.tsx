@@ -1,28 +1,28 @@
 import { useState, useEffect, useRef, JSX, useMemo, FocusEvent } from "react";
 import { debounce } from "lodash";
 import { useFormContext, Controller } from "react-hook-form";
-import {
-  classSearchHelper,
-  getAllBaseClasses,
-} from "@/integrations/supabase/helpers/classes";
 import { Check } from "lucide-react";
 
-interface Option {
-  value: number;
+export interface Option {
+  value: number | string;
   label: string;
 }
 
-interface ClassMultiSelectProps {
+interface GenericMultiSelectProps {
   name: string;
   label?: string;
   isMulti?: boolean;
+  searchFn: (query: string) => Promise<Option[] | null>;
+  defaultFn?: () => Promise<Option[] | null>;
 }
 
-export const ClassMultiSelect = ({
+export const GenericMultiSelect = ({
   name,
   label,
   isMulti = false,
-}: ClassMultiSelectProps): JSX.Element => {
+  searchFn,
+  defaultFn,
+}: GenericMultiSelectProps): JSX.Element => {
   const { control } = useFormContext();
   const [input, setInput] = useState("");
   const [options, setOptions] = useState<Option[]>([]);
@@ -32,63 +32,47 @@ export const ClassMultiSelect = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  // Fetch options based on search query
   const fetchOptions = async (query: string) => {
     if (!query) return;
     setLoading(true);
     try {
-      const data = await classSearchHelper(query);
-      if (data) {
-        setOptions(
-          data.map((item) => ({
-            value: Number(item.id),
-            label: String(item.name),
-          }))
-        );
-      }
+      const data = await searchFn(query);
+      setOptions(data ?? []);
     } catch (err) {
-      console.error("classSearchHelper failed:", err);
+      console.error("searchFn failed:", err);
       setOptions([]);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch all base classes for default display
-  const fetchBaseClasses = async () => {
+  const fetchDefaultOptions = async () => {
+    if (!defaultFn) return;
     setLoading(true);
     try {
-      const data = await getAllBaseClasses();
-      if (data) {
-        setOptions(
-          data.map((item) => ({
-            value: Number(item.id),
-            label: String(item.name),
-          }))
-        );
-      }
+      const data = await defaultFn();
+      setOptions(data ?? []);
     } catch (err) {
-      console.error("getAllBaseClasses failed:", err);
+      console.error("defaultFn failed:", err);
       setOptions([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const debouncedFetch = useMemo(() => debounce(fetchOptions, 300), []);
+  const debouncedFetch = useMemo(() => debounce(fetchOptions, 300), [searchFn]);
 
   useEffect(() => {
     if (input.trim().length > 0) {
       void debouncedFetch(input);
-    } else if (isFocused) {
-      void fetchBaseClasses();
+    } else if (isFocused && defaultFn) {
+      void fetchDefaultOptions();
     } else {
       setOptions([]);
     }
   }, [input, debouncedFetch, isFocused]);
 
   const handleBlur = (e: FocusEvent) => {
-    // Only close dropdown if focus leaves the whole wrapper
     if (!wrapperRef.current?.contains(e.relatedTarget)) {
       setIsFocused(false);
       setInput("");
@@ -141,6 +125,10 @@ export const ClassMultiSelect = ({
               field.onChange(null);
             }
           };
+
+          {
+            console.log(field.value, "here");
+          }
 
           return (
             <div className="relative" onClick={() => inputRef.current?.focus()}>
@@ -195,7 +183,7 @@ export const ClassMultiSelect = ({
                           isSelected(option) ? "bg-gray-100" : ""
                         }`}
                         onMouseDown={(e) => {
-                          e.preventDefault(); // prevent blur before click
+                          e.preventDefault();
                           handleSelect(option);
                         }}
                         tabIndex={0}
@@ -216,3 +204,5 @@ export const ClassMultiSelect = ({
     </div>
   );
 };
+
+export default GenericMultiSelect;

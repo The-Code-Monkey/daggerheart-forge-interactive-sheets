@@ -74,9 +74,11 @@ const EffectsFeaturesManager = ({
 
   useEffect(() => {
     void fetchDomainEffects();
-  }, []);
-
-  console.log(myEffects);
+  }, [
+    character.domains,
+    character.level,
+    character.additional?.domain_features,
+  ]);
 
   return (
     <Card>

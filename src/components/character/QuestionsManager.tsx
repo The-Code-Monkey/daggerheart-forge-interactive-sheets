@@ -41,6 +41,35 @@ const QuestionsManager = ({
       <CardContent>
         <div className="space-y-8 divide-y">
           <div className="space-y-4 pb-8">
+            <h3 className="text-white mb-4">Experiences</h3>
+            <div className="text-white">
+              <Input
+                name="0"
+                defaultValue={
+                  character.additional?.questions?.experiences?.[0] ?? ""
+                }
+                onChange={(e) => {
+                  handleInputChange(e, "experiences");
+                }}
+                type="text"
+                label="Experience 1"
+              />
+            </div>
+            <div className="text-white">
+              <Input
+                name="1"
+                defaultValue={
+                  character.additional?.questions?.experiences?.[1] ?? ""
+                }
+                onChange={(e) => {
+                  handleInputChange(e, "experiences");
+                }}
+                type="text"
+                label="Experience 2"
+              />
+            </div>
+          </div>
+          <div className="space-y-4 pb-8">
             <h3 className="text-white mb-4">Background Questions</h3>
             {character.class?.additional?.questions?.background?.map(
               (backgroundQuestion, index) => (
