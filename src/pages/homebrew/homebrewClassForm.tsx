@@ -33,7 +33,7 @@ interface ClassFormData {
 }
 
 const HomebrewClassForm = (): JSX.Element => {
-  const [currentStep, setCurrentStep] = useState(4);
+  const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
   const navigate = useNavigate();
