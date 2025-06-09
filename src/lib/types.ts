@@ -173,4 +173,30 @@ export type Card = Omit<
 
 export type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 
+export type NPCS = Omit<
+  Database["public"]["Tables"]["npcs"]["Row"],
+  "stats"
+> & {
+  stats: CharacterStats;
+};
+
+export type Session = Omit<
+  Database["public"]["Tables"]["sessions"]["Row"],
+  "additional"
+> & {
+  additional: Record<string, never>;
+};
+
+export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+
+export type CampaignWithRelations = Omit<
+  Database["public"]["Tables"]["campaigns"]["Row"],
+  "additional"
+> & {
+  npcs: NPCS[];
+  players: Character[];
+  sessions: Session[];
+  additional: Record<string, never>;
+};
+
 export type Json = Record<string, SupabaseJson | undefined>;
