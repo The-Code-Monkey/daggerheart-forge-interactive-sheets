@@ -51,7 +51,7 @@ const ClassDomains = ({ form }: ClassDomainsProps): JSX.Element => {
               "bg-slate-800/30 p-4 rounded-lg border border-brand-500/20",
               {
                 "border-2 border-yellow-300": domain.isHomebrew,
-              },
+              }
             )}
           >
             <div className="flex items-start space-x-3">

@@ -47,7 +47,9 @@ export type Database = {
           additional: Json | null
           created_at: string
           description: string | null
+          featured: boolean | null
           id: number
+          isPublic: boolean | null
           max_player_count: number | null
           name: string | null
           user_id: string | null
@@ -56,7 +58,9 @@ export type Database = {
           additional?: Json | null
           created_at?: string
           description?: string | null
+          featured?: boolean | null
           id?: number
+          isPublic?: boolean | null
           max_player_count?: number | null
           name?: string | null
           user_id?: string | null
@@ -65,12 +69,50 @@ export type Database = {
           additional?: Json | null
           created_at?: string
           description?: string | null
+          featured?: boolean | null
           id?: number
+          isPublic?: boolean | null
           max_player_count?: number | null
           name?: string | null
           user_id?: string | null
         }
         Relationships: []
+      }
+      campaigns_players: {
+        Row: {
+          campaign_id: number | null
+          character_id: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          campaign_id?: number | null
+          character_id?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          campaign_id?: number | null
+          character_id?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_players_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "campaigns_players_character_id_fkey"
+            columns: ["character_id"]
+            isOneToOne: false
+            referencedRelation: "characters"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       cards: {
         Row: {
@@ -406,6 +448,41 @@ export type Database = {
         }
         Relationships: []
       }
+      npcs: {
+        Row: {
+          campaign_id: number | null
+          created_at: string
+          description: string | null
+          id: number
+          name: string | null
+          stats: Json | null
+        }
+        Insert: {
+          campaign_id?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string | null
+          stats?: Json | null
+        }
+        Update: {
+          campaign_id?: number | null
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string | null
+          stats?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "npcs_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -429,27 +506,33 @@ export type Database = {
       }
       sessions: {
         Row: {
+          additional: Json | null
           campaign_id: number | null
           created_at: string
           id: number
           name: string | null
           notes: string | null
+          play_date: string | null
           user_id: string | null
         }
         Insert: {
+          additional?: Json | null
           campaign_id?: number | null
           created_at?: string
           id?: number
           name?: string | null
           notes?: string | null
+          play_date?: string | null
           user_id?: string | null
         }
         Update: {
+          additional?: Json | null
           campaign_id?: number | null
           created_at?: string
           id?: number
           name?: string | null
           notes?: string | null
+          play_date?: string | null
           user_id?: string | null
         }
         Relationships: [
