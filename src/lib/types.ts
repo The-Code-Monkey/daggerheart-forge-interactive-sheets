@@ -194,6 +194,7 @@ export type CampaignWithRelations = Omit<
   "additional"
 > & {
   npcs: NPCS[];
+  players: Character[];
   sessions: Session[];
   additional: Record<string, never>;
 };

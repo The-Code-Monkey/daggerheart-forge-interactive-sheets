@@ -39,7 +39,7 @@ export const getCampaignsWhereUserIsPlayer = async (
 ): Promise<Campaign[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
-    .select("*")
+    .select("*, campaigns_players!inner(user_id)")
     .eq("campaign_players.user_id", user_id);
 
   if (error) {
