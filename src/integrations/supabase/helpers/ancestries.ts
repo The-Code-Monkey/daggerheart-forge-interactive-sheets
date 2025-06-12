@@ -11,13 +11,13 @@ export const getAllAncestries = async (
     homebrew: false,
   }
 ): Promise<Ancestry[] | null> => {
-  const query = supabase.from("ancestries").select("*");
+  let query = supabase.from("ancestries").select("id, name, isHomebrew, user_id");
 
   if (homebrew !== undefined) {
-    query.eq("isHomebrew", homebrew);
+    query = query.eq("isHomebrew", homebrew);
   }
   if (user_id) {
-    query.eq("user_id", user_id);
+    query = query.eq("user_id", user_id);
   }
 
   const { data, error } = await query.limit(limit ?? 99);
