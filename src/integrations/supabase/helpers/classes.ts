@@ -314,7 +314,7 @@ export const classSearchHelper = async (
 ): Promise<Option[] | null> => {
   const { data, error } = await supabase
     .from("classes")
-    .select()
+    .select("id, name")
     .ilike("name", `%${query}%`)
     .limit(20);
 

@@ -37,6 +37,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"; // Adjust this import path as per your shadcn/ui setup
+import {
+  ancestrySearchHelper,
+  getAllBaseAncestries,
+} from "@/integrations/supabase/helpers/ancestries";
 
 const allowedMods = {
   "+2": 1,
@@ -63,7 +67,10 @@ interface FormData {
   pronouns?: string | null;
   gender?: string | null;
   background?: string | null;
-  ancestry?: string | null;
+  ancestry?: {
+    label?: string;
+    value: number;
+  };
   class?: {
     label?: string;
     value: number;
@@ -101,7 +108,7 @@ const CharacterBuilder = (): JSX.Element => {
       pronouns: null,
       gender: null,
       background: null,
-      ancestry: null,
+      ancestry: undefined,
       class: undefined,
       community: null,
       subclass: null,
@@ -184,6 +191,11 @@ const CharacterBuilder = (): JSX.Element => {
         const classData = data.class
           ? classes.find((cls) => cls.id === data.class)
           : undefined;
+
+        const ancestryData = data.ancestry
+          ? ancestries.find((anc) => anc.id === data.ancestry)
+          : undefined;
+
         // Set form data using setValue from react-hook-form
         setValue("name", data.name);
         setValue("level", data.level ?? 1);
@@ -191,7 +203,12 @@ const CharacterBuilder = (): JSX.Element => {
         setValue("pronouns", data.pronouns ?? null);
         setValue("gender", data.gender ?? null);
         setValue("background", data.background ?? null);
-        setValue("ancestry", data.ancestry ? String(data.ancestry) : null);
+        setValue(
+          "ancestry",
+          ancestryData
+            ? { value: ancestryData.id, label: String(ancestryData.name) }
+            : undefined
+        );
         setValue(
           "class",
           classData
@@ -219,7 +236,7 @@ const CharacterBuilder = (): JSX.Element => {
       const characterData = {
         user_id: user.id,
         name: data.name,
-        ancestry: data.ancestry ? parseInt(data.ancestry, 10) : null,
+        ancestry: data.ancestry ? data.ancestry.value : null,
         class: data.class ? data.class.value : null,
         subclass: data.subclass ? parseInt(data.subclass, 10) : null,
         community: data.community ? parseInt(data.community, 10) : null,
@@ -474,38 +491,11 @@ const CharacterBuilder = (): JSX.Element => {
             <h3 className="text-xl font-semibold text-white mb-4">
               Character Origin
             </h3>
-            <FormField
-              control={form.control}
+            <GenericMultiSelect
               name="ancestry"
-              rules={{ required: "Ancestry is required" }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">
-                    Ancestry <span className="text-red-500">*</span>
-                  </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    value={String(field.value)}
-                  >
-                    <FormControl>
-                      <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                        <SelectValue placeholder="Select ancestry" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {ancestries.map((ancestry) => (
-                        <SelectItem
-                          key={String(ancestry.id)}
-                          value={String(ancestry.id)}
-                        >
-                          {String(ancestry.name)}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Choose an Ancestry"
+              searchFn={ancestrySearchHelper}
+              defaultFn={getAllBaseAncestries}
             />
 
             <GenericMultiSelect
@@ -671,7 +661,7 @@ const CharacterBuilder = (): JSX.Element => {
           (subclass) => String(subclass.id) === formData.subclass
         );
         const ancestry = ancestries.find(
-          (ancestry) => String(ancestry.id) === formData.ancestry
+          (ancestry) => ancestry.id === formData.ancestry?.value
         );
         const community = communities.find(
           (community) => String(community.id) === formData.community

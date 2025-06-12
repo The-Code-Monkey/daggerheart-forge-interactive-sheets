@@ -2,7 +2,7 @@ import { Campaign, CampaignWithRelations } from "@/lib/types";
 import { supabase } from "../client";
 
 export const getSingleCampaignById = async (
-  id: number,
+  id: number
 ): Promise<CampaignWithRelations | null> => {
   const { data, error } = await supabase
     .from("campaigns")
@@ -19,7 +19,7 @@ export const getSingleCampaignById = async (
 };
 
 export const getMyCampaigns = async (
-  user_id: string,
+  user_id: string
 ): Promise<Campaign[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
@@ -35,7 +35,7 @@ export const getMyCampaigns = async (
 };
 
 export const getCampaignsWhereUserIsPlayer = async (
-  user_id: string,
+  user_id: string
 ): Promise<Campaign[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
