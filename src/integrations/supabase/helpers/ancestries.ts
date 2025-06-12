@@ -11,7 +11,9 @@ export const getAllAncestries = async (
     homebrew: false,
   }
 ): Promise<Ancestry[] | null> => {
-  let query = supabase.from("ancestries").select("id, name, isHomebrew, user_id");
+  let query = supabase
+    .from("ancestries")
+    .select("id, name, isHomebrew, user_id");
 
   if (homebrew !== undefined) {
     query = query.eq("isHomebrew", homebrew);

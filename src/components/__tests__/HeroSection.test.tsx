@@ -11,7 +11,7 @@ describe("HeroSection", () => {
   it("renders description text", () => {
     render(<HeroSection />);
     expect(
-      screen.getByText(/Create characters, manage campaigns/),
+      screen.getByText(/Create characters, manage campaigns/)
     ).toBeInTheDocument();
   });
 
