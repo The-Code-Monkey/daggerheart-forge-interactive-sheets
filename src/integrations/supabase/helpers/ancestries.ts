@@ -76,4 +76,3 @@ export const getAllBaseAncestries = async (): Promise<Option[] | null> => {
     label: String(ancestry.name),
   }));
 };
-};
