@@ -209,32 +209,74 @@ exports[`Index Page renders correctly 1`] = `
           <div
             class="text-center"
           >
-            <h4
-              class="text-xl font-bold text-white"
+            <div
+              aria-label="Number 0"
+              class="counter mx-auto items-center justify-center text-white"
             >
-              10K+
-            </h4>
+              <div
+                class="digit"
+              >
+                <div
+                  class="roller"
+                  style="animation: rollTo0 1s ease-out forwards; animation-delay: 0s;"
+                >
+                  <div
+                    class="digit-slot"
+                  >
+                    0
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    1
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    2
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    3
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    4
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    6
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    7
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    8
+                  </div>
+                  <div
+                    class="digit-slot"
+                  >
+                    9
+                  </div>
+                </div>
+              </div>
+            </div>
             <p
               class="text-sm text-purple-200"
             >
               Characters Created
-            </p>
-          </div>
-          <div
-            class="w-px h-12 bg-purple-600"
-          />
-          <div
-            class="text-center"
-          >
-            <h4
-              class="text-xl font-bold text-white"
-            >
-              500+
-            </h4>
-            <p
-              class="text-sm text-purple-200"
-            >
-              Active Campaigns
             </p>
           </div>
         </div>

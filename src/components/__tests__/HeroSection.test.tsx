@@ -19,12 +19,4 @@ describe("HeroSection", () => {
     render(<HeroSection />);
     expect(screen.getByText("Start Building")).toBeInTheDocument();
   });
-
-  it("renders stats section", () => {
-    render(<HeroSection />);
-    expect(screen.getByText("10K+")).toBeInTheDocument();
-    expect(screen.getByText("Characters Created")).toBeInTheDocument();
-    expect(screen.getByText("500+")).toBeInTheDocument();
-    expect(screen.getByText("Active Campaigns")).toBeInTheDocument();
-  });
 });
