@@ -126,10 +126,6 @@ export const GenericMultiSelect = ({
             }
           };
 
-          {
-            console.log(field.value, "here");
-          }
-
           return (
             <div className="relative" onClick={() => inputRef.current?.focus()}>
               <div className="flex flex-wrap items-center gap-1 px-2 py-1 bg-slate-800/50 border border-brand-500/30 rounded text-white min-h-[40px] focus-within:ring-2 ring-brand-500">

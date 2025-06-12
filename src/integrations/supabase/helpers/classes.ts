@@ -177,7 +177,7 @@ export const getSubclassesByClassId = async (
 ): Promise<Subclass[] | null> => {
   const { data, error } = await supabase
     .from("subclasses")
-    .select("*")
+    .select("*, class: classes (id)")
     .eq("class_id", classId);
   if (error) {
     console.log(error);

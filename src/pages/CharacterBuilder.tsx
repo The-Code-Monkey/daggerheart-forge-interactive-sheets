@@ -78,10 +78,12 @@ interface FormData {
     value: number;
   };
   community?: string | null;
-  subclass?: {
-    label?: string;
-    value: number;
-  };
+  subclass?:
+    | {
+        label?: string;
+        value: number;
+      }
+    | number;
   stats: Record<StatKey, string>;
   stress?: number | null;
   hope?: number | null;
@@ -156,9 +158,16 @@ const CharacterBuilder = (): JSX.Element => {
 
   useEffect(() => {
     const fetchSubclasses = async () => {
-      console.log(formData.class);
       const classIdNum = formData.class?.value;
-      if (!classIdNum || isNaN(classIdNum) || classIdNum === 0) {
+
+      console.log(formData.subclass);
+
+      if (
+        !classIdNum ||
+        isNaN(classIdNum) ||
+        classIdNum === 0 ||
+        !formData.subclass
+      ) {
         setSubclasses([]);
         // Also clear the subclass field if the class is removed or invalid
         setValue("subclass", undefined);
@@ -169,6 +178,22 @@ const CharacterBuilder = (): JSX.Element => {
 
       if (data) {
         setSubclasses(data);
+
+        if (typeof formData.subclass === "number") {
+          const subclassData = formData.subclass
+            ? data.find((sub) => sub.id === formData.subclass)
+            : undefined;
+
+          setValue(
+            "subclass",
+            subclassData
+              ? {
+                  value: subclassData.id,
+                  label: String(subclassData.name),
+                }
+              : undefined
+          );
+        }
       } else {
         setSubclasses([]);
         toast({
@@ -180,7 +205,7 @@ const CharacterBuilder = (): JSX.Element => {
     };
 
     void fetchSubclasses();
-  }, [formData.class, setValue, toast]); // Add setValue and toast to dependencies
+  }, [formData.class, setValue, toast, characterId]); // Add setValue and toast to dependencies
 
   useEffect(() => {
     const fetchCharacter = async () => {
@@ -201,9 +226,7 @@ const CharacterBuilder = (): JSX.Element => {
           ? ancestries.find((anc) => anc.id === data.ancestry)
           : undefined;
 
-        const subclassData = data.subclass
-          ? subclasses.find((sub) => sub.id === data.subclass)
-          : undefined;
+        console.log(ancestryData, ancestries);
 
         // Set form data using setValue from react-hook-form
         setValue("name", data.name);
@@ -225,15 +248,7 @@ const CharacterBuilder = (): JSX.Element => {
             : undefined
         );
         setValue("community", data.community ? String(data.community) : null);
-        setValue(
-          "subclass",
-          subclassData
-            ? {
-                value: subclassData.id,
-                label: String(subclassData.name),
-              }
-            : undefined
-        );
+        setValue("subclass", data.subclass ?? undefined);
         setValue("stats", data.stats as FormData["stats"]); // Type assertion
         setValue("stress", data.stress ?? 6);
         setValue("hope", data.hope ?? 2);
@@ -370,8 +385,6 @@ const CharacterBuilder = (): JSX.Element => {
     if (mod) acc[mod] = (acc[mod] ?? 0) + 1;
     return acc;
   }, {});
-
-  console.log(formData);
 
   const renderStep = () => {
     switch (currentStep) {
@@ -648,7 +661,6 @@ const CharacterBuilder = (): JSX.Element => {
         );
 
       case 4:
-        console.log(formData.class);
         const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
           (subclass) => subclass.id === formData.subclass?.value
