@@ -222,3 +222,91 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.counter {
+  display: flex;
+  gap: 0.25em;
+  font-size: 2rem;
+  font-family: monospace;
+}
+
+.digit {
+  height: 1em;
+  width: 1ch;
+  overflow: hidden;
+  position: relative;
+}
+
+.roller {
+  display: flex;
+  flex-direction: column;
+  animation: roll ease-out forwards;
+  animation-duration: 2s;
+}
+
+.digit-slot {
+  height: 1em;
+  line-height: 1em;
+  text-align: center;
+}
+
+/* Base roll animation: goes all the way down through 0–9 */
+@keyframes roll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-9em);
+  }
+}
+
+@keyframes rollTo0 {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes rollTo1 {
+  to {
+    transform: translateY(-1em);
+  }
+}
+@keyframes rollTo2 {
+  to {
+    transform: translateY(-2em);
+  }
+}
+@keyframes rollTo3 {
+  to {
+    transform: translateY(-3em);
+  }
+}
+@keyframes rollTo4 {
+  to {
+    transform: translateY(-4em);
+  }
+}
+@keyframes rollTo5 {
+  to {
+    transform: translateY(-5em);
+  }
+}
+@keyframes rollTo6 {
+  to {
+    transform: translateY(-6em);
+  }
+}
+@keyframes rollTo7 {
+  to {
+    transform: translateY(-7em);
+  }
+}
+@keyframes rollTo8 {
+  to {
+    transform: translateY(-8em);
+  }
+}
+@keyframes rollTo9 {
+  to {
+    transform: translateY(-9em);
+  }
+}
