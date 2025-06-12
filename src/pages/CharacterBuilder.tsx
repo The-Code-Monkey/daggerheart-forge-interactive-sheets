@@ -26,6 +26,8 @@ import GenericMultiSelect from "@/components/molecules/GenericMultiSelect";
 import {
   classSearchHelper,
   getAllBaseClasses,
+  getAllSubclassesAsOption,
+  subclassSearchHelper,
 } from "@/integrations/supabase/helpers/classes";
 
 import { useForm } from "react-hook-form"; // No longer directly importing Controller
@@ -76,7 +78,10 @@ interface FormData {
     value: number;
   };
   community?: string | null;
-  subclass?: string | null;
+  subclass?: {
+    label?: string;
+    value: number;
+  };
   stats: Record<StatKey, string>;
   stress?: number | null;
   hope?: number | null;
@@ -111,7 +116,7 @@ const CharacterBuilder = (): JSX.Element => {
       ancestry: undefined,
       class: undefined,
       community: null,
-      subclass: null,
+      subclass: undefined,
       stats: {},
       stress: 6,
       hope: 2,
@@ -156,7 +161,7 @@ const CharacterBuilder = (): JSX.Element => {
       if (!classIdNum || isNaN(classIdNum) || classIdNum === 0) {
         setSubclasses([]);
         // Also clear the subclass field if the class is removed or invalid
-        setValue("subclass", null);
+        setValue("subclass", undefined);
         return;
       }
 
@@ -196,6 +201,10 @@ const CharacterBuilder = (): JSX.Element => {
           ? ancestries.find((anc) => anc.id === data.ancestry)
           : undefined;
 
+        const subclassData = data.subclass
+          ? subclasses.find((sub) => sub.id === data.subclass)
+          : undefined;
+
         // Set form data using setValue from react-hook-form
         setValue("name", data.name);
         setValue("level", data.level ?? 1);
@@ -216,7 +225,15 @@ const CharacterBuilder = (): JSX.Element => {
             : undefined
         );
         setValue("community", data.community ? String(data.community) : null);
-        setValue("subclass", data.subclass ? String(data.subclass) : null);
+        setValue(
+          "subclass",
+          subclassData
+            ? {
+                value: subclassData.id,
+                label: String(subclassData.name),
+              }
+            : undefined
+        );
         setValue("stats", data.stats as FormData["stats"]); // Type assertion
         setValue("stress", data.stress ?? 6);
         setValue("hope", data.hope ?? 2);
@@ -238,7 +255,7 @@ const CharacterBuilder = (): JSX.Element => {
         name: data.name,
         ancestry: data.ancestry ? data.ancestry.value : null,
         class: data.class ? data.class.value : null,
-        subclass: data.subclass ? parseInt(data.subclass, 10) : null,
+        subclass: data.subclass ? data.subclass.value : null,
         community: data.community ? parseInt(data.community, 10) : null,
         level: data.level,
         background: data.background ?? null,
@@ -506,35 +523,11 @@ const CharacterBuilder = (): JSX.Element => {
             />
 
             {formData.class && (
-              <FormField
-                control={form.control}
+              <GenericMultiSelect
                 name="subclass"
-                rules={{ required: "Subclass is required" }}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">
-                      Subclass <span className="text-red-500">*</span>
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} {...field}>
-                      <FormControl>
-                        <SelectTrigger className="bg-slate-800/50 border-purple-500/50 text-white mt-1">
-                          <SelectValue placeholder="Select subclass" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {subclasses.map((subclass) => (
-                          <SelectItem
-                            key={subclass.id}
-                            value={String(subclass.id)}
-                          >
-                            {subclass.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="Choose a Subclass"
+                searchFn={subclassSearchHelper(formData.class.value)}
+                defaultFn={getAllSubclassesAsOption(formData.class.value)}
               />
             )}
 
@@ -658,7 +651,7 @@ const CharacterBuilder = (): JSX.Element => {
         console.log(formData.class);
         const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
-          (subclass) => String(subclass.id) === formData.subclass
+          (subclass) => subclass.id === formData.subclass?.value
         );
         const ancestry = ancestries.find(
           (ancestry) => ancestry.id === formData.ancestry?.value

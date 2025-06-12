@@ -328,3 +328,43 @@ export const classSearchHelper = async (
     value: cls.id,
   }));
 };
+
+export const subclassSearchHelper =
+  (classId: number) =>
+  async (query: string): Promise<Option[] | null> => {
+    const { data, error } = await supabase
+      .from("subclasses")
+      .select("id, name")
+      .eq("class_id", classId)
+      .ilike("name", `%${query}%`)
+      .limit(20);
+
+    if (error) {
+      console.log(error);
+      return null;
+    }
+
+    return data.map((subclass) => ({
+      label: String(subclass.name),
+      value: subclass.id,
+    }));
+  };
+
+export const getAllSubclassesAsOption =
+  (classId: number) => async (): Promise<Option[] | null> => {
+    const { data, error } = await supabase
+      .from("subclasses")
+      .select("id, name")
+      .eq("class_id", classId)
+      .limit(20);
+
+    if (error) {
+      console.log(error);
+      return null;
+    }
+
+    return data.map((subclass) => ({
+      label: String(subclass.name),
+      value: subclass.id,
+    }));
+  };
