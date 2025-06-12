@@ -67,7 +67,7 @@ export const ancestrySearchHelper = async (
 };
 
 export const getAllBaseAncestries = async (): Promise<Option[] | null> => {
-  const data = await getAllAncestries({ homebrew: true, limit: 20 });
+  const data = await getAllAncestries({ homebrew: false, limit: 20 });
 
   if (!data) return null;
 
@@ -75,4 +75,5 @@ export const getAllBaseAncestries = async (): Promise<Option[] | null> => {
     value: ancestry.id,
     label: String(ancestry.name),
   }));
+};
 };
