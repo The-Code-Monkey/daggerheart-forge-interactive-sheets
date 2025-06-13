@@ -7,7 +7,8 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { JSX, Suspense, lazy } from "react";
+import { JSX, Suspense, lazy, useEffect, useState } from "react";
+import checkSupabaseGlobalStatus from "./integrations/status";
 
 // Dynamic imports for route-level code splitting
 const Index = lazy(() => import("./pages/Index"));
@@ -44,128 +45,141 @@ const HomebrewViewDomains = lazy(
   () => import("./pages/homebrew/view/domain/HomebrewViewDomains")
 );
 
-const App = (): JSX.Element => (
-  <AuthProvider>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="min-h-screen">
-          <Navigation />
-          <div className="w-full p-2 text-center text-xl">We currently have some server issues and will be back soon. Apologies</div>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/game-rules" element={<GameRules />} />
-              <Route
-                path="/rules/classes/:className"
-                element={<ClassDetail />}
-              />
-              <Route
-                path="/rules/subclass/:subclassId"
-                element={<SubclassDetail />}
-              />
-              <Route
-                path="/rules/ancestries/:ancestryName"
-                element={<AncestryDetail />}
-              />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/character-builder/:characterId?"
-                element={
-                  <ProtectedRoute>
-                    <CharacterBuilder />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/character-sheet/:characterId"
-                element={
-                  <ProtectedRoute>
-                    <CharacterSheet />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/campaigns"
-                element={
-                  <ProtectedRoute>
-                    <Campaigns />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrew"
-                element={
-                  <ProtectedRoute>
-                    <Homebrew />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrew/class"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewClassForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrew/subclass"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewSubclassForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrew/domain"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewDomainForm />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrewed/class"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewViewClasses />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrewed/subclass"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewViewSubclasses />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/homebrewed/domain"
-                element={
-                  <ProtectedRoute>
-                    <HomebrewViewDomains />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-          <Footer />
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </AuthProvider>
-);
+const App = (): JSX.Element => {
+  const [status, setStatus] = useState(true);
+
+  useEffect(() => {
+    void checkSupabaseGlobalStatus().then(setStatus);
+  }, []);
+
+  return (
+    <AuthProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="min-h-screen">
+            <Navigation />
+            {!status && (
+              <div className="w-full p-2 text-center text-xl">
+                We currently have some server issues and will be back soon.
+                Apologies
+              </div>
+            )}
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/game-rules" element={<GameRules />} />
+                <Route
+                  path="/rules/classes/:className"
+                  element={<ClassDetail />}
+                />
+                <Route
+                  path="/rules/subclass/:subclassId"
+                  element={<SubclassDetail />}
+                />
+                <Route
+                  path="/rules/ancestries/:ancestryName"
+                  element={<AncestryDetail />}
+                />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <Dashboard />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/character-builder/:characterId?"
+                  element={
+                    <ProtectedRoute>
+                      <CharacterBuilder />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/character-sheet/:characterId"
+                  element={
+                    <ProtectedRoute>
+                      <CharacterSheet />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns"
+                  element={
+                    <ProtectedRoute>
+                      <Campaigns />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrew"
+                  element={
+                    <ProtectedRoute>
+                      <Homebrew />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrew/class"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewClassForm />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrew/subclass"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewSubclassForm />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrew/domain"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewDomainForm />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrewed/class"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewViewClasses />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrewed/subclass"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewViewSubclasses />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/homebrewed/domain"
+                  element={
+                    <ProtectedRoute>
+                      <HomebrewViewDomains />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </AuthProvider>
+  );
+};
 
 export default App;
