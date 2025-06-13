@@ -52,7 +52,7 @@ const App = (): JSX.Element => (
       <BrowserRouter>
         <div className="min-h-screen">
           <Navigation />
-          <div className="w-full p-2 text-center text-xl">We currently have some server issues and will be back soon. Apologies</div>
+          // <div className="w-full p-2 text-center text-xl">We currently have some server issues and will be back soon. Apologies</div>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Index />} />
