@@ -306,10 +306,10 @@ const CharacterBuilder = (): JSX.Element => {
         description: "Your character progress has been saved.",
       });
     } catch (error) {
-      console.error("Error saving character:", error);
+      console.error("Error saving character:", error.message);
       toast({
         title: "Error",
-        description: "Failed to save character. Please try again.",
+        description: `Failed to save character. ${String(error.message)}`,
         variant: "destructive",
       });
     } finally {
