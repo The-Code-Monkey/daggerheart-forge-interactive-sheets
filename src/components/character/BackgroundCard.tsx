@@ -56,7 +56,7 @@ const BackgroundCard = ({
     <Card>
       <CardHeader>
         <CardTitle
-          className="text-white hover:cursor-pointer"
+          className="text-white justify-center  flex items-center hover:cursor-pointer"
           onClick={switchComponent}
         >
           Background (click to edit)

@@ -311,7 +311,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+        <CardTitle className="text-white flex items-center justify-center gap-2 text-center">
           <Heart className="w-5 h-5 text-red-400" />
           Health &amp; Combat
         </CardTitle>

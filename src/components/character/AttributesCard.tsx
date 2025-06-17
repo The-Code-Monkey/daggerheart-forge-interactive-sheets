@@ -11,7 +11,7 @@ const AttributesCard = ({ character }: AttributesCardProps): JSX.Element => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-white flex items-center gap-2">
+        <CardTitle className="text-white flex items-center justify-center gap-2">
           <Sword className="w-5 h-5 text-yellow-400" />
           Attributes
         </CardTitle>

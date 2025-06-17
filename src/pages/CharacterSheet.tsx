@@ -2,7 +2,7 @@ import { useState, useEffect, JSX } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Minus, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Character, CharacterWithRelations } from "@/lib/types";
 import {
@@ -17,6 +17,8 @@ import InventoryManager from "@/components/character/InventoryManager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import EffectsFeaturesManager from "@/components/character/EffectsFeaturesManager";
 import QuestionsManager from "@/components/character/QuestionsManager";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Text from "@/components/atoms/Text";
 
 const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
@@ -41,6 +43,14 @@ const CharacterSheet = (): JSX.Element => {
       void fetchCharacterById(characterId);
     }
   }, [characterId]);
+
+  const updateLevel = (lvl: number) => {
+    if (lvl >= 1 && lvl <= 10) {
+      void updateCharacterData({
+        level: lvl,
+      });
+    }
+  };
 
   const updateCharacterData = async (updates: Partial<Character>) => {
     if (!characterId) {
@@ -152,6 +162,34 @@ const CharacterSheet = (): JSX.Element => {
               onUpdate={(updates) => void updateCharacterData(updates)}
             />
             <AttributesCard character={character} />
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-white hover:cursor-pointer text-center">
+                  Level
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold ml-0 text-white flex flex-row gap-2 items-center justify-center">
+                  <Button
+                    onClick={() => {
+                      updateLevel(Number(character.level) - 1);
+                    }}
+                  >
+                    <Minus className="w-5 h-5" />
+                  </Button>
+                  <Text variant="h3" className="w-1/3 text-center">
+                    {character.level}
+                  </Text>
+                  <Button
+                    onClick={() => {
+                      updateLevel(Number(character.level) + 1);
+                    }}
+                  >
+                    <Plus className="w-5 h-5" />
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
             <BackgroundCard character={character} />
           </div>
 
