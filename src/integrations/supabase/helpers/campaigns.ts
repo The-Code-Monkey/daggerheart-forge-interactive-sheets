@@ -1,6 +1,28 @@
-import { Campaign, CampaignWithRelations } from "@/lib/types";
+import {
+  Campaign,
+  CampaignWithCount,
+  CampaignWithRelations,
+} from "@/lib/types";
 import { supabase } from "../client";
 import { CampaignFormValues } from "@/pages/campaigns/create";
+import { Option } from "@/components/molecules/GenericMultiSelect";
+
+export const getSingleCampaignByIdBasic = async (
+  id: number
+): Promise<Campaign | null> => {
+  const { data, error } = await supabase
+    .from("campaigns")
+    .select("id, name, description, additional")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data as Campaign;
+};
 
 export const getSingleCampaignById = async (
   id: number
@@ -21,10 +43,10 @@ export const getSingleCampaignById = async (
 
 export const getMyCampaigns = async (
   user_id: string
-): Promise<Campaign[] | null> => {
+): Promise<CampaignWithCount[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
-    .select("*")
+    .select("*, players: campaigns_players(count), sessions (count)")
     .eq("user_id", user_id)
     .limit(3);
 
@@ -33,7 +55,7 @@ export const getMyCampaigns = async (
     return null;
   }
 
-  return data;
+  return data as CampaignWithCount[];
 };
 
 export const getCampaignsWhereUserIsPlayer = async (
@@ -49,7 +71,7 @@ export const getCampaignsWhereUserIsPlayer = async (
     return null;
   }
 
-  return data;
+  return data as Campaign[];
 };
 
 export const getFeaturedCampaigns = async (): Promise<Campaign[] | null> => {
@@ -63,7 +85,7 @@ export const getFeaturedCampaigns = async (): Promise<Campaign[] | null> => {
     return null;
   }
 
-  return data;
+  return data as Campaign[];
 };
 
 export const createCampaign = async (
@@ -102,7 +124,23 @@ export const createCampaign = async (
   }
 
   return {
-    data,
+    data: data as Campaign,
     error: null,
   };
+};
+
+export const addCharacterToCampaign = async (
+  character: Option,
+  campaignId: number
+): Promise<boolean> => {
+  const result = await supabase
+    .from("campaigns_players")
+    .insert({
+      campaign_id: campaignId,
+      character_id: String(character.value),
+    })
+    .select()
+    .single();
+
+  return result.status === 201;
 };

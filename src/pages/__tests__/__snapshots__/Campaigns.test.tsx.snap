@@ -58,7 +58,191 @@ exports[`Campaigns Page renders correctly 1`] = `
       </div>
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
-      />
+      >
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <p
+              class="text-sm text-muted-foreground mt-4"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </p>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <p
+              class="text-sm text-muted-foreground mt-4"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </p>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <p
+              class="text-sm text-muted-foreground mt-4"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </p>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       <div
         class="grid grid-cols-1 md:grid-cols-4 gap-6"
       >

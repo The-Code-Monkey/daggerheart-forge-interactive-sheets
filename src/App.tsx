@@ -47,6 +47,9 @@ const HomebrewViewDomains = lazy(
 
 // Campaign Pages
 const CreateCampaignPage = lazy(() => import("./pages/campaigns/create"));
+const CampaignJoinPage = lazy(() => import("./pages/campaigns/join"));
+
+import "./App.css";
 
 const App = (): JSX.Element => {
   const [status, setStatus] = useState(true);
@@ -61,7 +64,7 @@ const App = (): JSX.Element => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen">
+          <div className="h-full">
             <Navigation />
             {!status && (
               <div className="w-full p-2 text-center text-xl">
@@ -179,6 +182,14 @@ const App = (): JSX.Element => {
                   element={
                     <ProtectedRoute>
                       <CreateCampaignPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:invite/invite"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignJoinPage />
                     </ProtectedRoute>
                   }
                 />

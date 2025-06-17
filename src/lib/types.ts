@@ -187,7 +187,24 @@ export type Session = Omit<
   additional: Record<string, never>;
 };
 
-export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"] & {
+  players?: Partial<Character>[];
+  sessions?: Partial<Session>[];
+};
+
+export type CampaignWithCount =
+  Database["public"]["Tables"]["campaigns"]["Row"] & {
+    players: [
+      {
+        count: number;
+      },
+    ];
+    sessions: [
+      {
+        count: number;
+      },
+    ];
+  };
 
 export type CampaignWithRelations = Omit<
   Database["public"]["Tables"]["campaigns"]["Row"],
