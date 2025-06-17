@@ -11,6 +11,10 @@ const mockAuthContext = {
   signUp: jest.fn(),
 };
 
+jest.mock("@/contexts/AuthContext", () => ({
+  useAuth: jest.fn().mockImplementation(() => mockAuthContext),
+}));
+
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return <div data-testid="auth-provider">{children}</div>;
 };
@@ -25,7 +29,7 @@ const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
 
 const customRender = (
   ui: React.ReactElement,
-  options?: Omit<RenderOptions, "wrapper">
+  options?: Omit<RenderOptions, "wrapper">,
 ): RenderResult => render(ui, { wrapper: AllTheProviders, ...options });
 
 // Export everything from testing-library/react

@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,39 +9,26 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, Calendar, MapPin, Plus, Settings, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Campaign } from "@/lib/types";
+import { getMyCampaigns } from "@/integrations/supabase/helpers/campaigns";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Campaigns = (): JSX.Element => {
-  const [campaigns] = useState([
-    {
-      id: 1,
-      name: "The Shattered Crown",
-      description:
-        "A quest to restore the ancient crown and unite the fractured kingdoms",
-      players: 4,
-      sessions: 12,
-      lastPlayed: "2024-01-15",
-      status: "active",
-    },
-    {
-      id: 2,
-      name: "Shadows of the Deep",
-      description: "Maritime adventures in the mysterious Cerulean Archipelago",
-      players: 3,
-      sessions: 8,
-      lastPlayed: "2024-01-10",
-      status: "active",
-    },
-    {
-      id: 3,
-      name: "The Dragon's Bargain",
-      description:
-        "A completed campaign where heroes made a pact with an ancient dragon",
-      players: 5,
-      sessions: 24,
-      lastPlayed: "2023-12-20",
-      status: "completed",
-    },
-  ]);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const { user } = useAuth();
+
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      if (!user) return;
+      const data = await getMyCampaigns(String(user.id));
+      if (data) {
+        setCampaigns(data);
+      }
+    };
+
+    void fetchCampaigns();
+  }, [user]);
 
   return (
     <div className="min-h-screen bg-nebula py-8 px-4">
@@ -56,10 +43,12 @@ const Campaigns = (): JSX.Element => {
               Organize and track your Daggerheart campaigns
             </p>
           </div>
-          <Button className="bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
-            <Plus className="w-4 h-4 mr-2" />
-            New Campaign
-          </Button>
+          <Link to="/campaigns/create">
+            <Button className="bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold">
+              <Plus className="w-4 h-4 mr-2" />
+              New Campaign
+            </Button>
+          </Link>
         </div>
 
         {/* Campaign Grid */}
@@ -112,7 +101,7 @@ const Campaigns = (): JSX.Element => {
 
                 <div className="text-sm text-brand-300">
                   Last played:{" "}
-                  {new Date(campaign.lastPlayed).toLocaleDateString()}
+                  {new Date(campaign.last_played).toLocaleDateString()}
                 </div>
 
                 <div className="flex gap-2">

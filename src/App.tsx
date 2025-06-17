@@ -11,7 +11,7 @@ import { JSX, Suspense, lazy, useEffect, useState } from "react";
 import checkSupabaseGlobalStatus from "./integrations/status";
 
 // Dynamic imports for route-level code splitting
-const Index = lazy(() => import("./pages/Index"));
+import Index from "./pages/Index";
 const GameRules = lazy(() => import("./pages/GameRules"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
@@ -44,6 +44,9 @@ const HomebrewViewSubclasses = lazy(
 const HomebrewViewDomains = lazy(
   () => import("./pages/homebrew/view/domain/HomebrewViewDomains")
 );
+
+// Campaign Pages
+const CreateCampaignPage = lazy(() => import("./pages/campaigns/create"));
 
 const App = (): JSX.Element => {
   const [status, setStatus] = useState(true);
@@ -168,6 +171,14 @@ const App = (): JSX.Element => {
                   element={
                     <ProtectedRoute>
                       <HomebrewViewDomains />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/create"
+                  element={
+                    <ProtectedRoute>
+                      <CreateCampaignPage />
                     </ProtectedRoute>
                   }
                 />

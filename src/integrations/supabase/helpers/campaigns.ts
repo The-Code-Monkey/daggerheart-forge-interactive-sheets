@@ -1,5 +1,6 @@
 import { Campaign, CampaignWithRelations } from "@/lib/types";
 import { supabase } from "../client";
+import { CampaignFormValues } from "@/pages/campaigns/create";
 
 export const getSingleCampaignById = async (
   id: number
@@ -24,7 +25,8 @@ export const getMyCampaigns = async (
   const { data, error } = await supabase
     .from("campaigns")
     .select("*")
-    .eq("user_id", user_id);
+    .eq("user_id", user_id)
+    .limit(3);
 
   if (error) {
     console.log(error);
@@ -62,4 +64,45 @@ export const getFeaturedCampaigns = async (): Promise<Campaign[] | null> => {
   }
 
   return data;
+};
+
+export const createCampaign = async (
+  record: CampaignFormValues & { user_id: string }
+): Promise<{ data: Campaign | null; error: Error | null }> => {
+  const { data, error } = await supabase
+    .from("campaigns")
+    .insert({
+      user_id: record.user_id,
+      name: record.name,
+      description: record.setting,
+      max_player_count: record.maxPlayers,
+      isPublic: false,
+      featured: false,
+      additional: {
+        startingLevel: record.startingLevel,
+        tone: record.tone,
+        themes: record.themes,
+        linesAndVeils: record.linesAndVeils,
+        safetyTools: record.safetyTools,
+        minPlayers: record.minPlayers,
+        timeZone: record.timeZone,
+        timeslot: record.timeslot,
+        frequency: record.frequency,
+      },
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    return {
+      data: null,
+      error,
+    };
+  }
+
+  return {
+    data,
+    error: null,
+  };
 };
