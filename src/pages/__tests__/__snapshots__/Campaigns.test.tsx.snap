@@ -26,36 +26,38 @@ exports[`Campaigns Page renders correctly 1`] = `
           </p>
         </div>
         <a
+          class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
           data-discover="true"
           href="/campaigns/create"
         >
-          <button
-            class="inline-flex items-center hover:cursor-pointer justify-center gap-2 whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors duration-300 ease-in-out focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary hover:bg-primary/90 h-10 px-4 py-2 bg-linear-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-semibold"
+          <svg
+            aria-hidden="true"
+            class="lucide lucide-plus w-4 h-4 mr-2"
+            fill="none"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              aria-hidden="true"
-              class="lucide lucide-plus w-4 h-4 mr-2"
-              fill="none"
-              height="24"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5 12h14"
-              />
-              <path
-                d="M12 5v14"
-              />
-            </svg>
-            New Campaign
-          </button>
+            <path
+              d="M5 12h14"
+            />
+            <path
+              d="M12 5v14"
+            />
+          </svg>
+          New Campaign
         </a>
       </div>
+      <h2
+        class="text-4xl font-bold text-white mb-3"
+      >
+        My Campaigns
+      </h2>
       <div
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
       >
@@ -84,13 +86,13 @@ exports[`Campaigns Page renders correctly 1`] = `
                 class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
               />
             </div>
-            <p
-              class="text-sm text-muted-foreground mt-4"
+            <div
+              class="mt-4 text-sm text-muted-foreground"
             >
               <div
                 class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
               />
-            </p>
+            </div>
           </div>
           <div
             class="p-6 pt-0 space-y-4"
@@ -145,13 +147,13 @@ exports[`Campaigns Page renders correctly 1`] = `
                 class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
               />
             </div>
-            <p
-              class="text-sm text-muted-foreground mt-4"
+            <div
+              class="mt-4 text-sm text-muted-foreground"
             >
               <div
                 class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
               />
-            </p>
+            </div>
           </div>
           <div
             class="p-6 pt-0 space-y-4"
@@ -206,13 +208,205 @@ exports[`Campaigns Page renders correctly 1`] = `
                 class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
               />
             </div>
-            <p
-              class="text-sm text-muted-foreground mt-4"
+            <div
+              class="mt-4 text-sm text-muted-foreground"
             >
               <div
                 class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
               />
-            </p>
+            </div>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2
+        class="text-4xl font-bold text-white mb-3"
+      >
+        Characters Campaigns
+      </h2>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+      >
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <div
+              class="mt-4 text-sm text-muted-foreground"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </div>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <div
+              class="mt-4 text-sm text-muted-foreground"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </div>
+          </div>
+          <div
+            class="p-6 pt-0 space-y-4"
+          >
+            <div
+              class="grid grid-cols-2 gap-4 text-sm"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-24 bg-brand-700/30"
+              />
+            </div>
+            <div
+              class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-40 bg-brand-700/30"
+            />
+            <div
+              class="flex gap-2"
+            >
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-full flex-1 rounded-md bg-brand-700/30"
+              />
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-9 w-9 rounded-md bg-brand-700/30"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg border text-card-foreground shadow-sm bg-gradient-to-br from-slate-800/80 to-slate-900/80 border-brand-500/30 backdrop-blur-xs hover:border-brand-400/50 transition-all duration-300"
+        >
+          <div
+            class="flex flex-col space-y-1.5 p-6"
+          >
+            <div
+              class="flex items-start justify-between"
+            >
+              <div>
+                <h3
+                  class="text-2xl font-semibold leading-none tracking-tight mb-2"
+                >
+                  <div
+                    class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-6 w-40 bg-brand-700/40"
+                  />
+                </h3>
+                <div
+                  class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-5 w-24 rounded-md bg-brand-600/40"
+                />
+              </div>
+              <div
+                class="animate-pulse bg-linear-to-br from-slate-800/50 to-slate-900/50 h-8 w-8 rounded-md bg-brand-700/40"
+              />
+            </div>
+            <div
+              class="mt-4 text-sm text-muted-foreground"
+            >
+              <div
+                class="animate-pulse rounded-md bg-linear-to-br from-slate-800/50 to-slate-900/50 h-4 w-full bg-brand-700/30"
+              />
+            </div>
           </div>
           <div
             class="p-6 pt-0 space-y-4"
@@ -253,12 +447,12 @@ exports[`Campaigns Page renders correctly 1`] = `
             class="p-6 text-center"
           >
             <div
-              class="text-3xl font-bold mb-2 text-green-950"
+              class="text-3xl font-bold mb-2 text-green-200"
             >
               2
             </div>
             <div
-              class="text-green-950"
+              class="text-green-200"
             >
               Active Campaigns
             </div>
@@ -271,12 +465,12 @@ exports[`Campaigns Page renders correctly 1`] = `
             class="p-6 text-center"
           >
             <div
-              class="text-3xl font-bold text-blue-900 mb-2"
+              class="text-3xl font-bold text-blue-200 mb-2"
             >
               12
             </div>
             <div
-              class="text-blue-900"
+              class="text-blue-200"
             >
               Total Players
             </div>
@@ -289,12 +483,12 @@ exports[`Campaigns Page renders correctly 1`] = `
             class="p-6 text-center"
           >
             <div
-              class="text-3xl font-bold text-brand-900 mb-2"
+              class="text-3xl font-bold text-brand-50 mb-2"
             >
               44
             </div>
             <div
-              class="text-brand-900"
+              class="text-brand-50"
             >
               Sessions Played
             </div>
@@ -307,12 +501,12 @@ exports[`Campaigns Page renders correctly 1`] = `
             class="p-6 text-center"
           >
             <div
-              class="text-3xl font-bold text-orange-900 mb-2"
+              class="text-3xl font-bold text-orange-200 mb-2"
             >
               156
             </div>
             <div
-              class="text-orange-900"
+              class="text-orange-200"
             >
               Hours Played
             </div>

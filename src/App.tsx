@@ -48,6 +48,8 @@ const HomebrewViewDomains = lazy(
 // Campaign Pages
 const CreateCampaignPage = lazy(() => import("./pages/campaigns/create"));
 const CampaignJoinPage = lazy(() => import("./pages/campaigns/join"));
+const CampaignEditPage = lazy(() => import("./pages/campaigns/edit"));
+const CampaignViewPage = lazy(() => import("./pages/campaigns/view"));
 
 import "./App.css";
 
@@ -190,6 +192,22 @@ const App = (): JSX.Element => {
                   element={
                     <ProtectedRoute>
                       <CampaignJoinPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignEditPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:id"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignViewPage />
                     </ProtectedRoute>
                   }
                 />

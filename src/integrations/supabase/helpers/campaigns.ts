@@ -25,13 +25,19 @@ export const getSingleCampaignByIdBasic = async (
 };
 
 export const getSingleCampaignById = async (
-  id: number
+  id: number,
+  user_id?: string
 ): Promise<CampaignWithRelations | null> => {
-  const { data, error } = await supabase
+  const query = supabase
     .from("campaigns")
     .select("*, npcs(*), sessions(*), players: campaigns_players(*)")
-    .eq("id", id)
-    .single();
+    .eq("id", id);
+
+  if (user_id) {
+    query.eq("user_id", user_id);
+  }
+
+  const { data, error } = await query.single();
 
   if (error) {
     console.log(error);
@@ -63,8 +69,16 @@ export const getCampaignsWhereUserIsPlayer = async (
 ): Promise<Campaign[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
-    .select("*, campaigns_players!inner(user_id)")
-    .eq("campaigns_players.user_id", user_id);
+    .select(
+      `
+        *,
+        campaigns_players!inner(
+          characters!inner(user_id)
+        )
+      `
+    )
+    .eq("campaigns_players.characters.user_id", user_id)
+    .limit(3);
 
   if (error) {
     console.log(error);
