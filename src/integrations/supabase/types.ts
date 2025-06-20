@@ -19,6 +19,7 @@ export type Database = {
           isHomebrew: boolean | null
           name: string | null
           slug: string | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -29,6 +30,7 @@ export type Database = {
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -39,6 +41,7 @@ export type Database = {
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -50,8 +53,10 @@ export type Database = {
           featured: boolean | null
           id: number
           isPublic: boolean | null
+          last_played: string | null
           max_player_count: number | null
           name: string | null
+          status: string | null
           user_id: string | null
         }
         Insert: {
@@ -61,8 +66,10 @@ export type Database = {
           featured?: boolean | null
           id?: number
           isPublic?: boolean | null
+          last_played?: string | null
           max_player_count?: number | null
           name?: string | null
+          status?: string | null
           user_id?: string | null
         }
         Update: {
@@ -72,8 +79,10 @@ export type Database = {
           featured?: boolean | null
           id?: number
           isPublic?: boolean | null
+          last_played?: string | null
           max_player_count?: number | null
           name?: string | null
+          status?: string | null
           user_id?: string | null
         }
         Relationships: []
