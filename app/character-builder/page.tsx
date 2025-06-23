@@ -29,10 +29,20 @@ const CharacterBuilderPage = () => {
   const handleCreateCharacter = async () => {
     if (!user) return;
 
-    if (!characterName.trim()) {
+    const trimmedName = characterName.trim();
+    if (!trimmedName) {
       toast({
         title: "Error",
         description: "Please enter a character name.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (trimmedName.length < 2 || trimmedName.length > 50) {
+      toast({
+        title: "Error",
+        description: "Character name must be between 2 and 50 characters.",
         variant: "destructive",
       });
       return;

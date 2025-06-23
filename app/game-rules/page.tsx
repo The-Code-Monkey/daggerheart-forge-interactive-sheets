@@ -30,31 +30,27 @@ const GameRulesPage = () => {
     Partial<Ancestry>[] | null
   >(null);
 
-  const fetchClasses = async () => {
-    const data = await getAllClassesWithDomains();
-    if (data) {
-      setClassesData(data);
-    }
-  };
-
-  const fetchSubclasses = async () => {
-    const data = await getAllSubclasses();
-    if (data) {
-      setSubclassesData(data);
-    }
-  };
-
-  const fetchAncestries = async () => {
-    const data = await getAllAncestries();
-    if (data) {
-      setAncestriesData(data);
-    }
-  };
+  // Removed individual fetchClasses, fetchSubclasses, fetchAncestries
 
   useEffect(() => {
-    void fetchClasses();
-    void fetchSubclasses();
-    void fetchAncestries();
+    const fetchGameData = async () => {
+      try {
+        const [classes, subclasses, ancestries] = await Promise.all([
+          getAllClassesWithDomains(),
+          getAllSubclasses(),
+          getAllAncestries()
+        ]);
+
+        if (classes) setClassesData(classes);
+        if (subclasses) setSubclassesData(subclasses);
+        if (ancestries) setAncestriesData(ancestries);
+      } catch (error) {
+        console.error('Failed to fetch game data:', error);
+        // Consider adding a user-facing notification here
+      }
+    };
+
+    void fetchGameData();
   }, []);
 
   const domains = [
