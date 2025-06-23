@@ -21,7 +21,7 @@ import ClassCards from "@/components/class/ClassCard";
 import SubclassCards from "@/components/class/SubclassCard";
 import { getAllSubclasses } from "@/integrations/supabase/helpers/classes";
 
-export default function GameRulesPage() {
+const GameRulesPage = () => {
   const [classesData, setClassesData] = useState<Partial<Class>[] | null>(null);
   const [subclassesData, setSubclassesData] = useState<
     Partial<Subclass>[] | null
@@ -292,4 +292,6 @@ export default function GameRulesPage() {
       </div>
     </div>
   );
-}
+};
+
+export default GameRulesPage;

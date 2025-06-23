@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Badge } from "../ui/badge";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import {
@@ -91,7 +91,7 @@ const ClassCards = ({
           <CardContent className="mt-auto">
             <div className="space-y-3">
               <div className="pt-2 mt-auto">
-                <Link to={`/rules/classes/${String(cls.slug)}`}>
+                <Link href={`/rules/classes/${String(cls.slug)}`}>
                   <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                     Learn More
                     <ArrowRight className="w-4 h-4 ml-2" />

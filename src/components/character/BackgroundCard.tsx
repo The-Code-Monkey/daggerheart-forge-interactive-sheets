@@ -3,7 +3,7 @@ import { CharacterWithRelations } from "@/lib/types";
 import { JSX, useState } from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { useParams } from "react-router-dom";
+import { useParams } from "next/navigation";
 import { updateCharacter } from "@/integrations/supabase/helpers";
 import { useToast } from "@/hooks/use-toast";
 
@@ -18,7 +18,8 @@ const BackgroundCard = ({
     String(character.background ?? "")
   );
   const [editing, setEditing] = useState(false);
-  const { characterId } = useParams<{ characterId: string }>();
+  const params = useParams<{ characterId: string }>();
+  const characterId = params?.characterId;
   const { toast } = useToast();
 
   const switchComponent = () => {
@@ -31,7 +32,7 @@ const BackgroundCard = ({
     ) as HTMLTextAreaElement;
     const newText = textArea.value;
 
-    const data = await updateCharacter(characterId, {
+    const data = await updateCharacter(String(characterId), {
       background: newText,
     });
 

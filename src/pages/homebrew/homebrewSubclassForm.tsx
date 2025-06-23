@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Save } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import BasicInfo from "@/components/homebrew/Subclass/BasicInfo";
 import FoundationFeatures from "@/components/homebrew/Subclass/FoundationFeatures";
@@ -20,7 +21,7 @@ const HomebrewSubclassForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const form = useForm<NewSubclassFormData>({
     defaultValues: {},
@@ -50,7 +51,7 @@ const HomebrewSubclassForm = (): JSX.Element => {
       });
 
       if (data) {
-        void navigate(`/rules/subclass/${String(data.id)}`);
+        router.push(`/rules/subclass/${String(data.id)}`);
       }
     } catch (error) {
       console.error("Failed to create subclass:", error);
@@ -81,7 +82,7 @@ const HomebrewSubclassForm = (): JSX.Element => {
         {/* Header */}
         <div className="text-center mb-8">
           <Link
-            to="/homebrew"
+            href="/homebrew"
             className="inline-flex items-center text-purple-200 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 
 // Lazy load the Turnstile component to reduce initial bundle size
 const TurnstileCaptcha = lazy(() => import("./TurnstileCaptcha"));
@@ -34,7 +33,6 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps) => {
   });
 
   const { toast } = useToast();
-  const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

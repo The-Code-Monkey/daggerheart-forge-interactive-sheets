@@ -2,7 +2,7 @@ import Text from "@/components/atoms/Text";
 import FeatureCard from "@/components/FeatureCard";
 import { Sparkles } from "lucide-react";
 import { JSX } from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 const features: {
   title: string;
@@ -64,7 +64,7 @@ const Homebrew = (): JSX.Element => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <Link
-                to={`/homebrew/${feature.title.toLowerCase()}`}
+                href={`/homebrew/${feature.title.toLowerCase()}`}
                 key={feature.title}
               >
                 <FeatureCard key={index} {...feature} />

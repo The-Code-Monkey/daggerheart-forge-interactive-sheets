@@ -1,5 +1,6 @@
 import { useState, useEffect, JSX } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Minus, Plus } from "lucide-react";
@@ -21,7 +22,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Text from "@/components/atoms/Text";
 
 const CharacterSheet = (): JSX.Element => {
-  const { characterId } = useParams();
+  const params = useParams();
+  const characterId = params?.characterId;
   const { toast } = useToast();
 
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
@@ -40,7 +42,7 @@ const CharacterSheet = (): JSX.Element => {
 
   useEffect(() => {
     if (characterId) {
-      void fetchCharacterById(characterId);
+      void fetchCharacterById(String(characterId));
     }
   }, [characterId]);
 
@@ -62,7 +64,10 @@ const CharacterSheet = (): JSX.Element => {
       return;
     }
 
-    const updatedCharacter = await updateCharacter(characterId, updates);
+    const updatedCharacter = await updateCharacter(
+      String(characterId),
+      updates
+    );
     if (updatedCharacter) {
       setCharacter(updatedCharacter);
       toast({
@@ -98,7 +103,7 @@ const CharacterSheet = (): JSX.Element => {
             Character not found.
           </p>
           <div className="text-center">
-            <Link to="/dashboard">
+            <Link href="/dashboard">
               <Button
                 variant="outline"
                 className="border-purple-400 text-purple-100 "
@@ -119,7 +124,7 @@ const CharacterSheet = (): JSX.Element => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center gap-4">
-            <Link to="/dashboard">
+            <Link href="/dashboard">
               <Button
                 variant="outline"
                 className="border-purple-400 text-purple-100 "

@@ -7,12 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Edit, Dice6, Heart, Shield, Sword } from "lucide-react";
 import Link from "next/link";
 import { CharacterWithRelations } from "@/lib/types";
+import { getCharacterById } from "@/integrations/supabase/helpers";
 
-export default function CharacterSheetPage() {
+const CharacterSheetPage = () => {
   const { user } = useAuth();
   const router = useRouter();
   const params = useParams();
@@ -22,7 +22,7 @@ export default function CharacterSheetPage() {
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
     null
   );
-  const characterId = params.characterId as string;
+  const characterId = params?.characterId as string;
 
   useEffect(() => {
     if (!user) {
@@ -32,28 +32,7 @@ export default function CharacterSheetPage() {
 
     const fetchCharacter = async () => {
       try {
-        const { data, error } = await supabase
-          .from("characters")
-          .select(
-            `
-            *,
-            ancestry:ancestries(*),
-            class:classes(*),
-            subclass:subclasses(*)
-          `
-          )
-          .eq("id", characterId)
-          .eq("user_id", user.id)
-          .single();
-
-        if (error) {
-          if (error.code === "PGRST116") {
-            // Character not found or not owned by user
-            router.push("/dashboard");
-            return;
-          }
-          throw error;
-        }
+        const data = await getCharacterById(characterId);
 
         setCharacter(data);
       } catch (error) {
@@ -145,8 +124,7 @@ export default function CharacterSheetPage() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-white mb-2">
-                {character.max_hit_points || 25} /{" "}
-                {character.max_hit_points || 25}
+                {25} / {25}
               </div>
               <p className="text-brand-200 text-sm">Hit Points</p>
             </CardContent>
@@ -160,9 +138,7 @@ export default function CharacterSheetPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white mb-2">
-                {character.armor_class || 12}
-              </div>
+              <div className="text-3xl font-bold text-white mb-2">{12}</div>
               <p className="text-brand-200 text-sm">Armor Class</p>
             </CardContent>
           </Card>
@@ -175,9 +151,7 @@ export default function CharacterSheetPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white mb-2">
-                +{character.attack_bonus || 3}
-              </div>
+              <div className="text-3xl font-bold text-white mb-2">+{3}</div>
               <p className="text-brand-200 text-sm">Attack Bonus</p>
             </CardContent>
           </Card>
@@ -190,9 +164,7 @@ export default function CharacterSheetPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white mb-2">
-                +{character.initiative_modifier || 2}
-              </div>
+              <div className="text-3xl font-bold text-white mb-2">+{2}</div>
               <p className="text-brand-200 text-sm">Initiative Modifier</p>
             </CardContent>
           </Card>
@@ -211,7 +183,7 @@ export default function CharacterSheetPage() {
                   Ancestry:
                 </span>
                 <p className="text-white">
-                  {character.ancestry?.name || "Unknown"}
+                  {character.ancestry?.name ?? "Unknown"}
                 </p>
               </div>
               <div>
@@ -219,7 +191,7 @@ export default function CharacterSheetPage() {
                   Class:
                 </span>
                 <p className="text-white">
-                  {character.class?.name || "Unknown"}
+                  {character.class?.name ?? "Unknown"}
                 </p>
                 {character.subclass && (
                   <p className="text-brand-200 text-sm">
@@ -237,9 +209,7 @@ export default function CharacterSheetPage() {
                 <span className="text-brand-200 text-sm font-medium">
                   Experience:
                 </span>
-                <p className="text-white">
-                  {character.experience_points || 0} XP
-                </p>
+                <p className="text-white">{0} XP</p>
               </div>
             </CardContent>
           </Card>
@@ -254,38 +224,42 @@ export default function CharacterSheetPage() {
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Agility</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.agility || 0}
+                    {character.stats.agility}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Strength</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.strength || 0}
+                    {character.stats.strength}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Finesse</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.finesse || 0}
+                    {character.stats.finesse}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Instinct</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.instinct || 0}
+                    {character.stats.instinct}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Presence</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.presence || 0}
+                    {character.stats.presence}
                   </p>
                 </div>
                 <div className="text-center">
                   <p className="text-brand-200 text-sm">Knowledge</p>
                   <p className="text-white text-2xl font-bold">
-                    {character.knowledge || 0}
+                    {character.stats.knowledge}
                   </p>
+                </div>
+                <div className="text-center">
+                  <p className="text-brand-200 text-sm">Status</p>
+                  <p className="text-white text-2xl font-bold"></p>
                 </div>
               </div>
             </CardContent>
@@ -301,12 +275,12 @@ export default function CharacterSheetPage() {
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-brand-200 text-sm">Hope</span>
                   <Badge variant="secondary" className="bg-yellow-600">
-                    {character.hope || 0}
+                    {character.hope ?? 0}
                   </Badge>
                 </div>
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-brand-200 text-sm">Fear</span>
-                  <Badge variant="destructive">{character.fear || 0}</Badge>
+                  <Badge variant="destructive">{0}</Badge>
                 </div>
               </div>
               <div>
@@ -318,7 +292,7 @@ export default function CharacterSheetPage() {
                     <div
                       key={i}
                       className={`w-4 h-4 border border-brand-400 rounded ${
-                        i < (character.stress || 0)
+                        i < (character.stress ?? 0)
                           ? "bg-red-500"
                           : "bg-transparent"
                       }`}
@@ -357,4 +331,6 @@ export default function CharacterSheetPage() {
       </div>
     </div>
   );
-}
+};
+
+export default CharacterSheetPage;

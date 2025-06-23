@@ -12,7 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Save } from "lucide-react";
 import Link from "next/link";
 
-export default function CharacterBuilderPage() {
+const CharacterBuilderPage = () => {
   const { user } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -124,7 +124,9 @@ export default function CharacterBuilderPage() {
 
             <div className="flex gap-4">
               <Button
-                onClick={handleCreateCharacter}
+                onClick={() => {
+                  void handleCreateCharacter();
+                }}
                 disabled={loading}
                 className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold"
               >
@@ -171,4 +173,6 @@ export default function CharacterBuilderPage() {
       </div>
     </div>
   );
-}
+};
+
+export default CharacterBuilderPage;

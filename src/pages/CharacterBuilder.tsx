@@ -23,7 +23,9 @@ import {
   getAllAncestries,
   getAllCommunities,
 } from "@/integrations/supabase/helpers";
-import GenericMultiSelect from "@/components/molecules/GenericMultiSelect";
+import GenericMultiSelect, {
+  Option,
+} from "@/components/molecules/GenericMultiSelect";
 import {
   classSearchHelper,
   getAllBaseClasses,
@@ -272,7 +274,8 @@ const CharacterBuilder = (): JSX.Element => {
         name: data.name,
         ancestry: data.ancestry ? data.ancestry.value : null,
         class: data.class ? data.class.value : null,
-        subclass: data.subclass ? data.subclass.value : null,
+        subclass:
+          typeof data.subclass === "object" ? data.subclass.value : null,
         community: data.community ? parseInt(data.community, 10) : null,
         level: data.level,
         background: data.background ?? null,
@@ -308,10 +311,10 @@ const CharacterBuilder = (): JSX.Element => {
         description: "Your character progress has been saved.",
       });
     } catch (error) {
-      console.error("Error saving character:", error.message);
+      console.error("Error saving character:", error);
       toast({
         title: "Error",
-        description: `Failed to save character. ${String(error.message)}`,
+        description: `Failed to save character. ${String(error)}`,
         variant: "destructive",
       });
     } finally {
@@ -371,7 +374,7 @@ const CharacterBuilder = (): JSX.Element => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
-      void navigate("/dashboard");
+      router.push("/dashboard");
     }
   };
 
@@ -480,7 +483,7 @@ const CharacterBuilder = (): JSX.Element => {
             <FormField
               control={form.control}
               name="pronouns"
-              render={({ field }) => (
+              render={({ field }: any) => (
                 <FormItem>
                   <FormLabel className="text-white">Pronouns</FormLabel>
                   <FormControl>
@@ -499,7 +502,7 @@ const CharacterBuilder = (): JSX.Element => {
             <FormField
               control={form.control}
               name="gender"
-              render={({ field }) => (
+              render={({ field }: any) => (
                 <FormItem>
                   <FormLabel className="text-white">Gender</FormLabel>
                   <FormControl>
@@ -550,7 +553,7 @@ const CharacterBuilder = (): JSX.Element => {
               control={form.control}
               name="community"
               rules={{ required: "Community is required" }}
-              render={({ field }) => (
+              render={({ field }: any) => (
                 <FormItem>
                   <FormLabel className="text-white">
                     Community <span className="text-red-500">*</span>
@@ -580,7 +583,7 @@ const CharacterBuilder = (): JSX.Element => {
             <FormField
               control={form.control}
               name="background"
-              render={({ field }) => (
+              render={({ field }: any) => (
                 <FormItem>
                   <FormLabel className="text-white">Background</FormLabel>
                   <FormControl>
@@ -665,7 +668,8 @@ const CharacterBuilder = (): JSX.Element => {
       case 4:
         const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
-          (subclass) => subclass.id === formData.subclass?.value
+          (subclass) =>
+            subclass.id === ((formData.subclass ?? {}) as Option).value
         );
         const ancestry = ancestries.find(
           (ancestry) => ancestry.id === formData.ancestry?.value
@@ -792,7 +796,7 @@ const CharacterBuilder = (): JSX.Element => {
 
         {/* Quick Actions */}
         <div className="mt-6 text-center">
-          <Link to="/dashboard">
+          <Link href="/dashboard">
             <Button
               variant="outline"
               className="border-purple-400 text-purple-100 "

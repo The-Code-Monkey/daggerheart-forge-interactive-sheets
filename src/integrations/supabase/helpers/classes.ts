@@ -59,7 +59,7 @@ export const getSingleClassBySlugWithDomains = async (
     console.log(error);
     return null;
   }
-  return transformClassWithDomains(data as ClassWithDomainsResponse);
+  return transformClassWithDomains(data as unknown as ClassWithDomainsResponse);
 };
 
 export const getSingleClass = async (id: number): Promise<Class | null> => {

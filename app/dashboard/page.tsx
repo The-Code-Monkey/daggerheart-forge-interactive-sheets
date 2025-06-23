@@ -40,7 +40,7 @@ import { getCharacters } from "@/integrations/supabase/helpers";
 import { CharacterWithRelations } from "@/lib/types";
 import { supabase } from "@/integrations/supabase/client";
 
-export default function DashboardPage() {
+const DashboardPage = () => {
   const { user, signOut } = useAuth();
   const { toast } = useToast();
   const router = useRouter();
@@ -152,7 +152,7 @@ export default function DashboardPage() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-white mb-2">
-              Welcome back, {user?.user_metadata.username ?? "Adventurer"}!
+              Welcome back, {user.user_metadata.username ?? "Adventurer"}!
             </h1>
             <p className="text-brand-200">
               Manage your characters and campaigns
@@ -319,8 +319,8 @@ export default function DashboardPage() {
                                   Delete Character
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete "
-                                  {character.name}"? This action cannot be
+                                  Are you sure you want to delete &quot;
+                                  {character.name}&quot;? This action cannot be
                                   undone.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
@@ -349,7 +349,7 @@ export default function DashboardPage() {
             ) : (
               <div className="text-center py-8">
                 <p className="text-brand-200 mb-4">
-                  You haven't created any characters yet.
+                  You haven&apos;t created any characters yet.
                 </p>
                 {canCreateMore && (
                   <Link href="/character-builder">
@@ -365,7 +365,7 @@ export default function DashboardPage() {
             {!canCreateMore && (
               <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
                 <p className="text-orange-200 text-sm">
-                  You've reached the maximum of {maxCharacters} characters.
+                  You&apos;ve reached the maximum of {maxCharacters} characters.
                   Delete a character to create a new one.
                 </p>
               </div>
@@ -391,7 +391,9 @@ export default function DashboardPage() {
 
           <Card className="bg-linear-to-br from-slate-800/40 to-gray-800/40 border-gray-500/30 opacity-60">
             <CardHeader>
-              <CardTitle className="text-white">Digital Dice & Tools</CardTitle>
+              <CardTitle className="text-white">
+                Digital Dice &amp; Tools
+              </CardTitle>
               <CardDescription className="text-gray-300">
                 Dice rolling, initiative tracking, and more
               </CardDescription>
@@ -406,4 +408,6 @@ export default function DashboardPage() {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardPage;

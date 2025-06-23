@@ -1,4 +1,5 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
@@ -7,10 +8,11 @@ import { Subclass } from "@/lib/types";
 import { getSingleSubclassById } from "@/integrations/supabase/helpers/classes";
 
 const SubclassDetail = (): JSX.Element => {
-  const { subclassId } = useParams();
+  const params = useParams();
+  const subclassId = params?.subclassId;
   const [subclassData, setSubclassData] = useState<Subclass | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Replace the malformed fetch functions with a single, properly scoped one
   const fetchSubclass = async () => {
@@ -48,7 +50,7 @@ const SubclassDetail = (): JSX.Element => {
           <h1 className="text-4xl font-bold text-white mb-4">
             Subclass Not Found
           </h1>
-          <Link to="/game-rules">
+          <Link href="/game-rules">
             <Button className="bg-purple-600 hover:bg-purple-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Game Rules
@@ -65,10 +67,10 @@ const SubclassDetail = (): JSX.Element => {
         {/* Header */}
         <div className="mb-8">
           <Link
-            to="/"
+            href="/"
             onClick={(e) => {
               e.preventDefault();
-              void navigate(-1);
+              router.back();
             }}
           >
             <Button className="text-purple-200 hover:text-white mb-4">

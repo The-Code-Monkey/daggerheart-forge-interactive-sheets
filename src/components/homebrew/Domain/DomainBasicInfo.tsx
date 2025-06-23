@@ -8,18 +8,11 @@ import {
 } from "../../ui/form";
 import { Input } from "../../ui/input";
 import { Textarea } from "../../ui/textarea";
-import { UseFormReturn } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 
-interface DomainFormData {
-  name: string;
-  description: string;
-}
+const DomainBasicInfo = (): JSX.Element => {
+  const form = useFormContext();
 
-interface DomainBasicInfoProps {
-  form: UseFormReturn<DomainFormData>;
-}
-
-const DomainBasicInfo = ({ form }: DomainBasicInfoProps): JSX.Element => {
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-semibold text-white mb-4">

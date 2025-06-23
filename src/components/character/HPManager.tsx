@@ -185,8 +185,10 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
 
           if (armorItem.features.features) {
             armorItem.features.features.forEach((feature: Partial<Feature>) => {
-              Object.keys(
-                (feature.modifiers ?? {}) as Record<Traits, number>
+              (
+                Object.keys(
+                  (feature.modifiers ?? {}) as Record<Traits, number>
+                ) as Traits[]
               ).forEach((key: Traits) => {
                 if (key.toLowerCase() === Traits.EVASION.toLowerCase()) {
                   newEvasion = newEvasion + Number(feature.modifiers![key]);
@@ -281,8 +283,8 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
 
       features.forEach((feature) => {
         if (!feature.modifiers) return;
-        Object.keys(feature.modifiers).forEach(
-          (modifier: "major" | "severe") => {
+        (Object.keys(feature.modifiers) as ["major" | "severe"]).forEach(
+          (modifier) => {
             const value = Number(feature.modifiers?.[modifier]);
             thresholds[modifier] = thresholds[modifier] + value;
           }

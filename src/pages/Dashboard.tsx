@@ -30,7 +30,7 @@ import {
   Beer,
   Trash2,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { getCharacters } from "@/integrations/supabase/helpers";
@@ -118,7 +118,7 @@ const Dashboard = (): JSX.Element => {
           </div>
           <div className="flex flex-row gap-2">
             <Button asChild>
-              <Link to="/homebrew">
+              <Link href="/homebrew">
                 <Beer className="w-4 h-4 mr-2" />
                 Homebrew
               </Link>
@@ -196,7 +196,7 @@ const Dashboard = (): JSX.Element => {
               </CardDescription>
             </div>
             {canCreateMore && (
-              <Link to="/character-builder">
+              <Link href="/character-builder">
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
                   <Plus className="w-4 h-4 mr-2" />
                   Create Character
@@ -243,7 +243,7 @@ const Dashboard = (): JSX.Element => {
                             : ""}
                         </p>
                         <div className="flex gap-2">
-                          <Link to={link} className="flex-1">
+                          <Link href={link} className="flex-1">
                             <Button
                               size="sm"
                               className="w-full bg-blue-600 hover:bg-blue-700 text-white"
@@ -310,7 +310,7 @@ const Dashboard = (): JSX.Element => {
                   You haven&apos;t created any characters yet.
                 </p>
                 {canCreateMore && (
-                  <Link to="/character-builder">
+                  <Link href="/character-builder">
                     <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
                       <Plus className="w-4 h-4 mr-2" />
                       Create Your First Character

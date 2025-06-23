@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-export default function NotFound() {
+const NotFound = () => {
   useEffect(() => {
     console.log("404 Error: User attempted to access non-existent route");
   }, []);
@@ -22,4 +22,6 @@ export default function NotFound() {
       </div>
     </div>
   );
-}
+};
+
+export default NotFound;

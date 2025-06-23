@@ -8,11 +8,11 @@ const Footer = (): JSX.Element => {
         Press System Reference Document (SRD), shared under the Community Gaming
         License. The descriptive text comes straight from the SRD, but all the
         images here are original creations inspired by those descriptions. We
-        don't use any copyrighted art, logos, or story content from Critical
-        Role or its related companies. All trademarks and rights belong to
-        Critical Role, LLC and its partners. Just so you know, this project
-        isn't officially connected to or endorsed by Critical Role or Darrington
-        Press.
+        don&apos;t use any copyrighted art, logos, or story content from
+        Critical Role or its related companies. All trademarks and rights belong
+        to Critical Role, LLC and its partners. Just so you know, this project
+        isn&apos;t officially connected to or endorsed by Critical Role or
+        Darrington Press.
       </p>
       <p>
         If anyone at Critical Role or Darrington Press sees this, please let us

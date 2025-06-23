@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
-export default function Navigation() {
+const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const { user } = useAuth();
@@ -219,4 +219,6 @@ export default function Navigation() {
       </div>
     </nav>
   );
-}
+};
+
+export default Navigation;

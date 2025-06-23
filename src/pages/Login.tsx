@@ -1,18 +1,20 @@
+"use client";
+
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 const Login = (): null => {
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
-      void navigate("/dashboard");
+      router.push("/dashboard");
     } else {
-      void navigate("/auth");
+      router.push("/auth");
     }
-  }, [user, navigate]);
+  }, [user, router]);
 
   return null;
 };

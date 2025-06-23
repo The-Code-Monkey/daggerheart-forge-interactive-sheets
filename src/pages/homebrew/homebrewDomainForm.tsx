@@ -6,7 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import DomainBasicInfo from "@/components/homebrew/Domain/DomainBasicInfo";
 import { ArrowLeft, Save } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   createNewHomebrewDomain,
   DomainFormData,
@@ -17,7 +18,7 @@ const HomebrewDomainForm = (): JSX.Element => {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const form = useForm<DomainFormData>({
     defaultValues: {
@@ -37,7 +38,7 @@ const HomebrewDomainForm = (): JSX.Element => {
     console.log(data);
 
     if (data) {
-      void navigate(`/homebrewed/domain`);
+      router.push(`/homebrewed/domain`);
     }
   };
 
@@ -62,7 +63,7 @@ const HomebrewDomainForm = (): JSX.Element => {
         {/* Header */}
         <div className="text-center mb-8">
           <Link
-            to="/homebrew"
+            href="/homebrew"
             className="inline-flex items-center text-purple-200 hover:text-white mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -124,7 +125,7 @@ const HomebrewDomainForm = (): JSX.Element => {
                 }}
                 className="space-y-6"
               >
-                <CurrentStepComponent form={form} />
+                <CurrentStepComponent />
 
                 <Separator className="bg-brand-500/20" />
 

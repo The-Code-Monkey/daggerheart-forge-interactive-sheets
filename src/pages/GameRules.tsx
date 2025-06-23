@@ -8,7 +8,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { JSX, useEffect, useState } from "react";
 import { Ancestry, Class, Subclass } from "@/lib/types";
 import {
@@ -223,7 +223,7 @@ const GameRules = (): JSX.Element => {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Link to={`/rules/ancestries/${String(ancestry.slug)}`}>
+                    <Link href={`/rules/ancestries/${String(ancestry.slug)}`}>
                       <Button className="w-full bg-purple-600 hover:bg-purple-700 text-white">
                         Learn More
                         <ArrowRight className="w-4 h-4 ml-2" />

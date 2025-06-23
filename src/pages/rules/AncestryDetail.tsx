@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -13,7 +14,8 @@ import { Ancestry } from "@/lib/types";
 import { getSingleAncestryBySlug } from "@/integrations/supabase/helpers";
 
 const AncestryDetail = (): JSX.Element => {
-  const { ancestryName } = useParams();
+  const params = useParams<{ ancestryName: string }>();
+  const ancestryName = params?.ancestryName;
   const [ancestryData, setAncestryData] = useState<Ancestry | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +48,7 @@ const AncestryDetail = (): JSX.Element => {
           <h1 className="text-4xl font-bold text-white mb-4">
             Ancestry Not Found
           </h1>
-          <Link to="/game-rules">
+          <Link href="/game-rules">
             <Button className="bg-purple-600 hover:bg-purple-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Game Rules
@@ -62,7 +64,7 @@ const AncestryDetail = (): JSX.Element => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <Link to="/game-rules">
+          <Link href="/game-rules">
             <Button
               variant="ghost"
               className="text-purple-200 hover:text-white mb-4"

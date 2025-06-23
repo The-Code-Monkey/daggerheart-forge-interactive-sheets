@@ -1,4 +1,5 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -15,10 +16,11 @@ import { getSingleClassBySlugWithDomains } from "@/integrations/supabase/helpers
 import { Class } from "@/lib/types";
 
 const ClassDetail = (): JSX.Element => {
-  const { className } = useParams();
+  const params = useParams();
+  const className = params?.className;
   const [classData, setClassData] = useState<Class | null>(null);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const fetchClass = async () => {
     const data = await getSingleClassBySlugWithDomains(String(className));
@@ -50,7 +52,7 @@ const ClassDetail = (): JSX.Element => {
           <h1 className="text-4xl font-bold text-white mb-4">
             Class Not Found
           </h1>
-          <Link to="/game-rules">
+          <Link href="/game-rules">
             <Button className="bg-purple-600 hover:bg-purple-700">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Game Rules
@@ -69,10 +71,10 @@ const ClassDetail = (): JSX.Element => {
         {/* Header */}
         <div className="mb-8">
           <Link
-            to="/"
+            href="/"
             onClick={(e) => {
               e.preventDefault();
-              void navigate(-1);
+              router.back();
             }}
           >
             <Button className="text-purple-200 hover:text-white mb-4">

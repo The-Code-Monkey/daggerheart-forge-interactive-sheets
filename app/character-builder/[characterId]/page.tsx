@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +10,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { ArrowLeft, Save, Eye } from "lucide-react";
 import Link from "next/link";
 import { CharacterWithRelations } from "@/lib/types";
+import { getCharacterById } from "@/integrations/supabase/helpers";
 
-const CharacterBuilderEditPage = () => {
+const CharacterBuilderEditPage = (): JSX.Element | null => {
   const { user } = useAuth();
   const router = useRouter();
   const params = useParams();
@@ -21,7 +22,7 @@ const CharacterBuilderEditPage = () => {
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
     null
   );
-  const characterId = params.characterId as string;
+  const characterId = params?.characterId as string;
 
   useEffect(() => {
     if (!user) {
@@ -31,30 +32,11 @@ const CharacterBuilderEditPage = () => {
 
     const fetchCharacter = async () => {
       try {
-        const { data, error } = await supabase
-          .from("characters")
-          .select(
-            `
-            *,
-            ancestry:ancestries(*),
-            class:classes(*),
-            subclass:subclasses(*)
-          `
-          )
-          .eq("id", characterId)
-          .eq("user_id", user.id)
-          .single();
+        const data = await getCharacterById(characterId);
 
-        if (error) {
-          if (error.code === "PGRST116") {
-            // Character not found or not owned by user
-            router.push("/dashboard");
-            return;
-          }
-          throw error;
+        if (data) {
+          setCharacter(data);
         }
-
-        setCharacter(data);
       } catch (error) {
         console.error("Error fetching character:", error);
         toast({
@@ -149,7 +131,7 @@ const CharacterBuilderEditPage = () => {
     );
   }
 
-  if (!user ?? !character) {
+  if (!user || !character) {
     return null;
   }
 
@@ -178,7 +160,9 @@ const CharacterBuilderEditPage = () => {
           </div>
           <div className="flex gap-2">
             <Button
-              onClick={handleSaveCharacter}
+              onClick={() => {
+                void handleSaveCharacter();
+              }}
               disabled={loading}
               variant="outline"
               className="border-brand-400 text-brand-100"
@@ -187,7 +171,9 @@ const CharacterBuilderEditPage = () => {
               Save Progress
             </Button>
             <Button
-              onClick={handleMarkComplete}
+              onClick={() => {
+                void handleMarkComplete();
+              }}
               disabled={loading}
               className="bg-green-600 hover:bg-green-700 text-white"
             >
@@ -255,7 +241,7 @@ const CharacterBuilderEditPage = () => {
               <div>
                 <span className="text-brand-200 text-sm">Created:</span>
                 <p className="text-white font-medium">
-                  {new Date(character.created_at).toLocaleDateString()}
+                  {new Date(String(character.created_at)).toLocaleDateString()}
                 </p>
               </div>
             </CardContent>

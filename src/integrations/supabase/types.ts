@@ -19,6 +19,7 @@ export type Database = {
           isHomebrew: boolean | null
           name: string | null
           slug: string | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -29,6 +30,7 @@ export type Database = {
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -39,6 +41,7 @@ export type Database = {
           isHomebrew?: boolean | null
           name?: string | null
           slug?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }
@@ -50,8 +53,10 @@ export type Database = {
           featured: boolean | null
           id: number
           isPublic: boolean | null
+          last_played: string | null
           max_player_count: number | null
           name: string | null
+          status: string | null
           user_id: string | null
         }
         Insert: {
@@ -61,8 +66,10 @@ export type Database = {
           featured?: boolean | null
           id?: number
           isPublic?: boolean | null
+          last_played?: string | null
           max_player_count?: number | null
           name?: string | null
+          status?: string | null
           user_id?: string | null
         }
         Update: {
@@ -72,8 +79,10 @@ export type Database = {
           featured?: boolean | null
           id?: number
           isPublic?: boolean | null
+          last_played?: string | null
           max_player_count?: number | null
           name?: string | null
+          status?: string | null
           user_id?: string | null
         }
         Relationships: []
@@ -591,9 +600,34 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      campaigns_players_access: {
+        Row: {
+          id: number | null
+        }
+        Relationships: []
+      }
+      characters_no_rls: {
+        Row: {
+          id: string | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      get_campaigns_players_access: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: number
+        }[]
+      }
+      get_characters_no_rls: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          id: string
+          user_id: string
+        }[]
+      }
       getCharactersCount: {
         Args: Record<PropertyKey, never>
         Returns: number

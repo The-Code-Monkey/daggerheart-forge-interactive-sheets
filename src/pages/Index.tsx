@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Dice1, Users, BookOpen, Sword, Shield, Sparkles } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import HeroSection from "@/components/HeroSection";
 import FeatureCard from "@/components/FeatureCard";
 import FeaturedCampaigns from "@/components/FeaturedCampaigns";
@@ -97,7 +97,7 @@ const Index = (): JSX.Element => {
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/character-builder">
+                <Link href="/character-builder">
                   <Button
                     size="lg"
                     className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-8 py-3"
@@ -105,7 +105,7 @@ const Index = (): JSX.Element => {
                     Create Character
                   </Button>
                 </Link>
-                <Link to="/campaigns">
+                <Link href="/campaigns">
                   <Button
                     size="lg"
                     variant="outline"

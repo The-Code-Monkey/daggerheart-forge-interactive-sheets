@@ -173,7 +173,7 @@ const InventoryManager = ({
               <SheetTitle className="text-white">Add Inventory Item</SheetTitle>
               <SheetDescription className="text-purple-200">
                 Search for items from the database or add custom items to your
-                character's inventory.
+                character&apos;s inventory.
               </SheetDescription>
             </SheetHeader>
             <div className="space-y-6 mt-6">

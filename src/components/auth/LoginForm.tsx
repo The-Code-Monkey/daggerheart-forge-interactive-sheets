@@ -89,7 +89,9 @@ export const LoginForm = ({ onToggleMode }: LoginFormProps) => {
         {loading ? "Loading..." : "Sign In"}
       </Button>
       <div className="text-center">
-        <p className="text-brand-200 text-sm mb-2">Don't have an account?</p>
+        <p className="text-brand-200 text-sm mb-2">
+          Don&apos;t have an account?
+        </p>
         <Button
           variant="outline"
           className="w-full border-brand-400 text-brand-100"

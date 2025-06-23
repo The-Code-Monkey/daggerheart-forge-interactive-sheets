@@ -1,6 +1,5 @@
 import React from "react";
 import { render, RenderOptions, RenderResult } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
 
 // Mock AuthContext
 const mockAuthContext = {
@@ -16,11 +15,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <BrowserRouter>
-      <AuthProvider>{children}</AuthProvider>
-    </BrowserRouter>
-  );
+  return <AuthProvider>{children}</AuthProvider>;
 };
 
 const customRender = (

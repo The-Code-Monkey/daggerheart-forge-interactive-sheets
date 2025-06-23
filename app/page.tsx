@@ -12,7 +12,7 @@ import HeroSection from "@/components/HeroSection";
 import FeatureCard from "@/components/FeatureCard";
 import FeaturedCampaigns from "@/components/FeaturedCampaigns";
 
-export default function Home() {
+const Home = () => {
   const features = [
     {
       icon: BookOpen,
@@ -120,4 +120,6 @@ export default function Home() {
       </section>
     </div>
   );
-}
+};
+
+export default Home;
