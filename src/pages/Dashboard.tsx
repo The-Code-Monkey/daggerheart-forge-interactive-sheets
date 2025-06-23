@@ -277,8 +277,8 @@ const Dashboard = (): JSX.Element => {
                                   Delete Character
                                 </AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  Are you sure you want to delete "
-                                  {character.name}"? This action cannot be
+                                  Are you sure you want to delete &quot;
+                                  {character.name}&quot;? This action cannot be
                                   undone.
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
@@ -307,7 +307,7 @@ const Dashboard = (): JSX.Element => {
             ) : (
               <div className="text-center py-8">
                 <p className="text-brand-200 mb-4">
-                  You haven't created any characters yet.
+                  You haven&apos;t created any characters yet.
                 </p>
                 {canCreateMore && (
                   <Link to="/character-builder">
@@ -323,7 +323,7 @@ const Dashboard = (): JSX.Element => {
             {!canCreateMore && (
               <div className="mt-4 p-4 bg-orange-900/30 border border-orange-500/30 rounded-lg">
                 <p className="text-orange-200 text-sm">
-                  You've reached the maximum of {maxCharacters} characters.
+                  You&apos;ve reached the maximum of {maxCharacters} characters.
                   Delete a character to create a new one.
                 </p>
               </div>

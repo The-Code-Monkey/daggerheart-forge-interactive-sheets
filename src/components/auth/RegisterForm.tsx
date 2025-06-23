@@ -1,9 +1,12 @@
-import { JSX, useState, Suspense, lazy } from "react";
+"use client";
+
+import { useState, Suspense, lazy } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 // Lazy load the Turnstile component to reduce initial bundle size
 const TurnstileCaptcha = lazy(() => import("./TurnstileCaptcha"));
@@ -12,7 +15,7 @@ interface RegisterFormProps {
   onToggleMode: () => void;
 }
 
-const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
+const RegisterForm = ({ onToggleMode }: RegisterFormProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -31,6 +34,7 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
   });
 
   const { toast } = useToast();
+  const router = useRouter();
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();

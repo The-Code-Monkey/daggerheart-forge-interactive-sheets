@@ -1,12 +1,15 @@
-import { JSX, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Sparkles } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
-const Navigation = (): JSX.Element => {
+export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
   const { user } = useAuth();
 
   const publicNavItems = [
@@ -30,7 +33,7 @@ const Navigation = (): JSX.Element => {
     { name: "Homebrewed Domains", path: "/homebrewed/domain" },
   ];
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => pathname === path;
 
   return (
     <nav className="bg-brand-900/90 backdrop-blur-xs border-b border-brand-700/50 sticky top-0 z-50">
@@ -38,7 +41,7 @@ const Navigation = (): JSX.Element => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link
-            to={user ? "/dashboard" : "/"}
+            href={user ? "/dashboard" : "/"}
             className="flex items-center space-x-2"
           >
             <Sparkles className="w-8 h-8 text-yellow-400" />
@@ -49,18 +52,30 @@ const Navigation = (): JSX.Element => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex h-full items-center space-x-8">
-            {publicNavItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                target={item.target}
-                className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
-                  isActive(item.path) ? "text-yellow-400" : ""
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {publicNavItems.map((item) =>
+              item.path.startsWith("http") ? (
+                <a
+                  key={item.name}
+                  href={item.path}
+                  target={item.target}
+                  className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
+                    isActive(item.path) ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.path}
+                  className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
+                    isActive(item.path) ? "text-yellow-400" : ""
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            )}
             {user && (
               <>
                 <div className="group relative text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center">
@@ -69,7 +84,7 @@ const Navigation = (): JSX.Element => {
                     {homebrewNavItems.map((item) => (
                       <Link
                         key={item.name}
-                        to={item.path}
+                        href={item.path}
                         className={`text-white hover:text-yellow-400 transition-colors py-2 ${
                           isActive(item.path) ? "text-yellow-400" : ""
                         }`}
@@ -83,7 +98,7 @@ const Navigation = (): JSX.Element => {
                 {protectedNavItems.map((item) => (
                   <Link
                     key={item.name}
-                    to={item.path}
+                    href={item.path}
                     className={`text-white hover:text-yellow-400 transition-colors h-full flex items-center justify-center ${
                       isActive(item.path) ? "text-yellow-400" : ""
                     }`}
@@ -94,13 +109,13 @@ const Navigation = (): JSX.Element => {
               </>
             )}
             {!user ? (
-              <Link to="/auth">
+              <Link href="/auth">
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
                   Login
                 </Button>
               </Link>
             ) : (
-              <Link to="/dashboard">
+              <Link href="/dashboard">
                 <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold">
                   Dashboard
                 </Button>
@@ -130,25 +145,41 @@ const Navigation = (): JSX.Element => {
         {isOpen && (
           <div className="lg:hidden py-4 border-t border-brand-700/50">
             <div className="flex flex-col space-y-2">
-              {publicNavItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                  className={`text-white hover:text-yellow-400 transition-colors py-2 ${
-                    isActive(item.path) ? "text-yellow-400" : ""
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {publicNavItems.map((item) =>
+                item.path.startsWith("http") ? (
+                  <a
+                    key={item.name}
+                    href={item.path}
+                    target={item.target}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                    className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                      isActive(item.path) ? "text-yellow-400" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.path}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                    className={`text-white hover:text-yellow-400 transition-colors py-2 ${
+                      isActive(item.path) ? "text-yellow-400" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
               {user &&
                 protectedNavItems.map((item) => (
                   <Link
                     key={item.name}
-                    to={item.path}
+                    href={item.path}
                     onClick={() => {
                       setIsOpen(false);
                     }}
@@ -161,7 +192,7 @@ const Navigation = (): JSX.Element => {
                 ))}
               {!user ? (
                 <Link
-                  to="/auth"
+                  href="/auth"
                   onClick={() => {
                     setIsOpen(false);
                   }}
@@ -172,7 +203,7 @@ const Navigation = (): JSX.Element => {
                 </Link>
               ) : (
                 <Link
-                  to="/dashboard"
+                  href="/dashboard"
                   onClick={() => {
                     setIsOpen(false);
                   }}
@@ -188,6 +219,4 @@ const Navigation = (): JSX.Element => {
       </div>
     </nav>
   );
-};
-
-export default Navigation;
+}

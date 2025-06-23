@@ -1,20 +1,9 @@
 import Text from "@/components/atoms/Text";
 import { supabase } from "@/integrations/supabase/client";
-import { JSX, useEffect, useState } from "react";
+import { JSX } from "react";
 
-const HeroStats = (): JSX.Element => {
-  const [characterCount, setCharacterCount] = useState(0);
-
-  useEffect(() => {
-    const fetchCharacterCount = async () => {
-      const { data } = await supabase.rpc("getCharactersCount");
-
-      if (typeof data === "number") {
-        setCharacterCount(data);
-      }
-    };
-    void fetchCharacterCount();
-  }, []);
+const HeroStats = async (): Promise<JSX.Element> => {
+  const characterCount = (await supabase.rpc("getCharactersCount")).data;
 
   const digits = String(characterCount).split("");
   return (

@@ -1,24 +1,52 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
   "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es6"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
-    "isolatedModules": true,
     "noImplicitAny": false,
     "noUnusedParameters": false,
-    "skipLibCheck": true,
-    "allowJs": true,
     "noUnusedLocals": false,
     "strictNullChecks": true,
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "types": ["@testing-library/jest-dom", "node", "jest"]
+    "types": [
+      "@testing-library/jest-dom",
+      "node",
+      "jest"
+    ],
+    "target": "ES2017"
   },
-  "include": ["babel.config.js", "src"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "babel.config.js",
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

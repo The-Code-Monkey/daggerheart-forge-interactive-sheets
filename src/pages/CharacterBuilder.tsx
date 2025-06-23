@@ -2,7 +2,8 @@ import { useState, useEffect, JSX } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -90,9 +91,10 @@ interface FormData {
 }
 
 const CharacterBuilder = (): JSX.Element => {
-  const { characterId: urlCharacterId } = useParams();
+  const params = useParams<{ characterId: string }>();
+  const urlCharacterId = params?.characterId;
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [characterId, setCharacterId] = useState<string | null>(

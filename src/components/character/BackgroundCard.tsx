@@ -31,7 +31,7 @@ const BackgroundCard = ({
     ) as HTMLTextAreaElement;
     const newText = textArea.value;
 
-    const data = await updateCharacter(characterId!, {
+    const data = await updateCharacter(characterId, {
       background: newText,
     });
 
