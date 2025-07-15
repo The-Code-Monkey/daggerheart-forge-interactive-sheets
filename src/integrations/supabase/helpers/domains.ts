@@ -97,7 +97,7 @@ export const getDomainEffects = async (
   const { data, error } = await supabase
     .from("cards")
     .select("*")
-    .eq("level", level)
+    .lte("level", level)
     .in("domain_id", domainIds);
 
   if (error) {
