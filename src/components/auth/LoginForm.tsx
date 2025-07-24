@@ -17,6 +17,18 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
+  const onTestAccount = async () => {
+    const { error } = await supabase.auth.signInAnonymously();
+
+    if (!error) {
+      toast({
+        title: "Welcome!",
+        description: "You have successfully signed in as a guest.",
+      });
+      void navigate("/dashboard");
+    }
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -95,6 +107,16 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
           type="button"
         >
           Create Account
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full border-brand-400 text-brand-100"
+          onClick={() => {
+            void onTestAccount();
+          }}
+          type="button"
+        >
+          Create Test Account
         </Button>
       </div>
     </form>

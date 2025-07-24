@@ -96,7 +96,7 @@ const CharacterBuilder = (): JSX.Element => {
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(1);
   const [characterId, setCharacterId] = useState<string | null>(
-    urlCharacterId ?? null
+    urlCharacterId ?? null,
   );
   const [isLoading, setIsLoading] = useState(false);
 
@@ -191,7 +191,7 @@ const CharacterBuilder = (): JSX.Element => {
                   value: subclassData.id,
                   label: String(subclassData.name),
                 }
-              : undefined
+              : undefined,
           );
         }
       } else {
@@ -239,13 +239,13 @@ const CharacterBuilder = (): JSX.Element => {
           "ancestry",
           ancestryData
             ? { value: ancestryData.id, label: String(ancestryData.name) }
-            : undefined
+            : undefined,
         );
         setValue(
           "class",
           classData
             ? { value: classData.id, label: String(classData.name) }
-            : undefined
+            : undefined,
         );
         setValue("community", data.community ? String(data.community) : null);
         setValue("subclass", data.subclass ?? undefined);
@@ -281,6 +281,12 @@ const CharacterBuilder = (): JSX.Element => {
         age: data.age ?? null,
         pronouns: data.pronouns ?? null,
         gender: data.gender ?? null,
+        additional:
+          currentStep === 4
+            ? {
+                levelUps: data.level - 1,
+              }
+            : {},
       };
 
       if (characterId) {
@@ -465,7 +471,7 @@ const CharacterBuilder = (): JSX.Element => {
                       value={field.value ?? ""}
                       onChange={(e) => {
                         field.onChange(
-                          e.target.value ? parseInt(e.target.value, 10) : null
+                          e.target.value ? parseInt(e.target.value, 10) : null,
                         );
                       }}
                     />
@@ -663,13 +669,13 @@ const CharacterBuilder = (): JSX.Element => {
       case 4:
         const cls = classes.find((cls) => cls.id === formData.class?.value);
         const subclass = subclasses.find(
-          (subclass) => subclass.id === formData.subclass?.value
+          (subclass) => subclass.id === formData.subclass?.value,
         );
         const ancestry = ancestries.find(
-          (ancestry) => ancestry.id === formData.ancestry?.value
+          (ancestry) => ancestry.id === formData.ancestry?.value,
         );
         const community = communities.find(
-          (community) => String(community.id) === formData.community
+          (community) => String(community.id) === formData.community,
         );
         return (
           <div className="space-y-6" key="step4">
