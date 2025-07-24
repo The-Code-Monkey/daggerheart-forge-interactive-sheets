@@ -27,7 +27,7 @@ const CharacterSheet = (): JSX.Element => {
   const { toast } = useToast();
 
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
-    null,
+    null
   );
   const [level, setLevel] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -52,7 +52,7 @@ const CharacterSheet = (): JSX.Element => {
     (record: Record<string, unknown>) => {
       void updateCharacterData(record);
     },
-    500,
+    500
   );
 
   const getTierUp = (lvl: number) => {
@@ -120,7 +120,7 @@ const CharacterSheet = (): JSX.Element => {
   };
 
   const handleUpdateFormSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
+    event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
