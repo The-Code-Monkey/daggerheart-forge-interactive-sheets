@@ -103,7 +103,7 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
             void handleForgotPassword();
           }}
         >
-          Back to Login
+          Reset Password
         </Button>
       </div>
     );
