@@ -15,12 +15,13 @@ const characterString = `*, class(name, base_evasion, base_hp, features, additio
     )
   )), ancestry(id, name), subclass(id, name, features), community(id, name)`;
 
-export const getCharacters = async (): Promise<
-  CharacterWithRelations[] | null
-> => {
+export const getCharacters = async (
+  userId: string,
+): Promise<CharacterWithRelations[] | null> => {
   const { data, error } = await supabase
     .from("characters")
     .select(characterString)
+    .eq("user_id", userId)
     .limit(5);
 
   if (error) {
@@ -31,7 +32,7 @@ export const getCharacters = async (): Promise<
 };
 
 export const getCharacterById = async (
-  cId: string
+  cId: string,
 ): Promise<CharacterWithRelations | null> => {
   const { data, error } = await supabase
     .from("characters")
@@ -51,7 +52,7 @@ export const getCharacterById = async (
   const formattedData = {
     ...data,
     domains: classes_domains.map(
-      (domain: { domains: Domain }) => domain.domains
+      (domain: { domains: Domain }) => domain.domains,
     ),
   };
 
@@ -60,7 +61,7 @@ export const getCharacterById = async (
 
 export const updateCharacter = async (
   characterId: string,
-  updates: Partial<Character>
+  updates: Partial<Character>,
 ): Promise<CharacterWithRelations | null> => {
   const { data, error } = await supabase
     .from("characters")
@@ -81,7 +82,7 @@ export const updateCharacter = async (
   const formattedData = {
     ...data,
     domains: classes_domains.map(
-      (domain: { domains: Domain }) => domain.domains
+      (domain: { domains: Domain }) => domain.domains,
     ),
   };
 
