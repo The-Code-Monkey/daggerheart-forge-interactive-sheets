@@ -11,6 +11,10 @@ const mockAuthContext = {
   signUp: jest.fn(),
 };
 
+jest.mock("@/contexts/AuthContext", () => ({
+  useAuth: jest.fn().mockImplementation(() => mockAuthContext),
+}));
+
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return <div data-testid="auth-provider">{children}</div>;
 };

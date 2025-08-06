@@ -194,7 +194,29 @@ export type Session = Omit<
   additional: Record<string, never>;
 };
 
-export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"];
+export type User = Database["public"]["Tables"]["profiles"]["Row"];
+
+export type Campaign = Database["public"]["Tables"]["campaigns"]["Row"] & {
+  players?: {
+    character: Partial<CharacterWithRelations>;
+  }[];
+  sessions?: Partial<Session>[];
+  gm?: Partial<User>;
+};
+
+export type CampaignWithCount =
+  Database["public"]["Tables"]["campaigns"]["Row"] & {
+    players: [
+      {
+        count: number;
+      },
+    ];
+    sessions: [
+      {
+        count: number;
+      },
+    ];
+  };
 
 export type CampaignWithRelations = Omit<
   Database["public"]["Tables"]["campaigns"]["Row"],

@@ -11,7 +11,7 @@ import { JSX, Suspense, lazy, useEffect, useState } from "react";
 import checkSupabaseGlobalStatus from "./integrations/status";
 
 // Dynamic imports for route-level code splitting
-const Index = lazy(() => import("./pages/Index"));
+import Index from "./pages/Index";
 const GameRules = lazy(() => import("./pages/GameRules"));
 const Auth = lazy(() => import("./pages/Auth"));
 const ResetPassword = lazy(() => import("./pages/ResetPassword"));
@@ -46,6 +46,14 @@ const HomebrewViewDomains = lazy(
   () => import("./pages/homebrew/view/domain/HomebrewViewDomains"),
 );
 
+// Campaign Pages
+const CreateCampaignPage = lazy(() => import("./pages/campaigns/create"));
+const CampaignJoinPage = lazy(() => import("./pages/campaigns/join"));
+const CampaignEditPage = lazy(() => import("./pages/campaigns/edit"));
+const CampaignViewPage = lazy(() => import("./pages/campaigns/view"));
+
+import "./App.css";
+
 const App = (): JSX.Element => {
   const [status, setStatus] = useState(true);
 
@@ -59,7 +67,7 @@ const App = (): JSX.Element => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <div className="min-h-screen">
+          <div className="h-full">
             <Navigation />
             {!status && (
               <div className="w-full p-2 text-center text-xl">
@@ -170,6 +178,38 @@ const App = (): JSX.Element => {
                   element={
                     <ProtectedRoute>
                       <HomebrewViewDomains />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/create"
+                  element={
+                    <ProtectedRoute>
+                      <CreateCampaignPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:invite/invite"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignJoinPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:id/edit"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignEditPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/campaigns/:id"
+                  element={
+                    <ProtectedRoute>
+                      <CampaignViewPage />
                     </ProtectedRoute>
                   }
                 />
