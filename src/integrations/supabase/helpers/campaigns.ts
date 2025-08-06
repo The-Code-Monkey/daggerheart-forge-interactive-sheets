@@ -8,12 +8,12 @@ import { CampaignFormValues } from "@/pages/campaigns/create";
 import { Option } from "@/components/molecules/GenericMultiSelect";
 
 export const getSingleCampaignByIdBasic = async (
-  id: number,
+  id: number
 ): Promise<Campaign | null> => {
   const { data, error } = await supabase
     .from("campaigns")
     .select(
-      "id, name, description, additional, created_at, gm: user_id(username), players: campaigns_players(character: character_id(name, class(name)))",
+      "id, name, description, additional, created_at, gm: user_id(username), players: campaigns_players(character: character_id(name, class(name))), sessions(name, play_date)"
     )
     .eq("id", id)
     .single();
@@ -28,7 +28,7 @@ export const getSingleCampaignByIdBasic = async (
 
 export const getSingleCampaignById = async (
   id: number,
-  user_id?: string,
+  user_id?: string
 ): Promise<CampaignWithRelations | null> => {
   const query = supabase
     .from("campaigns")
@@ -50,7 +50,7 @@ export const getSingleCampaignById = async (
 };
 
 export const getMyCampaigns = async (
-  user_id: string,
+  user_id: string
 ): Promise<CampaignWithCount[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
@@ -67,7 +67,7 @@ export const getMyCampaigns = async (
 };
 
 export const getCampaignsWhereUserIsPlayer = async (
-  user_id: string,
+  user_id: string
 ): Promise<Campaign[] | null> => {
   const { data, error } = await supabase
     .from("campaigns")
@@ -77,7 +77,7 @@ export const getCampaignsWhereUserIsPlayer = async (
         campaigns_players!inner(
           characters!inner(user_id)
         )
-      `,
+      `
     )
     .eq("campaigns_players.characters.user_id", user_id)
     .limit(3);
@@ -105,7 +105,7 @@ export const getFeaturedCampaigns = async (): Promise<Campaign[] | null> => {
 };
 
 export const createCampaign = async (
-  record: CampaignFormValues & { user_id: string },
+  record: CampaignFormValues & { user_id: string }
 ): Promise<{ data: Campaign | null; error: Error | null }> => {
   const { data, error } = await supabase
     .from("campaigns")
@@ -147,7 +147,7 @@ export const createCampaign = async (
 
 export const addCharacterToCampaign = async (
   character: Option,
-  campaignId: number,
+  campaignId: number
 ): Promise<boolean> => {
   const result = await supabase
     .from("campaigns_players")

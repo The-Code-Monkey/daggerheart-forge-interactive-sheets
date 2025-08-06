@@ -8,8 +8,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
 import { Campaign, CampaignWithCount } from "@/lib/types";
-import { Calendar, Eye, Plus, Settings, Users } from "lucide-react";
+import { Calendar, Eye, Plus, Users } from "lucide-react";
 import { JSX } from "react";
 import { Link } from "react-router-dom";
 
@@ -24,6 +25,8 @@ const CampaignsGrid = ({
   loading,
   isDm,
 }: CampaignsGridProps): JSX.Element => {
+  const { toast } = useToast();
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
       {loading &&
@@ -86,7 +89,7 @@ const CampaignsGrid = ({
                   {campaign.status}
                 </Badge>
               </div>
-              {isDm && (
+              {/*{isDm && (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -97,7 +100,7 @@ const CampaignsGrid = ({
                     <Settings className="w-4 h-4" />
                   </Link>
                 </Button>
-              )}
+              )}*/}
             </div>
             <CardDescription className="text-brand-200">
               {campaign.description}
@@ -154,6 +157,11 @@ const CampaignsGrid = ({
                       void navigator.clipboard.writeText(
                         `${window.location.origin}/campaigns/${String(campaign.id)}/invite`
                       );
+                      toast({
+                        title: "Invite link copied",
+                        description:
+                          "The invite link has been copied to your clipboard.",
+                      });
                     }}
                   >
                     <Plus className="w-4 h-4 mr-2" />

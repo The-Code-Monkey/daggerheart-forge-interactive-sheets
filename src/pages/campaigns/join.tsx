@@ -1,5 +1,5 @@
 import { JSX, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, ShieldCheck, XCircle } from "lucide-react";
@@ -12,9 +12,12 @@ import GenericMultiSelect, {
   Option,
 } from "@/components/molecules/GenericMultiSelect";
 import { CharacterWithRelations } from "@/lib/types";
+import { useAuth } from "@/contexts/AuthContext";
 
 const JoinCampaignPage = (): JSX.Element => {
   const { invite: inviteToken } = useParams();
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [campaignName, setCampaignName] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,8 +29,6 @@ const JoinCampaignPage = (): JSX.Element => {
   );
 
   useEffect(() => {
-    console.log(inviteToken);
-
     if (!inviteToken) {
       setError("Invalid invite link.");
       setLoading(false);
@@ -50,7 +51,7 @@ const JoinCampaignPage = (): JSX.Element => {
   };
 
   const fetchCharacters = async (): Promise<Option[] | null> => {
-    const data = await getCharacters();
+    const data = await getCharacters(String(user?.id));
 
     if (data) {
       return data
@@ -74,6 +75,10 @@ const JoinCampaignPage = (): JSX.Element => {
         parseInt(inviteToken, 10)
       );
       setJoined(result);
+
+      setTimeout(() => {
+        void navigate(`/campaigns/${String(inviteToken)}`);
+      }, 2000);
     } else {
       setJoined(false);
     }
