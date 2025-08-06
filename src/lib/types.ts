@@ -66,6 +66,13 @@ export interface CharacterAdditional {
     connections?: Record<string, string>;
     experiences?: [string, string];
   };
+  tierUp?: boolean;
+  tiers?: Record<
+    0 | 1 | 2 | 3,
+    {
+      modifiers?: Record<Traits, number>;
+    }
+  >;
 }
 
 export type Domain = Database["public"]["Tables"]["domains"]["Row"] & {

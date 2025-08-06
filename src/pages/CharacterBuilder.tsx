@@ -281,6 +281,12 @@ const CharacterBuilder = (): JSX.Element => {
         age: data.age ?? null,
         pronouns: data.pronouns ?? null,
         gender: data.gender ?? null,
+        additional:
+          currentStep === 4
+            ? {
+                levelUps: data.level - 1,
+              }
+            : {},
       };
 
       if (characterId) {

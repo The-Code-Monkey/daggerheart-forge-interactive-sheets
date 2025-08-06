@@ -19,6 +19,8 @@ import EffectsFeaturesManager from "@/components/character/EffectsFeaturesManage
 import QuestionsManager from "@/components/character/QuestionsManager";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Text from "@/components/atoms/Text";
+import { Dialog, DialogContent, DialogFooter } from "@/components/ui/dialog";
+import { debounce } from "lodash";
 
 const CharacterSheet = (): JSX.Element => {
   const { characterId } = useParams();
@@ -27,6 +29,7 @@ const CharacterSheet = (): JSX.Element => {
   const [character, setCharacter] = useState<CharacterWithRelations | null>(
     null
   );
+  const [level, setLevel] = useState<number>(1);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchCharacterById = async (id: string) => {
@@ -34,6 +37,7 @@ const CharacterSheet = (): JSX.Element => {
     const data = await getCharacterById(id);
     if (data) {
       setCharacter(data);
+      setLevel(data.level ?? 1);
     }
     setIsLoading(false);
   };
@@ -44,10 +48,47 @@ const CharacterSheet = (): JSX.Element => {
     }
   }, [characterId]);
 
+  const debouncedUpdateCharacterData = debounce(
+    (record: Record<string, unknown>) => {
+      void updateCharacterData(record);
+    },
+    500
+  );
+
+  const getTierUp = (lvl: number) => {
+    if (lvl === 2 || lvl === 5 || lvl === 8) return true;
+    return false;
+  };
+
+  const getTier = (lvl: number) => {
+    switch (lvl) {
+      case 2: {
+        return 2;
+      }
+      case 5: {
+        return 3;
+      }
+      case 8: {
+        return 4;
+      }
+      default: {
+        return 1;
+      }
+    }
+  };
+
   const updateLevel = (lvl: number) => {
+    const levelWentUp = lvl > (character?.level ?? 1);
+
     if (lvl >= 1 && lvl <= 10) {
-      void updateCharacterData({
+      setLevel(lvl);
+      debouncedUpdateCharacterData({
         level: lvl,
+        tier: getTier(lvl),
+        additional: {
+          ...(character?.additional ?? {}),
+          tierUp: levelWentUp ? getTierUp(lvl) : undefined,
+        },
       });
     }
   };
@@ -76,6 +117,15 @@ const CharacterSheet = (): JSX.Element => {
         variant: "destructive",
       });
     }
+  };
+
+  const handleUpdateFormSubmit = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const updates = Object.fromEntries(formData.entries());
+    await updateCharacterData(updates);
   };
 
   if (isLoading) {
@@ -115,6 +165,31 @@ const CharacterSheet = (): JSX.Element => {
 
   return (
     <div className="min-h-screen bg-nebula p-4">
+      <Dialog defaultOpen={false} open={false} modal>
+        <DialogContent>
+          <form
+            onSubmit={(event) => {
+              void handleUpdateFormSubmit(event);
+            }}
+          >
+            <div className="flex flex-col gap-2 w-full">
+              {Array(character.tier ?? 1)
+                .fill(null)
+                .map((_, index) => {
+                  return <div>{index + 1}</div>;
+                })}
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                // className="border-purple-400 text-purple-100"
+              >
+                Save Changes
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -133,7 +208,7 @@ const CharacterSheet = (): JSX.Element => {
                 {character.name}
               </h1>
               <div className="flex gap-2 mt-2">
-                <Badge variant="secondary">Level {character.level}</Badge>
+                <Badge variant="secondary">Level {level}</Badge>
                 <Badge
                   variant="outline"
                   className="border-purple-400 text-purple-200"
@@ -172,17 +247,17 @@ const CharacterSheet = (): JSX.Element => {
                 <div className="text-2xl font-bold ml-0 text-white flex flex-row gap-2 items-center justify-center">
                   <Button
                     onClick={() => {
-                      updateLevel(Number(character.level) - 1);
+                      updateLevel(Number(level) - 1);
                     }}
                   >
                     <Minus className="w-5 h-5" />
                   </Button>
                   <Text variant="h3" className="w-1/3 text-center">
-                    {character.level}
+                    {level}
                   </Text>
                   <Button
                     onClick={() => {
-                      updateLevel(Number(character.level) + 1);
+                      updateLevel(Number(level) + 1);
                     }}
                   >
                     <Plus className="w-5 h-5" />

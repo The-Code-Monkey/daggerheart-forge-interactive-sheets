@@ -14,6 +14,7 @@ import checkSupabaseGlobalStatus from "./integrations/status";
 import Index from "./pages/Index";
 const GameRules = lazy(() => import("./pages/GameRules"));
 const Auth = lazy(() => import("./pages/Auth"));
+const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const CharacterBuilder = lazy(() => import("./pages/CharacterBuilder"));
 const CharacterSheet = lazy(() => import("./pages/CharacterSheet"));
@@ -25,24 +26,24 @@ const SubclassDetail = lazy(() => import("./pages/rules/SubclassDetail"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
 // Homebrew Create Forms
 const HomebrewClassForm = lazy(
-  () => import("./pages/homebrew/homebrewClassForm")
+  () => import("./pages/homebrew/homebrewClassForm"),
 );
 const HomebrewSubclassForm = lazy(
-  () => import("./pages/homebrew/homebrewSubclassForm")
+  () => import("./pages/homebrew/homebrewSubclassForm"),
 );
 const HomebrewDomainForm = lazy(
-  () => import("./pages/homebrew/homebrewDomainForm")
+  () => import("./pages/homebrew/homebrewDomainForm"),
 );
 
 // Homebrew View Pages
 const HomebrewViewClasses = lazy(
-  () => import("./pages/homebrew/view/class/HomebrewViewClasses")
+  () => import("./pages/homebrew/view/class/HomebrewViewClasses"),
 );
 const HomebrewViewSubclasses = lazy(
-  () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses")
+  () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses"),
 );
 const HomebrewViewDomains = lazy(
-  () => import("./pages/homebrew/view/domain/HomebrewViewDomains")
+  () => import("./pages/homebrew/view/domain/HomebrewViewDomains"),
 );
 
 // Campaign Pages
@@ -78,6 +79,7 @@ const App = (): JSX.Element => {
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/auth" element={<Auth />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
                 <Route path="/game-rules" element={<GameRules />} />
                 <Route
                   path="/rules/classes/:className"
