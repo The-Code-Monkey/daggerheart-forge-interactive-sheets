@@ -173,7 +173,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
   }, [domainCards]);
 
   const fetchItemsInventory = async () => {
-    let newEvasion = Number(character.class?.base_evasion ?? 0);
+    let newEvasion = character.class?.base_evasion ?? 0;
     let newArmor = 0;
 
     const equippedArmorItems = await allEquippedArmorItems;
@@ -181,7 +181,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
     if (equippedArmorItems.length > 0) {
       equippedArmorItems.forEach((armorItem) => {
         if (armorItem.features) {
-          newArmor = newArmor + Number(armorItem.features.base);
+          newArmor = newArmor + armorItem.features.base;
 
           if (armorItem.features.features) {
             armorItem.features.features.forEach((feature: Partial<Feature>) => {
@@ -189,7 +189,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
                 (feature.modifiers ?? {}) as Record<Traits, number>
               ).forEach((key: Traits) => {
                 if (key.toLowerCase() === Traits.EVASION.toLowerCase()) {
-                  newEvasion = newEvasion + Number(feature.modifiers![key]);
+                  newEvasion = newEvasion + feature.modifiers![key];
                 }
               });
             });
@@ -204,14 +204,14 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
         equippedArmorItems.length === 0
       ) {
         if (domainCard.additional.if.armor[1].base) {
-          newArmor = newArmor + Number(domainCard.additional.if.armor[1].base);
+          newArmor = newArmor + domainCard.additional.if.armor[1].base;
         }
       } else if (
         domainCard.additional?.if?.armor?.[0] === true &&
         equippedArmorItems.length > 0
       ) {
         if (domainCard.additional.if.armor[1].base) {
-          newArmor = newArmor + Number(domainCard.additional.if.armor[1].base);
+          newArmor = newArmor + domainCard.additional.if.armor[1].base;
         }
       } else if (
         domainCard.additional?.if?.domainCardCount &&
@@ -221,8 +221,7 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       ) {
         if (domainCard.additional.if.domainCardCount[1].armor) {
           newArmor =
-            newArmor +
-            Number(domainCard.additional.if.domainCardCount[1].armor);
+            newArmor + domainCard.additional.if.domainCardCount[1].armor;
         }
       }
     });
@@ -240,18 +239,15 @@ const HPManager = ({ character, onUpdate }: HPManagerProps): JSX.Element => {
       major: 0,
       severe: 0,
     };
-    const tier = getCharacterTier(Number(character.level ?? 0));
+    const tier = getCharacterTier(character.level ?? 0);
 
     const equippedArmorItems = await allEquippedArmorItems;
 
     if (equippedArmorItems.length > 0) {
       const armor = equippedArmorItems[0];
-      thresholds.major = Number(
-        armor.features?.thresholds.major ?? thresholds.major
-      );
-      thresholds.severe = Number(
-        armor.features?.thresholds.severe ?? thresholds.severe
-      );
+      thresholds.major = armor.features?.thresholds.major ?? thresholds.major;
+      thresholds.severe =
+        armor.features?.thresholds.severe ?? thresholds.severe;
     } else if (domainCards.length > 0) {
       domainCards.forEach((card) => {
         if (card.additional?.if?.armor?.[0] === false) {

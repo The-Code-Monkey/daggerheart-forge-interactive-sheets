@@ -21,7 +21,7 @@ const HomebrewDomainForm = (): JSX.Element => {
 
   const form = useForm<DomainFormData>({
     defaultValues: {
-      user_id: user?.id ? String(user.id) : "",
+      user_id: user?.id ?? "",
     },
   });
 

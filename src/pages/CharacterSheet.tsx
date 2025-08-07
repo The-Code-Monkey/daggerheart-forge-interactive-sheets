@@ -247,7 +247,7 @@ const CharacterSheet = (): JSX.Element => {
                 <div className="text-2xl font-bold ml-0 text-white flex flex-row gap-2 items-center justify-center">
                   <Button
                     onClick={() => {
-                      updateLevel(Number(level) - 1);
+                      updateLevel(level - 1);
                     }}
                   >
                     <Minus className="w-5 h-5" />
@@ -257,7 +257,7 @@ const CharacterSheet = (): JSX.Element => {
                   </Text>
                   <Button
                     onClick={() => {
-                      updateLevel(Number(level) + 1);
+                      updateLevel(level + 1);
                     }}
                   >
                     <Plus className="w-5 h-5" />

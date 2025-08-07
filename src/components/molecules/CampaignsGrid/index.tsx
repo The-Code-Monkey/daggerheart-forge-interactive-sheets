@@ -127,7 +127,7 @@ const CampaignsGrid = ({
             <div className="text-sm text-brand-300">
               Last played:{" "}
               {campaign.last_played
-                ? new Date(String(campaign.last_played)).toLocaleDateString()
+                ? new Date(campaign.last_played).toLocaleDateString()
                 : "Never"}
             </div>
 

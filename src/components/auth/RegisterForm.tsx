@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 // Lazy load the Turnstile component to reduce initial bundle size
 const TurnstileCaptcha = lazy(() => import("./TurnstileCaptcha"));
@@ -20,6 +21,7 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
   const [honeypot, setHoneypot] = useState("");
   const [captchaAnswer, setCaptchaAnswer] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
+  const navigate = useNavigate();
 
   const [captchaQuestion] = useState(() => {
     const num1 = Math.floor(Math.random() * 10) + 1;

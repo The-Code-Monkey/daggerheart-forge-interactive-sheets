@@ -13,7 +13,7 @@ export const getSingleCampaignByIdBasic = async (
   const { data, error } = await supabase
     .from("campaigns")
     .select(
-      "id, name, description, additional, created_at, gm: user_id(username), players: campaigns_players(character: character_id(name, class(name))), sessions(name, play_date)"
+      "id, name, description, additional, created_at, gm: user_id(username), user_id, players: campaigns_players(character: character_id(name, class(name))), sessions(name, play_date, notes)"
     )
     .eq("id", id)
     .single();
@@ -143,6 +143,18 @@ export const createCampaign = async (
     data: data as Campaign,
     error: null,
   };
+};
+
+export const addSessionToCampaign = async (
+  campaignId: number,
+  record: Record<string, unknown>
+): Promise<boolean> => {
+  const result = await supabase.from("sessions").insert({
+    campaign_id: campaignId,
+    ...record,
+  });
+
+  return result.status === 201;
 };
 
 export const addCharacterToCampaign = async (

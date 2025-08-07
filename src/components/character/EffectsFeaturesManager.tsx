@@ -34,7 +34,7 @@ const EffectsFeaturesManager = ({
   const fetchDomainEffects = async () => {
     const data = await getDomainEffects(
       character.domains.map((domain) => domain.id),
-      Number(character.level ?? 1)
+      character.level ?? 1
     );
     setDomainEffects(data);
     setMyEffects(
@@ -98,9 +98,7 @@ const EffectsFeaturesManager = ({
               <div className="grid grid-cols-1 gap-4 mt-4 w-full">
                 {domainEffects.map((effect) => {
                   const isSelected =
-                    character.additional?.domain_features?.includes(
-                      Number(effect.id)
-                    );
+                    character.additional?.domain_features?.includes(effect.id);
 
                   return (
                     <Card key={effect.id}>
@@ -134,7 +132,7 @@ const EffectsFeaturesManager = ({
                         <Button
                           className="mt-4 w-full"
                           onClick={() => {
-                            handleSelectCard(Number(effect.id));
+                            handleSelectCard(effect.id);
                           }}
                         >
                           {isSelected ? "Remove" : "Select"} Card

@@ -46,7 +46,7 @@ const HomebrewSubclassForm = (): JSX.Element => {
     try {
       const data = await createNewHomebrewSubclass({
         ...formData,
-        user_id: String(user.id),
+        user_id: user.id,
       });
 
       if (data) {
