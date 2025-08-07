@@ -19,7 +19,7 @@ const LoginForm = ({ onToggleMode }: LoginFormProps): JSX.Element => {
   const navigate = useNavigate();
 
   const onTestAccount = async () => {
-    const { data, error } = await supabase.auth.signInAnonymously();
+    const { error } = await supabase.auth.signInAnonymously();
 
     if (!error) {
       toast({

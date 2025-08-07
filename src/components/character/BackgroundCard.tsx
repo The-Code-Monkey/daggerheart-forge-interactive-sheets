@@ -14,9 +14,7 @@ interface BackgroundCardProps {
 const BackgroundCard = ({
   character,
 }: BackgroundCardProps): JSX.Element | null => {
-  const [background, setBackground] = useState(
-    String(character.background ?? "")
-  );
+  const [background, setBackground] = useState(character.background ?? "");
   const [editing, setEditing] = useState(false);
   const { characterId } = useParams<{ characterId: string }>();
   const { toast } = useToast();

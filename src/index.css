@@ -213,6 +213,14 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  button {
+    @apply hover:cursor-pointer;
+  }
+
+  dialog {
+    @apply bg-nebula rounded-md shadow-2xl;
+  }
 }
 
 .truncate-5-lines {

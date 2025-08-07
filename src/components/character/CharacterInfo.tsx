@@ -53,9 +53,8 @@ const CharacterInfo = ({
   }, [character]);
 
   const handleSave = async () => {
-    const level = String(
-      (document.getElementById("level-input") as HTMLInputElement).value
-    );
+    const level = (document.getElementById("level-input") as HTMLInputElement)
+      .value;
     const pronouns = (
       document.getElementById("pronouns-input") as HTMLInputElement
     ).value;

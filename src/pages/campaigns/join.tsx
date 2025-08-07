@@ -77,7 +77,7 @@ const JoinCampaignPage = (): JSX.Element => {
       setJoined(result);
 
       setTimeout(() => {
-        void navigate(`/campaigns/${String(inviteToken)}`);
+        void navigate(`/campaigns/${inviteToken}`);
       }, 2000);
     } else {
       setJoined(false);

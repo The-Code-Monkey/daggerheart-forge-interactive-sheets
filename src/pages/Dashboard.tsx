@@ -65,7 +65,7 @@ const Dashboard = (): JSX.Element => {
 
   const handleDeleteCharacter = async (
     characterId: string,
-    characterName: string,
+    characterName: string
   ) => {
     try {
       const { error } = await supabase
@@ -288,7 +288,7 @@ const Dashboard = (): JSX.Element => {
                                   onClick={() =>
                                     void handleDeleteCharacter(
                                       character.id,
-                                      character.name,
+                                      character.name
                                     )
                                   }
                                   className="bg-red-600 hover:bg-red-700"

@@ -22,7 +22,7 @@ const Campaigns = (): JSX.Element => {
   useEffect(() => {
     const fetchCampaigns = async () => {
       if (!user) return;
-      const data = await getMyCampaigns(String(user.id));
+      const data = await getMyCampaigns(user.id);
       if (data) {
         setCampaigns(data);
         setLoading(false);
@@ -31,7 +31,7 @@ const Campaigns = (): JSX.Element => {
 
     const fetchOtherCampaigns = async () => {
       if (!user) return;
-      const data = await getCampaignsWhereUserIsPlayer(String(user.id));
+      const data = await getCampaignsWhereUserIsPlayer(user.id);
       if (data) {
         setOtherCampaigns(data);
         setLoadingOther(false);

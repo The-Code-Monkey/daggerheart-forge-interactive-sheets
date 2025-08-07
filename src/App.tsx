@@ -26,30 +26,30 @@ const SubclassDetail = lazy(() => import("./pages/rules/SubclassDetail"));
 const Homebrew = lazy(() => import("./pages/Homebrew"));
 // Homebrew Create Forms
 const HomebrewClassForm = lazy(
-  () => import("./pages/homebrew/homebrewClassForm"),
+  () => import("./pages/homebrew/homebrewClassForm")
 );
 const HomebrewSubclassForm = lazy(
-  () => import("./pages/homebrew/homebrewSubclassForm"),
+  () => import("./pages/homebrew/homebrewSubclassForm")
 );
 const HomebrewDomainForm = lazy(
-  () => import("./pages/homebrew/homebrewDomainForm"),
+  () => import("./pages/homebrew/homebrewDomainForm")
 );
 
 // Homebrew View Pages
 const HomebrewViewClasses = lazy(
-  () => import("./pages/homebrew/view/class/HomebrewViewClasses"),
+  () => import("./pages/homebrew/view/class/HomebrewViewClasses")
 );
 const HomebrewViewSubclasses = lazy(
-  () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses"),
+  () => import("./pages/homebrew/view/subclass/HomebrewViewSubclasses")
 );
 const HomebrewViewDomains = lazy(
-  () => import("./pages/homebrew/view/domain/HomebrewViewDomains"),
+  () => import("./pages/homebrew/view/domain/HomebrewViewDomains")
 );
 
 // Campaign Pages
 const CreateCampaignPage = lazy(() => import("./pages/campaigns/create"));
 const CampaignJoinPage = lazy(() => import("./pages/campaigns/join"));
-const CampaignEditPage = lazy(() => import("./pages/campaigns/edit"));
+// const CampaignEditPage = lazy(() => import("./pages/campaigns/edit"));
 const CampaignViewPage = lazy(() => import("./pages/campaigns/view"));
 
 import "./App.css";
@@ -197,14 +197,14 @@ const App = (): JSX.Element => {
                     </ProtectedRoute>
                   }
                 />
-                <Route
+                {/*<Route
                   path="/campaigns/:id/edit"
                   element={
                     <ProtectedRoute>
                       <CampaignEditPage />
                     </ProtectedRoute>
                   }
-                />
+                />*/}
                 <Route
                   path="/campaigns/:id"
                   element={
