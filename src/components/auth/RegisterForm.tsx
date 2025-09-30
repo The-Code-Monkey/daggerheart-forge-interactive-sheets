@@ -103,7 +103,7 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: String(error.message),
+        description: `${String(error.message)} here`,
         variant: "destructive",
       });
     } finally {
