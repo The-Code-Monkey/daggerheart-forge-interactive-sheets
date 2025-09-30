@@ -34,18 +34,6 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
 
   const { toast } = useToast();
 
-  const onTestAccount = async () => {
-    const { error } = await supabase.auth.signInAnonymously();
-
-    if (!error) {
-      toast({
-        title: "Welcome!",
-        description: "You have successfully signed in as a guest.",
-      });
-      void navigate("/dashboard");
-    }
-  };
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -219,16 +207,6 @@ const RegisterForm = ({ onToggleMode }: RegisterFormProps): JSX.Element => {
           type="button"
         >
           Sign In
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full border-brand-400 text-brand-100"
-          onClick={() => {
-            void onTestAccount();
-          }}
-          type="button"
-        >
-          Create Test Account
         </Button>
       </div>
     </form>
