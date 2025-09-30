@@ -1,4 +1,4 @@
-import { JSX, useState, Suspense, lazy } from "react";
+import { JSX, useState, Suspense } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -7,7 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
 // Lazy load the Turnstile component to reduce initial bundle size
-const TurnstileCaptcha = lazy(() => import("./TurnstileCaptcha"));
+import TurnstileCaptcha from "./TurnstileCaptcha";
 
 interface RegisterFormProps {
   onToggleMode: () => void;
