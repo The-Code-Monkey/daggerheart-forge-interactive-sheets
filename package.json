@@ -52,7 +52,7 @@
     "@supabase/supabase-js": "2.74.0",
     "@testing-library/jest-dom": "6.9.1",
     "@types/jest": "30.0.0",
-    "@vitejs/plugin-react-swc": "4.0.1",
+    "@vitejs/plugin-react-swc": "4.1.0",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "cmdk": "1.1.1",
